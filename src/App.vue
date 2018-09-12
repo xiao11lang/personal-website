@@ -3,7 +3,7 @@
     <header>
       <div class="top">
         <div class="topLeft">
-          <span class="iconfont icon-atom"></span>
+          <span class="iconfont icon-atom" @click="login"></span>
           <div class="search">
             <input type="text" placeholder="搜索">
           </div>
@@ -33,16 +33,19 @@
     <div class="weather">
       <div class="info">
         <p>{{weatherInfo.city}}</p>
-        <p>{{weatherInfo.wind}}</p>
+        <p>{{weatherInfo.date}}</p>
       </div>
       <div class="tem">{{weatherInfo.tem}}</div>
       <img src="./assets/weather.png" alt="">
     </div>
+    <Login v-if="isLogin"></Login>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Login from './components/Login'
+import {mapState,mapMutations} from 'vuex'
 export default {
   name: 'App',
   data:function(){
@@ -51,9 +54,12 @@ export default {
       weatherInfo:{
         city:'',
         tem:'',
-        wind:""
+        date:new Date().getMonth()+1+'月'+new Date().getDate()+'日'
       }
     }
+  },
+  computed:{
+     ...mapState(['isLogin'])
   },
   methods:{
     showPop:function(){
@@ -61,15 +67,18 @@ export default {
     },
     hidePop:function(){
       this.show=false
-    }
+    },
+    ...mapMutations(['login'])
+  },
+  components:{
+    Login
   },
   mounted:function(){
     var vm=this;
     axios.get("http://wthrcdn.etouch.cn/weather_mini?city=%E4%B8%8A%E6%B5%B7")
          .then(function(res){
            vm.weatherInfo.city=res.data.data.city;
-           vm.weatherInfo.wind=res.data.data.forecast[1].fengxiang;
-           vm.weatherInfo.tem=parseInt(res.data.data.forecast[1].low.split(' ')[1]);
+           vm.weatherInfo.tem=res.data.data.wendu;
          })
   }
   
