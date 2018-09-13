@@ -8,10 +8,10 @@
             <input type="text" placeholder="搜索">
           </div>
           <div class="navTool">
-            <span>日志</span>
-            <span>文章</span>
-            <span>个人中心</span>
-            <span>留言板</span>
+            <router-link to='/messageBoard' tag='span'>日志</router-link>
+            <router-link to='/messageBoard' tag='span'>文章</router-link>
+            <router-link to='/messageBoard' tag='span'>个人中心</router-link>
+            <router-link to='/messageBoard' tag='span'>留言板</router-link>
           </div>
         </div>
         <div class="topRight">
@@ -44,6 +44,7 @@
       <div class="tem">{{weatherInfo.tem}}</div>
       <img src="./assets/weather.png" alt="">
     </div>
+    <router-view></router-view>
     <Login v-if="showlogin" @hide="hideLogin" :loginFlag="loginFlag"></Login>
   </div>
 </template>
