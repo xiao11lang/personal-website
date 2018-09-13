@@ -2,56 +2,137 @@
     <div class="loginContainer" @click="hide">
         <div class="loginMain">
             <div class="mainTop">
-                <div @click="login" :class="{active:logining}">登陆</div>
-                <div @click="register" :class="{active:!logining}">注册</div>
+                <div @click="switchLogin" :class="{active:logining}">登陆</div>
+                <div @click="switchRegister" :class="{active:!logining}">注册</div>
             </div>
             <div class="mainBottom login" v-if="logining">
                 <div class="item">
                     <span>用户名</span>
-                    <div :class="{focus:index==1}"><input type="text" placeholder="请输入用户名" @blur="blur"  @focus="focus(1)"></div>
+                    <div :class="{focus:index==1}"><input type="text" placeholder="请输入用户名" @blur="blur"  @focus="focus(1)" v-model="login_userName"></div>
                 </div>
                 <div class="item">
                     <span>密码</span>
-                    <div :class="{focus:index==2}"><input type="text" placeholder="请输入密码" @blur="blur" @focus="focus(2)"></div>
+                    <div :class="{focus:index==2}"><input type="text" placeholder="请输入密码" @blur="blur" @focus="focus(2)" v-model="login_pass"></div>
                 </div>
-                <div class="item">
+                <div class="item" @click="login">
                     登 陆
                 </div>
             </div>
             <div class="mainBottom register" v-if="!logining">
                 <div class="item">
                     <span>用户名</span>
-                    <div :class="{focus:index==1}"><input type="text" placeholder="请输入用户名" @blur="blur"  @focus="focus(1)"></div>
+                    <div :class="{focus:index==1}"><input type="text" placeholder="请输入用户名" @blur="blur"  @focus="focus(1)" v-model="reg_userName"></div>
                 </div>
                 <div class="item">
                     <span>密码</span>
-                    <div :class="{focus:index==2}"><input type="password" placeholder="请输入密码" @blur="blur" @focus="focus(2)"></div>
+                    <div :class="{focus:index==2}"><input type="password" placeholder="请输入密码" @blur="blur" @focus="focus(2)" v-model="reg_pass"></div>
                 </div>
                 <div class="item">
                     <span>确认密码</span>
-                    <div :class="{focus:index==3}"><input type="password" placeholder="请确认密码" @blur="blur" @focus="focus(3)"></div>
+                    <div :class="{focus:index==3}"><input type="password" placeholder="请确认密码" @blur="blur" @focus="focus(3)" v-model="reg_con_pass"></div>
                 </div>
-                <div class="item">注 册</div>
+                <div class="item" @click="register">注 册</div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import axios from 'axios'
+import {mapMutations} from 'vuex'
 export default {
     name:"Login",
     data:function(){
         return {
             index:'',
+            login_userName:"",
+            login_pass:"",
+            reg_userName:"",
+            reg_pass:"",
+            reg_con_pass:"",
             logining:true
         }
     },
     props:['loginFlag'],
     methods:{
-        login:function(){
+        ...mapMutations(['setLoginState','setUserInfo']),
+        switchLogin:function(){
             this.logining=true
         },
-        register:function(){
+        switchRegister:function(){
             this.logining=false
+        },
+        login:function(){
+            let vm=this;
+            if(this.login_userName.trim().length===0){
+                alert('请输入用户名')
+                return 
+
+            }else if(this.login_pass.trim().length===0){
+                alert('请输入密码')
+                return 
+            }else{
+                let fd=new FormData();
+                fd.append('userName',this.login_userName)
+                fd.append('password',this.login_pass)
+                axios.post('http://localhost:3000/login',fd).then(function(res){
+                    switch(res.data){
+                        case "not_exist":
+                        alert('用户名不存在');
+                        return 
+                        case "pass_error":
+                        alert('密码错误');
+                        return 
+                        case "success":
+                        vm.setLoginState(true);
+                        vm.setUserInfo({userName:vm.login_userName,admin:false})
+                        vm.$emit('hide')
+                    }
+                })
+            }
+            
+        },
+        register:function(){
+             let nameReg = /^([\u4E00-\u9FA5]|[a-zA-Z0-9_]){2,10}$/;
+             let passReg = /^([a-zA-Z0-9]){6,16}$/;
+             let vm=this;
+             if(this.reg_userName.trim().length===0){
+                 alert('用户名不可为空');
+                 return 
+             }
+             if(this.reg_pass.trim().length===0||this.reg_con_pass.trim().length===0){
+                 alert('密码不可为空');
+                 return 
+             }
+             if(this.reg_pass!==this.reg_con_pass){
+                 alert('两次密码不一致');
+                 return
+             }
+             if(!this.reg_userName.match(nameReg)){
+                 alert('用户名仅可为2-10位的数字、字母和汉字');
+                 return 
+             }
+             if(!this.reg_pass.match(passReg)){
+                 alert('密码格式有误，仅可为6-16位的字母或数字');
+                 return 
+             }else{
+                 let fd=new FormData();
+                 fd.append('userName',this.reg_userName)
+                 fd.append('password',this.reg_pass)
+                 axios.post('http://localhost:3000/register',fd).then(function(res){
+                     switch(res.data){
+                         case "exist":
+                         alert('用户名已经存在');
+                         vm.reg_userName='';
+                         return 
+                         case "success":
+                         vm.setLoginState(true);
+                         vm.setUserInfo({userName:vm.reg_userName,admin:false})
+                         vm.$emit('hide')
+                     }
+                 })
+             }
+             
+             
         },
         focus:function(index){
             this.index=index
@@ -69,9 +150,9 @@ export default {
     },
     mounted:function(){
         if(this.loginFlag){
-            this.login()
+            this.switchLogin()
         }else{
-            this.register()
+            this.switchRegister()
         }
     }
 }

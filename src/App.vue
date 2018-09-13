@@ -32,9 +32,9 @@
     </div>
     <footer><a href="http://www.miitbeian.gov.cn/">皖ICP备17027274号</a></footer>
     <div class="pop" v-if="showpop">
-      <p>游客12138</p>
+      <p>{{userName}}</p>
       <p>留言</p>
-      <p>退出</p>
+      <p @click="setLoginState(false)">退出</p>
     </div>
     <div class="weather">
       <div class="info">
@@ -58,7 +58,7 @@ export default {
     return {
       showpop: false,
       showlogin:false,
-      loginFlag:true,
+      loginFlag:true,//登陆组件默认展示登陆或注册
       weatherInfo: {
         city: "",
         tem: "",
@@ -67,14 +67,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin"])
+    ...mapState(["isLogin",'userName','admin'])
   },
   methods: {
     showPop: function() {
-      this.show = true;
+      this.showpop = true;
     },
     hidePop: function() {
-      this.show = false;
+      this.showpop = false;
     },
     showLogin:function(){
       this.showlogin=true
@@ -85,7 +85,7 @@ export default {
     setLogin:function(flag){
       this.loginFlag=flag
     },
-    ...mapMutations(["login"])
+    ...mapMutations(['setLoginState'])
   },
   components: {
     Login
