@@ -114,19 +114,20 @@ export default {
     cursor: auto
   }
 }
-html,
 body {
-  height: 100%;
-}
-body {
+  position: relative;
   background-image: url("./assets/bg.png");
   background-size: cover;
+  margin-top: 60px;
+  padding-bottom: 30px;
 }
 #app {
-  height: 100%;
   header {
     overflow: hidden;
+    position: fixed;
+    top: 0;
     height: 60px;
+    width: 100%;
     background-color: rgb(36, 41, 46);
     .top {
       display: flex;
