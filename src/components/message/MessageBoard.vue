@@ -9,21 +9,79 @@
             <div class="boardTitle">
                 <span>发表您的留言</span>
             </div>
-            <div class="board" contenteditable="true"></div>
-            <div class="button">发表</div>
+            <div class="board" contenteditable="true" ref="content"></div>
+            <div class="button" @click="publish">发表</div>
         </div>
         <div class="messageCon">
-            <div class="mesCount">留言(7)</div>
+            <div class="mesCount">留言({{mesList.length}})</div>
         </div>
-        <Message></Message>
+        <Message v-for="(mes,index) of mesListOrder" :key="mes.time+index" :info="mes" :index='mesList.length-index'></Message>
     </div>
 </template>
 <script>
 import Message from "./Message"
+import axios from 'axios'
+import {mapState} from 'vuex'
 export default {
   name: "MessageBoard",
+  data:function(){
+    return {
+      mesList:[]
+    }
+  },
   components:{
       Message
+  },
+  computed:{
+    ...mapState(['isLogin','userName']),
+    mesListOrder:function(){
+      let vm=this;
+      return this.mesList.sort(function(a,b){
+        return vm.toNumber(a.time)-vm.toNumber(b.time)
+      })
+    }
+  },
+  methods:{
+    publish:function(){
+      if(!this.isLogin){
+        alert('请先登录')
+        return
+      }
+      if(this.$refs.content.innerHTML.trim()===''){
+        alert('请输入留言内容');
+        return 
+      }else{
+        let fd=new FormData();
+        let vm=this;
+        fd.append('userName',vm.userName)
+        fd.append('content',vm.$refs.content.innerHTML)
+        fd.append('time',vm.parse(new Date()))
+        axios.post('http://localhost:3000/message',fd).then(function(res){
+          console.log(res.data);
+        })
+      }
+    },
+    parse:function(time){
+      let dateStr=time.toLocaleDateString().split('/').join('-');
+      let timeStr=this.withZero(time.getHours())+":"+this.withZero(time.getMinutes());
+      return dateStr+' '+timeStr
+    },
+    withZero:function(str){
+      if(str>=10){
+        return str
+      }else{
+        return '0'+str
+      }
+    },
+    toNumber:function(str){
+      return parseInt(str.split(' ')[0].split('-').join('')+str.split(' ')[1].split(':').join(''))
+    }
+  },
+  beforeMount:function(){
+    let vm=this;
+    axios.get('http://localhost:3000/message').then(function(res){
+      vm.mesList=res.data;
+    })
   }
 };
 </script>

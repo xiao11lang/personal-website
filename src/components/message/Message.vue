@@ -5,21 +5,22 @@
         </div>
         <div class="mesRight">
             <div class="mesTop">
-                <span class="userName">小蚂蚁</span>
-                <span class="number">第1楼</span>
+                <span class="userName">{{info.userName}}</span>
+                <span class="number">第{{index}}楼</span>
             </div>
-            <div class="mesMiddle">
-                我来看你了老朋友
+            <div class="mesMiddle" v-html="info.content">
+                
             </div>
             <div class="mesBottom">
-                2018-09-14 08:10
+                {{info.time}}
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
-  name: "Message"
+  name: "Message",
+  props:['info','index']
 };
 </script>
 <style lang="scss" scoped>

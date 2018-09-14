@@ -223,7 +223,7 @@ body {
     }
   }
   .pop {
-    position: absolute;
+    position: fixed;
     top: 55px;
     right: 180px;
     width: 150px;
@@ -244,7 +244,7 @@ body {
     align-items: flex-end;
     flex-direction: row-reverse;
     padding-right: 180px;
-    color: white;
+    color: rgb(38, 112, 154);
     .tem {
       font-size: 40px;
       &::after {
