@@ -15,11 +15,16 @@
         <div class="messageCon">
             <div class="mesCount">留言(7)</div>
         </div>
+        <Message></Message>
     </div>
 </template>
 <script>
+import Message from "./Message"
 export default {
-  name: "MessageBoard"
+  name: "MessageBoard",
+  components:{
+      Message
+  }
 };
 </script>
 <style lang="scss" scoped>
