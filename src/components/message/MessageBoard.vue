@@ -19,69 +19,88 @@
     </div>
 </template>
 <script>
-import Message from "./Message"
-import axios from 'axios'
-import {mapState} from 'vuex'
+import Message from "./Message";
+import axios from "axios";
+import { mapState } from "vuex";
 export default {
   name: "MessageBoard",
-  data:function(){
+  data: function() {
     return {
-      mesList:[]
+      mesList: []
+    };
+  },
+  components: {
+    Message
+  },
+  computed: {
+    ...mapState(["isLogin", "userName"]),
+    mesListOrder: function() {
+      let vm = this;
+      return this.mesList.sort(function(a, b) {
+        return -vm.toNumber(a.time) + vm.toNumber(b.time);
+      });
     }
   },
-  components:{
-      Message
-  },
-  computed:{
-    ...mapState(['isLogin','userName']),
-    mesListOrder:function(){
-      let vm=this;
-      return this.mesList.sort(function(a,b){
-        return vm.toNumber(a.time)-vm.toNumber(b.time)
-      })
+  methods: {
+    publish: function() {
+      if (!this.isLogin) {
+        alert("请先登录");
+        return;
+      }
+      if (this.$refs.content.innerHTML.trim() === "") {
+        alert("请输入留言内容");
+        return;
+      } else {
+        let fd = new FormData();
+        let vm = this;
+        let time=new Date()
+        fd.append("userName", vm.userName);
+        fd.append("content", vm.$refs.content.innerHTML);
+        fd.append("time", vm.parse(time));
+        axios.post("http://localhost:3000/message", fd).then(function(res) {
+          vm.mesList.push({
+            userName: vm.userName,
+            content: vm.$refs.content.innerHTML,
+            time: vm.parse(time)
+          });
+          vm.$refs.content.innerHTML=''
+        });
+      }
+    },
+    parse: function(time) {
+      let dateStr = time
+        .toLocaleDateString()
+        .split("/")
+        .join("-");
+      let timeStr =
+        this.withZero(time.getHours()) + ":" + this.withZero(time.getMinutes());
+      return dateStr + " " + timeStr;
+    },
+    withZero: function(str) {
+      if (str >= 10) {
+        return str;
+      } else {
+        return "0" + str;
+      }
+    },
+    toNumber: function(str) {
+      return parseInt(
+        str
+          .split(" ")[0]
+          .split("-")
+          .join("") +
+          str
+            .split(" ")[1]
+            .split(":")
+            .join("")
+      );
     }
   },
-  methods:{
-    publish:function(){
-      if(!this.isLogin){
-        alert('请先登录')
-        return
-      }
-      if(this.$refs.content.innerHTML.trim()===''){
-        alert('请输入留言内容');
-        return 
-      }else{
-        let fd=new FormData();
-        let vm=this;
-        fd.append('userName',vm.userName)
-        fd.append('content',vm.$refs.content.innerHTML)
-        fd.append('time',vm.parse(new Date()))
-        axios.post('http://localhost:3000/message',fd).then(function(res){
-          console.log(res.data);
-        })
-      }
-    },
-    parse:function(time){
-      let dateStr=time.toLocaleDateString().split('/').join('-');
-      let timeStr=this.withZero(time.getHours())+":"+this.withZero(time.getMinutes());
-      return dateStr+' '+timeStr
-    },
-    withZero:function(str){
-      if(str>=10){
-        return str
-      }else{
-        return '0'+str
-      }
-    },
-    toNumber:function(str){
-      return parseInt(str.split(' ')[0].split('-').join('')+str.split(' ')[1].split(':').join(''))
-    }
-  },
-  beforeMount:function(){
-    let vm=this;
-    axios.get('http://localhost:3000/message').then(function(res){
-      vm.mesList=res.data;
-    })
+  beforeMount: function() {
+    let vm = this;
+    axios.get("http://localhost:3000/message").then(function(res) {
+      vm.mesList = res.data;
+    });
   }
 };
 </script>
