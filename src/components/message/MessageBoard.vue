@@ -98,9 +98,15 @@ export default {
   },
   beforeMount: function() {
     let vm = this;
-    axios.get("http://localhost:3000/message").then(function(res) {
+    if(window.getMessage){
+      vm.mesList=window.mesList
+    }else{
+      axios.get("http://localhost:3000/message").then(function(res) {
       vm.mesList = res.data;
+      window.mesList=res.data;
+      window.getMessage=true
     });
+    }
   }
 };
 </script>
