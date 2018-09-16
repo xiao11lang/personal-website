@@ -22,16 +22,23 @@
                     </div>
                 </div>
                 <div class="nav">
-                    <div :class="{active:activeIndex===0}" @click="switchIndex(0)">基本资料</div>
-                    <div :class="{active:activeIndex===1}" @click="switchIndex(1)">兴趣爱好</div>
-                    <div :class="{active:activeIndex===2}" @click="switchIndex(2)">技能经验</div>
+                    <div :class="{active:activeIndex===0}" @click="switchIndex(0)"><span class="iconfont icon-jibenziliao"></span>基本资料</div>
+                    <div :class="{active:activeIndex===1}" @click="switchIndex(1)"><span class="iconfont icon-xingquaihao"></span>兴趣爱好</div>
+                    <div :class="{active:activeIndex===2}" @click="switchIndex(2)"><span class="iconfont icon-jishu"></span>技能经验</div>
                 </div>
             </div>
-            <div class="mainRight"></div>
+            <div class="mainRight">
+                <BaseInfo title="基本资料" subTitle='这是我的基本资料' v-if="activeIndex===0"></BaseInfo>
+                <Hobby title="兴趣爱好" subTitle='这是我的兴趣爱好' v-if="activeIndex===1"></Hobby>
+                <Skill title="技能经验" subTitle='这是我的技能经验' v-if="activeIndex===2"></Skill>
+            </div>
         </div>
     </div>
 </template>
 <script>
+import BaseInfo from './BaseInfo'
+import Hobby from './Hobby'
+import Skill from './Skill'
 export default {
   name: "Self",
   data:function(){
@@ -43,10 +50,13 @@ export default {
       switchIndex(index){
           this.activeIndex=index
       }
+  },
+  components:{
+      BaseInfo,Hobby,Skill
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .self {
   margin: 30px 180px;
   padding: 0 20px;
@@ -109,6 +119,9 @@ export default {
               color: #2595b7;
               line-height: 36px;
               padding-left: 10px;
+              .iconfont{
+                  margin-right: 6px
+              }
               &.active{
                   border-left-color: orange
               }
@@ -117,6 +130,28 @@ export default {
               }
           }
       }
+    }
+    .mainRight{
+        padding-left: 60px;
+        flex-grow: 1;
+        background-color: rgb(245, 244, 249);
+        .base{
+            color: #3d464a;
+        .title{
+            margin: 20px 0;
+            font-size: 20px;
+        }
+        .subTitle{
+            margin-top: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #ccc
+        }
+        .itemCon{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        }
     }
   }
 }

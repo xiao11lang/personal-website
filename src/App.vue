@@ -129,6 +129,7 @@ body {
     height: 60px;
     width: 100%;
     background-color: rgb(36, 41, 46);
+    z-index: 10;
     .top {
       display: flex;
       align-items: center;
