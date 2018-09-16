@@ -9,32 +9,41 @@
 </template>
 <script>
 import Item from './Item'
-import logo from '../../assets/avatar.jpg'
+import js from '../../assets/js.jpg'
+import css from '../../assets/css.jpg'
+import node from '../../assets/node.png'
+import react from '../../assets/react.png'
+import vue from '../../assets/logo.png'
 export default {
     name:"Skill",
     props:['title','subTitle'],
     data:function(){
         return {
             details:[{
-                subject:"Name",
-                src:logo,
-                des:'曹航',
-                summary:'一个阳光宅男1'
+                subject:"JS",
+                src:js,
+                des:'JavaScript',
+                summary:'异步的脚本语言'
             },{
-                subject:"Home",
-                src:logo,
-                des:'曹航',
-                summary:'一个阳光宅男2'
+                subject:"React",
+                src:react,
+                des:'React',
+                summary:'声明式的js框架'
             },{
-                subject:"School",
-                src:logo,
-                des:'曹航',
-                summary:'一个阳光宅男3'
+                subject:"Vue",
+                src:vue,
+                des:'Vue',
+                summary:'渐进式的mvvm框架'
             },{
-                subject:"Major",
-                src:logo,
-                des:'曹航',
-                summary:'一个阳光宅男4'
+                subject:"Node",
+                src:node,
+                des:'Node',
+                summary:'基于v8的服务端js实现'
+            },{
+                subject:"CSS",
+                src:css,
+                des:'CSS',
+                summary:'层叠样式表'
             }]
         }
     },

@@ -9,32 +9,35 @@
 </template>
 <script>
 import Item from './Item'
-import logo from '../../assets/avatar.jpg'
+import novel from '../../assets/novel.png'
+import comic from '../../assets/comic.jpg'
+import game from '../../assets/game.jpg'
+import music from '../../assets/music.jpg'
 export default {
     name:"Hobby",
     props:['title','subTitle'],
     data:function(){
         return {
             details:[{
-                subject:"Name",
-                src:logo,
-                des:'曹航',
-                summary:'一个阳光宅男1'
+                subject:"Novel",
+                src:novel,
+                des:'趣味',
+                summary:'玄幻、武侠、推理'
             },{
-                subject:"Home",
-                src:logo,
-                des:'曹航',
-                summary:'一个阳光宅男2'
+                subject:"Music",
+                src:music,
+                des:'雅俗共赏',
+                summary:'Vae、Eason'
             },{
-                subject:"School",
-                src:logo,
-                des:'曹航',
-                summary:'一个阳光宅男3'
+                subject:"Game",
+                src:game,
+                des:'静',
+                summary:'英雄联盟'
             },{
-                subject:"Major",
-                src:logo,
-                des:'曹航',
-                summary:'一个阳光宅男4'
+                subject:"Comic",
+                src:comic,
+                des:'海贼王',
+                summary:'成为海贼王的男人'
             }]
         }
     },

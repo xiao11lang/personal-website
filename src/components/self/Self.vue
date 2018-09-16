@@ -33,26 +33,34 @@
                 <Skill title="技能经验" subTitle='这是我的技能经验' v-if="activeIndex===2"></Skill>
             </div>
         </div>
+        <div class="selfBottom">
+            <span class="iconfont icon-qq1"></span>
+            <span class="iconfont icon-weixin"></span>
+            <span class="iconfont icon-Git"></span>
+            <span class="iconfont icon-npm"></span>
+        </div>
     </div>
 </template>
 <script>
-import BaseInfo from './BaseInfo'
-import Hobby from './Hobby'
-import Skill from './Skill'
+import BaseInfo from "./BaseInfo";
+import Hobby from "./Hobby";
+import Skill from "./Skill";
 export default {
   name: "Self",
-  data:function(){
-      return {
-          activeIndex:0
-      }
+  data: function() {
+    return {
+      activeIndex: 0
+    };
   },
-  methods:{
-      switchIndex(index){
-          this.activeIndex=index
-      }
+  methods: {
+    switchIndex(index) {
+      this.activeIndex = index;
+    }
   },
-  components:{
-      BaseInfo,Hobby,Skill
+  components: {
+    BaseInfo,
+    Hobby,
+    Skill
   }
 };
 </script>
@@ -71,7 +79,7 @@ export default {
   .selfMain {
     display: flex;
     .mainLeft {
-      width: 155px;
+      min-width: 128px;
       border-right: 1px solid #ccc;
       .avatar {
         text-align: center;
@@ -111,46 +119,56 @@ export default {
           }
         }
       }
-      .nav{
-          div{
-              height: 36px;
-              border-bottom: 1px solid rgb(225, 228, 232);
-              border-left: 2px solid transparent;
-              color: #2595b7;
-              line-height: 36px;
-              padding-left: 10px;
-              .iconfont{
-                  margin-right: 6px
-              }
-              &.active{
-                  border-left-color: orange
-              }
-              &:hover{
-                  background-color: #f3f5f8
-              }
+      .nav {
+        div {
+          height: 36px;
+          border-bottom: 1px solid rgb(225, 228, 232);
+          border-left: 2px solid transparent;
+          color: #2595b7;
+          line-height: 36px;
+          padding-left: 10px;
+          .iconfont {
+            margin-right: 6px;
           }
+          &.active {
+            border-left-color: orange;
+          }
+          &:hover {
+            background-color: #f3f5f8;
+          }
+        }
       }
     }
-    .mainRight{
-        padding-left: 60px;
-        flex-grow: 1;
-        background-color: rgb(245, 244, 249);
-        .base{
-            color: #3d464a;
-        .title{
-            margin: 20px 0;
-            font-size: 20px;
+    .mainRight {
+      padding-left: 60px;
+      flex-grow: 1;
+      background-color: rgb(245, 244, 249);
+      .base {
+        color: #3d464a;
+        .title {
+          margin: 20px 0;
+          font-size: 20px;
         }
-        .subTitle{
-            margin-top: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #ccc
+        .subTitle {
+          margin-top: 12px;
+          padding-bottom: 12px;
+          border-bottom: 1px solid #ccc;
         }
-        .itemCon{
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+        .itemCon {
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
         }
+      }
+    }
+  }
+  .selfBottom {
+    text-align: center;
+    padding: 20px 0;
+    span {
+        margin-right: 20px;
+        &::before {
+          font-size: 24px;
         }
     }
   }
