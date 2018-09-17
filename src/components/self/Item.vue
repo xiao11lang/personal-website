@@ -96,8 +96,8 @@ export default {
           overflow: hidden;
           display: flex;
           width: 200%;
-          height: 28px;
-          line-height: 28px;
+          height: 36px;
+          line-height: 36px;
           box-sizing: border-box;
           border-bottom: 1px solid #ccc;
           justify-content: space-between;

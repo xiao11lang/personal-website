@@ -2,6 +2,15 @@ import logo from '../../assets/avatar.jpg'
 import home from '../../assets/home.jpg'
 import school from '../../assets/school.jpg'
 import atom from '../../assets/atom.jpg'
+import novel from '../../assets/novel.png'
+import comic from '../../assets/comic.jpg'
+import game from '../../assets/game.jpg'
+import music from '../../assets/music.jpg'
+import js from '../../assets/js.jpg'
+import css from '../../assets/css.jpg'
+import node from '../../assets/node.png'
+import react from '../../assets/react.png'
+import vue from '../../assets/logo.png'
 const SelfInfo={
     baseInfo:[{
         subject:"Name",
@@ -25,19 +34,187 @@ const SelfInfo={
         subject:"Home",
         src:home,
         des:'安徽',
-        summary:'安徽六安'
+        summary:'安徽六安',
+        itemLists:[{
+            key:'家乡',
+            value:"六(lu)安"
+        },{
+            key:'别名',
+            value:"皋城"
+        },{
+            key:'特产',
+            value:"瓜片、石斛"
+        },{
+            key:'历史名人',
+            value:"皋陶、周瑜"
+        }]
     },{
         subject:"School",
         src:school,
         des:'NUAA',
-        summary:'南京航空航天大学'
+        summary:'南京航空航天大学',
+        itemLists:[{
+            key:'校训',
+            value:"智周万物，道济天下"
+        },{
+            key:'校风',
+            value:"团结、简朴、唯实、创新"
+        },{
+            key:'特色',
+            value:"航空、航天、民航"
+        },{
+            key:'热词',
+            value:"食堂"
+        }]
     },{
         subject:"Major",
         src:atom,
         des:'核工程',
-        summary:'核工程与核技术'
+        summary:'核工程与核技术',
+        itemLists:[{
+            key:'主要课程',
+            value:"原子核物理、量子力学"
+        },{
+            key:'关键词',
+            value:"原子核、裂变、辐射"
+        },{
+            key:'应用',
+            value:"核电、辐照、安检、医疗等"
+        }]
     }],
-    hobby:[],
-    skill:[]
+    hobby:[{
+        subject:"Novel",
+        src:novel,
+        des:'雅俗共赏',
+        summary:'玄幻、武侠、推理',
+        itemLists:[{
+            key:'玄幻',
+            value:"神墓"
+        },{
+            key:'武侠',
+            value:"庆余年、雪中悍刀行"
+        },{
+            key:'推理',
+            value:"心理罪"
+        },{
+            key:'仙侠',
+            value:"搜神记、蛮荒记"
+        }]
+    },{
+        subject:"Music",
+        src:music,
+        des:'经典、共鸣',
+        summary:'银瓶乍破水浆迸',
+        itemLists:[{
+            key:'歌手',
+            value:"Vae"
+        },{
+            key:'单曲',
+            value:"庐州月"
+        },{
+            key:'专辑',
+            value:"苏格拉没有底"
+        }]
+    },{
+        subject:"Game",
+        src:game,
+        des:'消遣',
+        summary:'小玩怡情',
+        itemLists:[{
+            key:'网游',
+            value:"英雄联盟"
+        },{
+            key:'解谜',
+            value:"纪念碑谷"
+        },{
+            key:'策略',
+            value:"植物大战僵尸"
+        }]
+    },{
+        subject:"Comic",
+        src:comic,
+        des:'海贼王',
+        summary:'友情与梦想',
+        itemLists:[{
+            key:'喜欢的男角色',
+            value:"路飞"
+        },{
+            key:'喜欢的女角色',
+            value:"蕾玖"
+        },{
+            key:'佩服的人',
+            value:"索隆"
+        },{
+            key:'想要的果实',
+            value:"手术果实"
+        }]
+    }],
+    skill:[{
+        subject:"JS",
+        src:js,
+        des:'JavaScript',
+        summary:'异步的脚本语言',
+        itemLists:[{
+            key:'构建',
+            value:"webpack"
+        },{
+            key:'视图',
+            value:"Vue、React"
+        },{
+            key:'服务端',
+            value:"Node"
+        }]
+    },{
+        subject:"React",
+        src:react,
+        des:'React',
+        summary:'声明式的js框架',
+        itemLists:[{
+            key:'脚手架',
+            value:"create-react-app"
+        },{
+            key:'路由',
+            value:"ReactRouter"
+        },{
+            key:'状态管理',
+            value:"Redux、Mobx"
+        }]
+    },{
+        subject:"Vue",
+        src:vue,
+        des:'Vue',
+        summary:'渐进式的mvvm框架',
+        itemLists:[{
+            key:'脚手架',
+            value:"vue-cli"
+        },{
+            key:'路由',
+            value:"VueRouter"
+        },{
+            key:'状态管理',
+            value:"Vuex"
+        }]
+    },{
+        subject:"Node",
+        src:node,
+        des:'Node',
+        summary:'基于v8的服务端js实现',
+        itemLists:[{
+            key:'框架',
+            value:"express"
+        }]
+    },{
+        subject:"CSS",
+        src:css,
+        des:'CSS',
+        summary:'层叠样式表',
+        itemLists:[{
+            key:'预处理器',
+            value:"sass"
+        },{
+            key:'后处理器',
+            value:"postcss"
+        }]
+    }]
 }
 export default SelfInfo
