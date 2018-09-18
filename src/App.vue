@@ -9,7 +9,7 @@
           </div>
           <div class="navTool">
             <router-link to='/messageBoard' tag='span'>日志</router-link>
-            <router-link to='/messageBoard' tag='span'>文章</router-link>
+            <router-link to='/article' tag='span'>文章</router-link>
             <router-link to='/self' tag='span'>个人中心</router-link>
             <router-link to='/messageBoard' tag='span'>留言板</router-link>
           </div>

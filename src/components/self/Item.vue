@@ -1,5 +1,5 @@
 <template>
-    <div class="item" @click="toggle" :class='{active:active}'>
+    <div class="item" @click="toggle" :class='{active:active}' title="点击查看详情">
         <div class="front" v-if="!showDetail" >
             <p class="subject"><span>{{detail.subject}}</span></p>
             <p class="img">

@@ -34,10 +34,10 @@
             </div>
         </div>
         <div class="selfBottom">
-            <span class="iconfont icon-qq1"></span>
-            <span class="iconfont icon-weixin"></span>
-            <span class="iconfont icon-Git"></span>
-            <span class="iconfont icon-npm"></span>
+            <span class="iconfont icon-qq1" title="扫描二维码添加我的QQ"></span>
+            <span class="iconfont icon-weixin" title="扫描二维码添加我的微信"></span>
+            <a class="iconfont icon-Git" href="https://github.com/xiao11lang" target="_blank" title="单击查看我的git"></a>
+            <a class="iconfont icon-npm" href="https://www.npmjs.com/~xiao11lang" target="_blank" title="单击查看我的npm"></a>
         </div>
     </div>
 </template>
@@ -165,11 +165,29 @@ export default {
   .selfBottom {
     text-align: center;
     padding: 20px 0;
-    span {
+    span,a {
+        position: relative;
         margin-right: 20px;
         &::before {
           font-size: 24px;
         }
+        &:hover:nth-child(1)::after{
+          content: url('../../assets/qq.jpg');
+          position: absolute;
+          bottom: 25px;
+          left: -38px;
+        }
+        &:hover:nth-child(2)::after{
+          content: url('../../assets/wx.png');
+          position: absolute;
+          bottom: 25px;
+          left: -38px;
+        }
+        
+    }
+    a{
+      color: black;
+      text-decoration: none
     }
   }
 }
