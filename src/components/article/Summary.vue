@@ -1,35 +1,37 @@
 <template>
     <div class="summary">
-        <div class="title">jstraning</div>
-        <div class="content">全栈工程师培训资料</div>
+        <div class="title">{{info.title}}</div>
+        <div class="content">{{info.content}}</div>
         <div class="extraInfo">
             <div class="typeCon">
                <span class="iconfont icon-yuan"></span>
-               <span class="type">javascript</span> 
+               <span class="type">{{info.type}}</span> 
             </div>
             <div class="upCon">
                 <span class="iconfont icon-aixin"></span>
-                <span class="thumpUp">131</span>
+                <span class="thumpUp">{{info.thumpUp}}</span>
             </div>
             <div class="countCon">
                 <span class="iconfont icon-kanguo"></span>
-                <span class="readCount">124</span>
+                <span class="readCount">{{info.readCount}}</span>
             </div>
             <div class="timeCon">
-                <span class="writeTime">2018-12</span>
+                <span class="writeTime">{{info.writeTime}}</span>
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
-    name:"Summary"
+    name:"Summary",
+    props:['info']
 }
 </script>
 <style lang="scss" scoped>
     .summary{
-        width: 360px;
+        min-width: 360px;
         height: 130px;
+        margin-bottom: 16px;
         border: 1px #e1e4e8 solid;
         padding: 16px;
         box-sizing: border-box;
