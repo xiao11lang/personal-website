@@ -23,7 +23,7 @@ export default new Vuex.Store({
     },
     actions:{
         getArticle:function(context){
-            axios.get('http://localhost:3000/article').then(function(res){
+            return axios.get('http://localhost:3000/article').then(function(res){
                 context.commit('getArticle',res.data)
             })
         }

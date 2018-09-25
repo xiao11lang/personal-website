@@ -4,30 +4,28 @@
             <div class="top">
                 <div class="topItem">
                     <p>原创</p>
-                    <p>270</p>
+                    <p>{{totalInfo.original}}</p>
                 </div>
                 <div class="topItem">
                     <p>转载</p>
-                    <p>0</p>
+                    <p>{{totalInfo.reprint}}</p>
                 </div>
                 <div class="topItem">
                     <p>点赞</p>
-                    <p>0</p>
+                    <p>{{totalInfo.thumpUp}}</p>
                 </div>
                 <div class="topItem">
                     <p>阅读</p>
-                    <p>0</p>
+                    <p>{{totalInfo.readCount}}</p>
                 </div>
             </div>
             <div class="classification">
                 <h3>分类</h3>
-                <p><span>vue</span><span>3篇</span></p>
-                <p><span>React</span><span>3篇</span></p>
+                <p v-for="(item,key) of totalInfo.typeList" :key='key'><span>{{key}}</span><span>{{item}}篇</span></p>
             </div>
             <div class="file">
                 <h3>时间线</h3>
-                <p><span>2018年8月</span><span>3篇</span></p>
-                <p><span>2018年7月</span><span>3篇</span></p>
+                <p v-for="(item,key) of totalInfo.timeList" :key='key'><span>{{key}}</span><span>{{item}}篇</span></p>
 
             </div>
             <div class="hot">
@@ -58,13 +56,15 @@
 <script>
 import Summary from "./Summary";
 import { mapActions, mapState } from "vuex";
+import {getInfo} from './getInfo.js'
 export default {
   name: "Article",
   data: function() {
     return {
       got: false,
       onlySelf:false,
-      sortRule:'time'
+      sortRule:'time',
+      totalInfo:{}
     };
   },
   components: {
@@ -96,10 +96,13 @@ export default {
     }
   },
   mounted: function() {
+    let vm=this;
     if (this.got) {
       return;
     } else {
-      this.getArticle();
+      this.getArticle().then(function(){
+          vm.totalInfo=getInfo(vm.article)
+      });
     }
   }
 };
