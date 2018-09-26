@@ -7,7 +7,8 @@ export default new Vuex.Store({
         isLogin:false,
         userName:'',
         admin:false,
-        article:[]
+        article:[],
+        articleGot:false
     },
     mutations:{
         setLoginState:function(state,flag){
@@ -19,13 +20,22 @@ export default new Vuex.Store({
         },
         getArticle:function(state,article){
             state.article=article
+            state.articleGot=true
         }
     },
     actions:{
         getArticle:function(context){
-            return axios.get('http://localhost:3000/article').then(function(res){
-                context.commit('getArticle',res.data)
-            })
+            if(context.state.articleGot){
+                return Promise.resolve()
+            }else{
+                return new Promise(function(resolve,reject){
+                    axios.get('http://localhost:3000/article').then(function(res){
+                        context.commit('getArticle',res.data)
+                        resolve()
+                        })
+                })
+            }
+             
         }
     }
 })

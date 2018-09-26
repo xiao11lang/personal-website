@@ -61,7 +61,6 @@ export default {
   name: "Article",
   data: function() {
     return {
-      got: false,
       onlySelf:false,
       sortRule:'time',
       totalInfo:{}
@@ -97,13 +96,9 @@ export default {
   },
   mounted: function() {
     let vm=this;
-    if (this.got) {
-      return;
-    } else {
-      this.getArticle().then(function(){
-          vm.totalInfo=getInfo(vm.article)
-      });
-    }
+    this.getArticle().then(function(){
+        vm.totalInfo=getInfo(vm.article)
+    })
   }
 };
 </script>
