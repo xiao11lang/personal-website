@@ -20,32 +20,32 @@
                 </div>
             </div>
             <div class="classification">
-                <h3>分类</h3>
-                <p v-for="(item,key) of totalInfo.typeList" :key='key'><span>{{key}}</span><span>{{item}}篇</span></p>
+                <h3 @click="setFilter('')">分类</h3>
+                <p v-for="(item,key) of totalInfo.typeList" :key='key' @click="setFilter({type:'type',value:key})"><span>{{key}}</span><span>{{item}}篇</span></p>
             </div>
             <div class="file">
-                <h3>时间线</h3>
-                <p v-for="(item,key) of totalInfo.timeList" :key='key'><span>{{key}}</span><span>{{item}}篇</span></p>
+                <h3 @click="setFilter('')">时间线</h3>
+                <p v-for="(item,key) of totalInfo.timeList" :key='key' @click="setFilter({type:'writeTime',value:key})"><span>{{key}}</span><span>{{item}}篇</span></p>
 
             </div>
-            <div class="hot">
+            <div class="hot" >
                 <h3>热门文章</h3>
-                <p>React中组件通信的方式</p>
+                <p >React中组件通信的方式</p>
             </div>
         </div>
         <div class="right">
             <div class="select">
-                <div class="onlySelf">
+                <div class="onlySelf" @click="watchOriginal()">
                     只看原创
                 </div>
                 <div class="rules">
-                    <span>排序:</span>
+                    <span >排序:</span>
                     <span @click="changeRule('thump')" :class='{inSort:sortRule==="thump"}'>按点赞数</span>
                     <span @click="changeRule('count')" :class='{inSort:sortRule==="count"}'>按阅读数</span>
                     <span @click="changeRule('time')" :class='{inSort:sortRule==="time"}'>按时间</span>
                 </div>
             </div>
-            <div class="summaryCon">
+            <div class="summaryCon" v-if="showSummary">
                 <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index'></Summary>
             </div>
         </div>
@@ -56,14 +56,16 @@
 <script>
 import Summary from "./Summary";
 import { mapActions, mapState } from "vuex";
-import {getInfo} from './getInfo.js'
+import {getInfo,timeStr} from './getInfo.js'
 export default {
   name: "Article",
   data: function() {
     return {
       onlySelf:false,
+      showSummary:true,
       sortRule:'time',
-      totalInfo:{}
+      totalInfo:{},
+      filter:''
     };
   },
   components: {
@@ -72,27 +74,64 @@ export default {
   computed: {
     ...mapState(["article"]),
     articleShow:function(){
-        switch(this.sortRule){
+        let onlySelfArticle=[];
+        let filterArticle=[];
+        let onlySelf=this.onlySelf;
+        let vm=this;
+        if(this.onlySelf){
+            onlySelfArticle=this.article.filter(function(article){
+            return article.isOriginal===onlySelf
+            })
+        }else{
+            onlySelfArticle=this.article
+        }
+        if(this.filter!=''){
+            if(vm.filter.type=='writeTime'){
+               filterArticle=onlySelfArticle.filter(function(art){
+                return timeStr(art[vm.filter.type])==vm.filter.value
+                }) 
+            }else{
+                filterArticle=onlySelfArticle.filter(function(art){
+                return art[vm.filter.type]==vm.filter.value
+                }) 
+            }
+            
+        }else{
+            filterArticle=onlySelfArticle;
+        }
+         switch(this.sortRule){
             case "time":
-            return this.article.sort(function(a1,a2){
+            return filterArticle.sort(function(a1,a2){
                 return a2.writeTime.split('-').join('')-a1.writeTime.split('-').join('')
             })
             case "count":
-            return this.article.sort(function(a1,a2){
+            return filterArticle.sort(function(a1,a2){
                 return a2.readCount-a1.readCount
             })
             case "thump":
-            return this.article.sort(function(a1,a2){
+            return filterArticle.sort(function(a1,a2){
                 return a2.thumpUp-a1.thumpUp
             })
-        }
+        } 
     }
   },
   methods: {
     ...mapActions(["getArticle"]),
     changeRule:function(rule){
         this.sortRule=rule
-    }
+
+    },
+    hide:function(){
+        this.showSummary=!this.showSummary
+    },
+    watchOriginal:function(){
+        this.onlySelf=!this.onlySelf
+    },
+    setFilter:function(filter){
+        this.filter=filter
+        
+    },
+    
   },
   mounted: function() {
     let vm=this;

@@ -8,7 +8,7 @@ export default new Vuex.Store({
         userName:'',
         admin:false,
         article:[],
-        articleGot:false
+        articleGot:false,
     },
     mutations:{
         setLoginState:function(state,flag){

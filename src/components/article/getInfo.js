@@ -1,4 +1,4 @@
-function timeStr(time){
+export function timeStr(time){
     let times=time.split('-')
     return times[0]+'年'+times[1]+'月'
 }
