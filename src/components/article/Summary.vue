@@ -1,5 +1,5 @@
 <template>
-    <div class="summary">
+    <div class="summary" @click="show">
         <div class="title">{{info.title}}</div>
         <div class="content">{{info.content}}</div>
         <div class="extraInfo">
@@ -24,7 +24,12 @@
 <script>
 export default {
     name:"Summary",
-    props:['info']
+    props:['info'],
+    methods:{
+        show:function(){
+            this.$emit('show')
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

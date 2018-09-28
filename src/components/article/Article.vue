@@ -33,10 +33,11 @@
                 <p >React中组件通信的方式</p>
             </div>
         </div>
-        <div class="right">
+        <div class="right" v-if="showSummary">
             <div class="select">
                 <div class="onlySelf" @click="watchOriginal()">
                     只看原创
+                    <span :class="{active:onlySelf}"></span>
                 </div>
                 <div class="rules">
                     <span >排序:</span>
@@ -45,99 +46,101 @@
                     <span @click="changeRule('time')" :class='{inSort:sortRule==="time"}'>按时间</span>
                 </div>
             </div>
-            <div class="summaryCon" v-if="showSummary">
-                <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index'></Summary>
+            <div class="summaryCon" >
+                <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index' @show='showDetail'></Summary>
             </div>
+            
         </div>
-        
+        <Detail v-if="!showSummary"></Detail>
     </div>
     
 </template>
 <script>
 import Summary from "./Summary";
+import Detail from "./Detail";
 import { mapActions, mapState } from "vuex";
-import {getInfo,timeStr} from './getInfo.js'
+import { getInfo, timeStr } from "./getInfo.js";
 export default {
   name: "Article",
   data: function() {
     return {
-      onlySelf:false,
-      showSummary:true,
-      sortRule:'time',
-      totalInfo:{},
-      filter:''
+      onlySelf: false,
+      showSummary: true,
+      sortRule: "time",
+      totalInfo: {},
+      filter: ""
     };
   },
   components: {
-    Summary
+    Summary,
+    Detail
   },
   computed: {
     ...mapState(["article"]),
-    articleShow:function(){
-        let onlySelfArticle=[];
-        let filterArticle=[];
-        let onlySelf=this.onlySelf;
-        let vm=this;
-        if(this.onlySelf){
-            onlySelfArticle=this.article.filter(function(article){
-            return article.isOriginal===onlySelf
-            })
-        }else{
-            onlySelfArticle=this.article
+    articleShow: function() {
+      let onlySelfArticle = [];
+      let filterArticle = [];
+      let onlySelf = this.onlySelf;
+      let vm = this;
+      if (this.onlySelf) {
+        onlySelfArticle = this.article.filter(function(article) {
+          return article.isOriginal === onlySelf;
+        });
+      } else {
+        onlySelfArticle = this.article;
+      }
+      if (this.filter != "") {
+        if (vm.filter.type == "writeTime") {
+          filterArticle = onlySelfArticle.filter(function(art) {
+            return timeStr(art[vm.filter.type]) == vm.filter.value;
+          });
+        } else {
+          filterArticle = onlySelfArticle.filter(function(art) {
+            return art[vm.filter.type] == vm.filter.value;
+          });
         }
-        if(this.filter!=''){
-            if(vm.filter.type=='writeTime'){
-               filterArticle=onlySelfArticle.filter(function(art){
-                return timeStr(art[vm.filter.type])==vm.filter.value
-                }) 
-            }else{
-                filterArticle=onlySelfArticle.filter(function(art){
-                return art[vm.filter.type]==vm.filter.value
-                }) 
-            }
-            
-        }else{
-            filterArticle=onlySelfArticle;
-        }
-         switch(this.sortRule){
-            case "time":
-            return filterArticle.sort(function(a1,a2){
-                return a2.writeTime.split('-').join('')-a1.writeTime.split('-').join('')
-            })
-            case "count":
-            return filterArticle.sort(function(a1,a2){
-                return a2.readCount-a1.readCount
-            })
-            case "thump":
-            return filterArticle.sort(function(a1,a2){
-                return a2.thumpUp-a1.thumpUp
-            })
-        } 
+      } else {
+        filterArticle = onlySelfArticle;
+      }
+      switch (this.sortRule) {
+        case "time":
+          return filterArticle.sort(function(a1, a2) {
+            return (
+              a2.writeTime.split("-").join("") -
+              a1.writeTime.split("-").join("")
+            );
+          });
+        case "count":
+          return filterArticle.sort(function(a1, a2) {
+            return a2.readCount - a1.readCount;
+          });
+        case "thump":
+          return filterArticle.sort(function(a1, a2) {
+            return a2.thumpUp - a1.thumpUp;
+          });
+      }
     }
   },
   methods: {
     ...mapActions(["getArticle"]),
-    changeRule:function(rule){
-        this.sortRule=rule
-
+    changeRule: function(rule) {
+      this.sortRule = rule;
     },
-    hide:function(){
-        this.showSummary=!this.showSummary
+    showDetail: function() {
+      this.showSummary = !this.showSummary;
     },
-    watchOriginal:function(){
-        this.onlySelf=!this.onlySelf
+    watchOriginal: function() {
+      this.onlySelf = !this.onlySelf;
     },
-    setFilter:function(filter){
-        this.filter=filter
-        
-    },
-    
+    setFilter: function(filter) {
+      this.filter = filter;
+    }
   },
   mounted: function() {
-    let vm=this;
-    this.getArticle().then(function(){
-        vm.totalInfo=getInfo(vm.article)
-    })
+    let vm = this;
+    this.getArticle().then(function() {
+      vm.totalInfo = getInfo(vm.article);
+    });
   }
 };
 </script>
@@ -146,11 +149,12 @@ export default {
   margin: 30px 180px;
   font-size: 14px;
   background-color: white;
+  min-width: 750px;
   display: flex;
   .left {
-    flex-grow: 1;
     border-right: 1px solid #e1e4e8;
     min-width: 200px;
+    max-width: 260px;
     .top {
       display: flex;
       height: 44px;
@@ -200,7 +204,7 @@ export default {
     }
   }
   .right {
-    max-width: 730px;
+    //max-width: 730px;
     min-width: 400px;
     flex-grow: 1;
     .select {
@@ -211,11 +215,28 @@ export default {
       justify-content: space-between;
       border-bottom: 1px solid #e1e4e8;
       align-items: center;
+      .onlySelf {
+        display: flex;
+        align-items: center;
+        span {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          border: 1px solid #ccc;
+          margin-left: 6px;
+          background-color: transparent;
+          background-clip: content-box;
+          padding: 2px;
+          &.active {
+            background-color: rgb(92, 228, 0);
+          }
+        }
+      }
       .rules {
         span {
           margin-left: 16px;
-          &.inSort{
-              color:#0366d6
+          &.inSort {
+            color: #0366d6;
           }
         }
       }
