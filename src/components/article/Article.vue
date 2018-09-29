@@ -51,7 +51,7 @@
             </div>
             
         </div>
-        <Detail v-if="!showSummary"></Detail>
+        <Detail v-if="!showSummary" @hide='showDetail'></Detail>
     </div>
     
 </template>
