@@ -81,9 +81,9 @@ export default {
             case "pass_error":
               alert("密码错误");
               return;
-            case "success":
+            default:
               vm.setLoginState(true);
-              vm.setUserInfo({ userName: vm.login_userName, admin: false });
+              vm.setUserInfo({ userName: res.data.userName, admin: res.data.admin });
               vm.$emit("hide");
           }
         });

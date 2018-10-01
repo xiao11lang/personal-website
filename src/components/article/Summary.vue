@@ -1,5 +1,5 @@
 <template>
-    <div class="summary" @click="show">
+    <div class="summary" @click="show(info.path)">
         <div class="title">{{info.title}}</div>
         <div class="content">{{info.content}}</div>
         <div class="extraInfo">
@@ -22,13 +22,16 @@
     </div>
 </template>
 <script>
+import {mapMutations} from 'vuex' 
 export default {
     name:"Summary",
     props:['info'],
     methods:{
-        show:function(){
+        show:function(path){
             this.$emit('show')
-        }
+            this.setPath(path)
+        },
+        ...mapMutations(['setPath'])
     }
 }
 </script>

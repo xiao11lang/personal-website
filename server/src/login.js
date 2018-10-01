@@ -28,7 +28,7 @@ function login(fields, res) {
                 } else if (doc[0].password !== fields.password) {
                     res.send("pass_error")
                 } else {
-                    res.send('success')
+                    res.json({userName:doc[0].userName,admin:doc[0].admin})
                 }
             })
 

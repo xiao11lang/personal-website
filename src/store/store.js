@@ -9,10 +9,14 @@ export default new Vuex.Store({
         admin:false,
         article:[],
         articleGot:false,
+        currentArticlePath:''
     },
     mutations:{
         setLoginState:function(state,flag){
-            state.isLogin=flag
+            state.isLogin=flag;
+            if(!flag){
+                state.admin=false
+            }
         },
         setUserInfo:function(state,info){
             state.userName=info.userName;
@@ -21,6 +25,9 @@ export default new Vuex.Store({
         getArticle:function(state,article){
             state.article=article
             state.articleGot=true
+        },
+        setPath:function(state,path){
+            state.currentArticlePath=path
         }
     },
     actions:{

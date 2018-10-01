@@ -49,15 +49,17 @@
             <div class="summaryCon" >
                 <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index' @show='showDetail'></Summary>
             </div>
-            
+            <div class="newArticle" v-if="true" @click="showNewArticle(true)">新建</div>
         </div>
         <Detail v-if="!showSummary" @hide='showDetail'></Detail>
+        <New v-if="showNew" @hide='showNewArticle'></New>
     </div>
     
 </template>
 <script>
 import Summary from "./Summary";
 import Detail from "./Detail";
+import New from './New'
 import { mapActions, mapState } from "vuex";
 import { getInfo, timeStr } from "./getInfo.js";
 export default {
@@ -66,6 +68,7 @@ export default {
     return {
       onlySelf: false,
       showSummary: true,
+      showNew:false,
       sortRule: "time",
       totalInfo: {},
       filter: ""
@@ -73,10 +76,11 @@ export default {
   },
   components: {
     Summary,
-    Detail
+    Detail,
+    New
   },
   computed: {
-    ...mapState(["article"]),
+    ...mapState(["article",'admin']),
     articleShow: function() {
       let onlySelfArticle = [];
       let filterArticle = [];
@@ -128,6 +132,9 @@ export default {
     },
     showDetail: function() {
       this.showSummary = !this.showSummary;
+    },
+    showNewArticle: function(flag) {
+      this.showNew = flag;
     },
     watchOriginal: function() {
       this.onlySelf = !this.onlySelf;
@@ -245,6 +252,19 @@ export default {
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
+    }
+    .newArticle{
+      width: 30%;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+      background: #2ebc4f;
+      margin: 0 auto;
+      &:hover {
+          background: rgb(40, 167, 69);
+        }
+      border-radius: 3px;
     }
   }
 }
