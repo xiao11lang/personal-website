@@ -1,5 +1,5 @@
 <template>
-    <div class="summary" @click="show(info.path)">
+    <div class="summary" @click="show(info)">
         <div class="title">{{info.title}}</div>
         <div class="content">{{info.content}}</div>
         <div class="extraInfo">
@@ -27,11 +27,11 @@ export default {
     name:"Summary",
     props:['info'],
     methods:{
-        show:function(path){
+        show:function(info){
             this.$emit('show')
-            this.setPath(path)
+            this.setArticle(info)
         },
-        ...mapMutations(['setPath'])
+        ...mapMutations(['setArticle'])
     }
 }
 </script>

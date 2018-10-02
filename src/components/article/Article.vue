@@ -47,11 +47,11 @@
                 </div>
             </div>
             <div class="summaryCon" >
-                <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index' @show='showDetail'></Summary>
+                <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index' @show='showDetail({id:info._id,readCount:info.readCount+1})'></Summary>
             </div>
             <div class="newArticle" v-if="true" @click="showNewArticle(true)">新建</div>
         </div>
-        <Detail v-if="!showSummary" @hide='showDetail'></Detail>
+        <Detail v-if="!showSummary" @hide='hideDetail'></Detail>
         <New v-if="showNew" @hide='showNewArticle'></New>
     </div>
     
@@ -60,7 +60,7 @@
 import Summary from "./Summary";
 import Detail from "./Detail";
 import New from './New'
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState,mapMutations } from "vuex";
 import { getInfo, timeStr } from "./getInfo.js";
 export default {
   name: "Article",
@@ -126,12 +126,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getArticle"]),
+    ...mapActions(["getArticle",'countAdd']),
+    ...mapMutations(['readCountAdd']),
     changeRule: function(rule) {
       this.sortRule = rule;
     },
-    showDetail: function() {
-      this.showSummary = !this.showSummary;
+    showDetail: function(data) {
+      this.showSummary = false;
+      //this.readCountAdd(id)
+      this.countAdd(data)
+    },
+    hideDetail: function(id) {
+      this.showSummary = true;
     },
     showNewArticle: function(flag) {
       this.showNew = flag;
@@ -261,6 +267,7 @@ export default {
       color: white;
       background: #2ebc4f;
       margin: 0 auto;
+      margin-bottom: 20px;
       &:hover {
           background: rgb(40, 167, 69);
         }

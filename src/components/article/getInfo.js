@@ -25,8 +25,8 @@ export function getInfo(summarys){
         }else{
             timeList[timeStr(summary.writeTime)]=1
         }
-        readCount+=summary.readCount;
-        thumpUp+=summary.thumpUp
+        readCount+=parseInt(summary.readCount);
+        thumpUp+=parseInt(summary.thumpUp)
     })
     return {
         original,readCount,reprint,thumpUp,typeList,timeList

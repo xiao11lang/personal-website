@@ -9,7 +9,8 @@ export default new Vuex.Store({
         admin:false,
         article:[],
         articleGot:false,
-        currentArticlePath:''
+        currentArticle:{},
+        thumpList:[]
     },
     mutations:{
         setLoginState:function(state,flag){
@@ -26,9 +27,22 @@ export default new Vuex.Store({
             state.article=article
             state.articleGot=true
         },
-        setPath:function(state,path){
-            state.currentArticlePath=path
-        }
+        setArticle:function(state,article){
+            state.currentArticle=article
+        },
+        readCountAdd:function(state,data){
+            let article=state.article.find(function(art){
+                return art._id===data.id
+            })
+            article.readCount=data.readCount
+        },
+        thumpUpAdd:function(state,data){
+            let article=state.article.find(function(art){
+                return art._id===data.id
+            })
+            article.thumpUp=data.thumpUp
+            state.thumpList.push(article._id)
+        },
     },
     actions:{
         getArticle:function(context){
@@ -43,6 +57,27 @@ export default new Vuex.Store({
                 })
             }
              
-        }
+        },
+        countAdd:function(context,data){
+            let fd=new FormData()
+            fd.append('id',data.id)
+            fd.append('readCount',data.readCount)
+            axios.post('http://localhost:3000/countAdd',fd).then(function(res){
+                if(res.data==='success'){
+                    context.commit('readCountAdd',data)
+                }
+            })
+        },
+        thumpAdd:function(context,data){
+            context.commit('thumpUpAdd',data)
+            let fd=new FormData()
+            fd.append('id',data.id)
+            fd.append('thumpUp',data.thumpUp)
+            axios.post('http://localhost:3000/thumpAdd',fd).then(function(res){
+                if(res.data==='success'){
+                    
+                }
+            })
+        },
     }
 })
