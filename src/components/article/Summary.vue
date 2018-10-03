@@ -1,6 +1,6 @@
 <template>
     <div class="summary" @click="show(info)">
-        <div class="title">{{info.title}}</div>
+        <div class="title">{{(info.isOriginal?'原 ':"转 ")+info.title}}</div>
         <div class="content">{{info.content}}</div>
         <div class="extraInfo">
             <div class="typeCon">

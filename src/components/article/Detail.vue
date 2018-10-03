@@ -7,7 +7,7 @@
                 <span >赞({{info.thumpUp}})</span>
             </div>
         </div>
-        <iframe :src="info.path" frameborder="0" width="100%" height="100%"></iframe>
+        <iframe :src="info.path" frameborder="0" width="100%" height="1000"></iframe>
     </div>
 </template>
 <script>

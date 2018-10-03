@@ -8,7 +8,7 @@
             <input type="text" placeholder="搜索">
           </div>
           <div class="navTool">
-            <router-link to='/messageBoard' tag='span'>日志</router-link>
+            <router-link to='/dailyRecord' tag='span'>日志</router-link>
             <router-link to='/article' tag='span'>文章</router-link>
             <router-link to='/self' tag='span'>个人中心</router-link>
             <router-link to='/messageBoard' tag='span'>留言板</router-link>
@@ -93,12 +93,14 @@ export default {
   },
   mounted: function() {
     var vm = this;
-    axios
+      axios
       .get("http://wthrcdn.etouch.cn/weather_mini?city=%E4%B8%8A%E6%B5%B7")
       .then(function(res) {
         vm.weatherInfo.city = res.data.data.city;
         vm.weatherInfo.tem = res.data.data.wendu;
-      });
+      },function(err){
+        console.log(err)
+      }); 
   }
 };
 </script>
