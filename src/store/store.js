@@ -9,8 +9,13 @@ export default new Vuex.Store({
         admin:false,
         article:[],
         articleGot:false,
+        daily:[],
+        dailyGot:false,
+        mesList:[],
+        mesGot:false,
         currentArticle:{},
-        thumpList:[]
+        thumpList:[],
+        
     },
     mutations:{
         setLoginState:function(state,flag){
@@ -43,6 +48,17 @@ export default new Vuex.Store({
             article.thumpUp=data.thumpUp
             state.thumpList.push(article._id)
         },
+        getDaily:function(state,daily){
+            state.daily=daily
+            state.dailyGot=true
+        },
+        getMes:function(state,mes){
+            state.mesList=mes
+            state.mesGot=true
+        },
+        mesAdd:function(state,mes){
+            state.mesList.push(mes)
+        }
     },
     actions:{
         getArticle:function(context){
@@ -78,6 +94,32 @@ export default new Vuex.Store({
                     
                 }
             })
+        },
+        getDaily:function(context){
+            if(context.state.articleGot){
+                return Promise.resolve()
+            }else{
+                return new Promise(function(resolve,reject){
+                    axios.get('http://localhost:3000/daily').then(function(res){
+                        context.commit('getDaily',res.data)
+                        resolve()
+                        })
+                })
+            }
+             
+        },
+        getMes:function(context){
+            if(context.state.articleGot){
+                return Promise.resolve()
+            }else{
+                return new Promise(function(resolve,reject){
+                    axios.get('http://localhost:3000/message').then(function(res){
+                        context.commit('getMes',res.data)
+                        resolve()
+                        })
+                })
+            }
+             
         },
     }
 })

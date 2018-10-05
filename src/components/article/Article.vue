@@ -49,7 +49,7 @@
             <div class="summaryCon" >
                 <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index' @show='showDetail({id:info._id,readCount:info.readCount+1})'></Summary>
             </div>
-            <div class="newArticle" v-if="true" @click="showNewArticle(true)">新建</div>
+            <div class="newArticle" v-if="admin" @click="showNewArticle(true)">新建</div>
         </div>
         <Detail v-if="!showSummary" @hide='hideDetail'></Detail>
         <New v-if="showNew" @hide='showNewArticle'></New>

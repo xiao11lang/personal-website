@@ -1,20 +1,39 @@
 <template>
     <div class="dailyRecord">
         <div class="left">
-            <RecordItem></RecordItem>
-            <RecordItem></RecordItem>
-            <RecordItem></RecordItem>
-            <div class="newDaily">新建</div>
+            <RecordItem v-for="(item,index) in daily" :key='index' :info='item'></RecordItem>
+            <div class="newDaily" @click="showNew(true)" v-if='admin'>新建</div>
         </div>
         <div class="right"></div>
+        <New @hide='showNew(false)' v-if="showNewDaily"></New>
     </div>
 </template>
 <script>
 import RecordItem from "./RecordItem";
+import { mapActions, mapState,mapMutations } from "vuex";
+import New from './New'
 export default {
   name: "DailyRecord",
   components: {
-    RecordItem
+    RecordItem,New
+  },
+  data:function(){
+    return {
+      showNewDaily:false
+    }
+  },
+  computed:{
+    ...mapState(['daily','admin']),
+
+  },
+  methods:{
+    showNew:function(flag){
+      this.showNewDaily=flag
+    },
+    ...mapActions(['getDaily'])
+  },
+  mounted:function(){
+    this.getDaily()
   }
 };
 </script>

@@ -3,7 +3,7 @@
         <div class="mesTop">留言板</div>
         <div class="mesSendTitle">主人寄语</div>
         <div class="mesSendBody">
-            无语
+            多看、多问、多读、多想
         </div>
         <div class="writeBoardCon">
             <div class="boardTitle">
@@ -21,19 +21,19 @@
 <script>
 import Message from "./Message";
 import axios from "axios";
-import { mapState } from "vuex";
+import { mapState,mapActions,mapMutations } from "vuex";
 export default {
   name: "MessageBoard",
   data: function() {
     return {
-      mesList: []
+      //mesList: []
     };
   },
   components: {
     Message
   },
   computed: {
-    ...mapState(["isLogin", "userName"]),
+    ...mapState(["isLogin", "userName",'mesList']),
     mesListOrder: function() {
       let vm = this;
       return this.mesList.sort(function(a, b) {
@@ -42,6 +42,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getMes']),
+    ...mapMutations(['mesAdd']),
     publish: function() {
       if (!this.isLogin) {
         alert("请先登录");
@@ -58,7 +60,7 @@ export default {
         fd.append("content", vm.$refs.content.innerHTML);
         fd.append("time", vm.parse(time));
         axios.post("http://localhost:3000/message", fd).then(function(res) {
-          vm.mesList.push({
+          vm.mesAdd({
             userName: vm.userName,
             content: vm.$refs.content.innerHTML,
             time: vm.parse(time)
@@ -68,19 +70,16 @@ export default {
       }
     },
     parse: function(time) {
-      let dateStr = time
-        .toLocaleDateString()
-        .split("/")
-        .join("-");
-      let timeStr =
-        this.withZero(time.getHours()) + ":" + this.withZero(time.getMinutes());
+      let dateArr=time.toLocaleDateString().split('/')
+      let dateStr = dateArr[0]+'-'+this.withZero(dateArr[1])+'-'+this.withZero(dateArr[2])
+      let timeStr =this.withZero(time.getHours()) + ":" + this.withZero(time.getMinutes());
       return dateStr + " " + timeStr;
     },
     withZero: function(str) {
       if (str >= 10) {
         return str;
       } else {
-        return "0" + str;
+        return "0" +""+ str;
       }
     },
     toNumber: function(str) {
@@ -88,7 +87,7 @@ export default {
         str
           .split(" ")[0]
           .split("-")
-          .join("") +
+          .join("") +''+
           str
             .split(" ")[1]
             .split(":")
@@ -96,17 +95,8 @@ export default {
       );
     }
   },
-  beforeMount: function() {
-    let vm = this;
-    if(window.getMessage){
-      vm.mesList=window.mesList
-    }else{
-      axios.get("http://localhost:3000/message").then(function(res) {
-      vm.mesList = res.data;
-      window.mesList=res.data;
-      window.getMessage=true
-    });
-    }
+  mounted: function() {
+    this.getMes()
   }
 };
 </script>

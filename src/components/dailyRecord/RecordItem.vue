@@ -6,21 +6,28 @@
         <div class="content">
             <div class="message">
                 <span class="name">小食蚁螂</span>
-                <div class="voice">我于杀戮之中盛放，亦如黎明的花朵</div>
+                <div class="voice">{{info.content}}</div>
             </div>
             <div class="images">
-                <img src="http://localhost:8090/static/image/test.jpg" alt="">
-                <img src="http://localhost:8090/static/image/test.jpg" alt="">
+                <img :src="'http://localhost:8090/static/image/'+path" alt="" v-for="path in info.path" :key='path'>
             </div>
             <div class="time">
-                2018年10月1日
+                {{parseTime(info.writeTime)}}
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
-  name: "RecordItem"
+  name: "RecordItem",
+  props:['info'],
+  methods:{
+      parseTime:function(time){
+          let timeArr=time.split('-')
+          return timeArr[0]+'年'+timeArr[1]+"月"+timeArr[2]+"日"
+      }
+  }
+
 };
 </script>
 <style lang="scss" scoped>
@@ -52,11 +59,15 @@ export default {
             margin-right: 12px;
             color: #2595b7
         }
+        .voice{
+            word-wrap: break-word
+        }
     }
     .images {
         margin: 16px 0;
       img {
         width: 200px;
+        margin-right: 16px
       }
     }
     .time{

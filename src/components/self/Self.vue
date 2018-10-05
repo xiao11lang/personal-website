@@ -5,19 +5,18 @@
             <div class="mainLeft">
                 <div class="avatar">
                     <span class="iconfont icon-atom"></span>
-                    <p class="modify">修改头像</p>
                 </div>
                 <div class="itemCount">
                     <div class="log">
-                        <p>1</p>
+                        <p>{{daily.length}}</p>
                         <p>日志</p>
                     </div>
                     <div class="article">
-                        <p>1</p>
+                        <p>{{article.length}}</p>
                         <p>文章</p>
                     </div>
                     <div class="message">
-                        <p>3</p>
+                        <p>{{mesList.length}}</p>
                         <p>留言</p>
                     </div>
                 </div>
@@ -45,12 +44,16 @@
 import BaseInfo from "./BaseInfo";
 import Hobby from "./Hobby";
 import Skill from "./Skill";
+import { mapState } from "vuex";
 export default {
   name: "Self",
   data: function() {
     return {
       activeIndex: 0
     };
+  },
+  computed:{
+    ...mapState(['article','daily','mesList'])
   },
   methods: {
     switchIndex(index) {
