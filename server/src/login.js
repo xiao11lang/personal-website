@@ -2,8 +2,12 @@ const formidable = require("formidable")
 const MonggoClient = require("mongodb").MongoClient;
 const url = "mongodb://localhost:27017";
 function loginMiddleware(req,res){
+    console.log(req.url)
     var form=new formidable.IncomingForm();
     form.parse(req,function(err,fields){
+        if(err){
+            console.log(err)
+        }
         login(fields,res)
     })
 }
@@ -23,6 +27,9 @@ function login(fields, res) {
             userInfo.find({
                 userName: fields.userName
             }).toArray(function (err, doc) {
+                if(err){
+                    console.log(err)
+                }
                 if (doc.length == 0) {
                     res.send("not_exist")
                 } else if (doc[0].password !== fields.password) {

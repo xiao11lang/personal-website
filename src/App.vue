@@ -46,19 +46,22 @@
     </div>
     <router-view></router-view>
     <Login v-if="showlogin" @hide="hideLogin" :loginFlag="loginFlag"></Login>
+    <Loading v-if="showLoading" message='加载中'></Loading>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Login from "./components/Login";
-import { mapState, mapMutations } from "vuex";
+import Loading from './components/Loading'
+import { mapState, mapMutations,mapActions } from "vuex";
 export default {
   name: "App",
   data: function() {
     return {
       showpop: false,
       showlogin:false,
+      showLoading:true,
       loginFlag:true,//登陆组件默认展示登陆或注册
       weatherInfo: {
         city: "",
@@ -86,21 +89,26 @@ export default {
     setLogin:function(flag){
       this.loginFlag=flag
     },
-    ...mapMutations(['setLoginState'])
+    ...mapMutations(['setLoginState']),
+    ...mapActions(['getDaily','getArticle','getMes','getCommer'])
   },
   components: {
-    Login
+    Login,Loading
   },
   mounted: function() {
     var vm = this;
-      axios
+      /* axios
       .get("http://wthrcdn.etouch.cn/weather_mini?city=%E4%B8%8A%E6%B5%B7")
       .then(function(res) {
         vm.weatherInfo.city = res.data.data.city;
         vm.weatherInfo.tem = res.data.data.wendu;
       },function(err){
         console.log(err)
-      }); 
+      });  */
+      Promise.all([vm.getDaily(),vm.getArticle(),vm.getMes(),vm.getCommer()]).then(function(){
+        vm.showLoading=false;
+        vm.$router.push('/dailyRecord')
+      })
   }
 };
 </script>

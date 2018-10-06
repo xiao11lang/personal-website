@@ -150,10 +150,7 @@ export default {
     }
   },
   mounted: function() {
-    let vm = this;
-    this.getArticle().then(function() {
-      vm.totalInfo = getInfo(vm.article);
-    });
+    this.totalInfo = getInfo(this.article);
   }
 };
 </script>

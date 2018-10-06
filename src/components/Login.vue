@@ -34,10 +34,12 @@
                 <div class="item" @click="register">注 册</div>
             </div>
         </div>
+        <loading v-if="showLoading" :message='message'></loading>
     </div>
 </template>
 <script>
 import axios from "axios";
+import Loading from './Loading'
 import { mapMutations } from "vuex";
 export default {
   name: "Login",
@@ -49,7 +51,9 @@ export default {
       reg_userName: "",
       reg_pass: "",
       reg_con_pass: "",
-      logining: true
+      logining: true,
+      showLoading:false,
+      message:''
     };
   },
   props: ["loginFlag"],
@@ -70,6 +74,8 @@ export default {
         alert("请输入密码");
         return;
       } else {
+        vm.showLoading=true
+        vm.message='登录中'
         let fd = new FormData();
         fd.append("userName", this.login_userName.trim());
         fd.append("password", this.login_pass);
@@ -85,7 +91,13 @@ export default {
               vm.setLoginState(true);
               vm.setUserInfo({ userName: res.data.userName, admin: res.data.admin });
               vm.$emit("hide");
+              vm.showLoading=false
+              let fd=new FormData()
+              fd.append('commerName',res.data.userName)
+              axios.post('http://localhost:3000/addCommer',fd).then(function(){})
           }
+        },function(err){
+          console.log(err)
         });
       }
     },
@@ -116,6 +128,8 @@ export default {
         alert("密码格式有误，仅可为6-16位的字母或数字");
         return;
       } else {
+        vm.showLoading=true
+        vm.message='注册中'
         let fd = new FormData();
         fd.append("userName", this.reg_userName);
         fd.append("password", this.reg_pass);
@@ -129,6 +143,10 @@ export default {
               vm.setLoginState(true);
               vm.setUserInfo({ userName: vm.reg_userName, admin: false });
               vm.$emit("hide");
+              vm.showLoading=false
+              let fd=new FormData()
+              fd.append('commerName',vm.reg_userName)
+              axios.post('http://localhost:3000/addCommer',fd).then(function(){})
           }
         });
       }
@@ -146,6 +164,9 @@ export default {
         this.$emit("hide");
       }
     }
+  },
+  components:{
+    Loading
   },
   mounted: function() {
     if (this.loginFlag) {

@@ -3,6 +3,7 @@ const {login,register}=require('./login')
 const {getMessage,publish}=require('./message')
 const {getArticle,newArticleMiddleware,countAddMiddleware,thumpAddMiddleware}=require('./article')
 const {getDaily,newDailyMiddleware}=require('./daily')
+const {getCommer,addCommerMiddleware}=require('./commer')
 const app=express();
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -19,5 +20,10 @@ app.post('/countAdd',countAddMiddleware)
 app.post('/thumpAdd',thumpAddMiddleware)
 app.get('/daily',getDaily)
 app.post('/newDaily',newDailyMiddleware)
+app.get('/api/test',function(req,res){
+    res.send('hhhhh')
+})
+app.get('/commer',getCommer)
+app.post('/addCommer',addCommerMiddleware)
 app.use(express.static('./static'))
 app.listen(3000)

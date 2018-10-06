@@ -16,21 +16,23 @@
             <div class="mesCount">留言({{mesList.length}})</div>
         </div>
         <Message v-for="(mes,index) of mesListOrder" :key="mes.time+index" :info="mes" :index='mesList.length-index'></Message>
+        <Loading v-if="showLoading" message='发表中'></Loading>
     </div>
 </template>
 <script>
 import Message from "./Message";
+import Loading from '../Loading'
 import axios from "axios";
 import { mapState,mapActions,mapMutations } from "vuex";
 export default {
   name: "MessageBoard",
   data: function() {
     return {
-      //mesList: []
+      showLoading:false
     };
   },
   components: {
-    Message
+    Message,Loading
   },
   computed: {
     ...mapState(["isLogin", "userName",'mesList']),
@@ -59,6 +61,7 @@ export default {
         fd.append("userName", vm.userName);
         fd.append("content", vm.$refs.content.innerHTML);
         fd.append("time", vm.parse(time));
+        vm.showLoading=true
         axios.post("http://localhost:3000/message", fd).then(function(res) {
           vm.mesAdd({
             userName: vm.userName,
@@ -66,6 +69,7 @@ export default {
             time: vm.parse(time)
           });
           vm.$refs.content.innerHTML=''
+          vm.showLoading=false
         });
       }
     },
@@ -95,9 +99,7 @@ export default {
       );
     }
   },
-  mounted: function() {
-    this.getMes()
-  }
+  
 };
 </script>
 <style lang="scss" scoped>

@@ -8,14 +8,11 @@ export default new Vuex.Store({
         userName:'',
         admin:false,
         article:[],
-        articleGot:false,
         daily:[],
-        dailyGot:false,
         mesList:[],
-        mesGot:false,
         currentArticle:{},
         thumpList:[],
-        
+        commers:[]
     },
     mutations:{
         setLoginState:function(state,flag){
@@ -30,7 +27,6 @@ export default new Vuex.Store({
         },
         getArticle:function(state,article){
             state.article=article
-            state.articleGot=true
         },
         setArticle:function(state,article){
             state.currentArticle=article
@@ -50,28 +46,25 @@ export default new Vuex.Store({
         },
         getDaily:function(state,daily){
             state.daily=daily
-            state.dailyGot=true
         },
         getMes:function(state,mes){
             state.mesList=mes
-            state.mesGot=true
         },
         mesAdd:function(state,mes){
             state.mesList.push(mes)
+        },
+        getCommer:function(state,commer){
+            state.commers=commer
         }
     },
     actions:{
         getArticle:function(context){
-            if(context.state.articleGot){
-                return Promise.resolve()
-            }else{
-                return new Promise(function(resolve,reject){
-                    axios.get('http://localhost:3000/article').then(function(res){
-                        context.commit('getArticle',res.data)
-                        resolve()
-                        })
-                })
-            }
+            return new Promise(function(resolve,reject){
+                axios.get('http://localhost:3000/article').then(function(res){
+                    context.commit('getArticle',res.data)
+                    resolve()
+                    })
+            })
              
         },
         countAdd:function(context,data){
@@ -96,29 +89,29 @@ export default new Vuex.Store({
             })
         },
         getDaily:function(context){
-            if(context.state.articleGot){
-                return Promise.resolve()
-            }else{
-                return new Promise(function(resolve,reject){
-                    axios.get('http://localhost:3000/daily').then(function(res){
-                        context.commit('getDaily',res.data)
-                        resolve()
-                        })
-                })
-            }
+            return new Promise(function(resolve,reject){
+                axios.get('http://localhost:3000/daily').then(function(res){
+                    context.commit('getDaily',res.data)
+                    resolve()
+                    })
+            })
              
         },
         getMes:function(context){
-            if(context.state.articleGot){
-                return Promise.resolve()
-            }else{
-                return new Promise(function(resolve,reject){
-                    axios.get('http://localhost:3000/message').then(function(res){
-                        context.commit('getMes',res.data)
-                        resolve()
-                        })
-                })
-            }
+            return new Promise(function(resolve,reject){
+                axios.get('http://localhost:3000/message').then(function(res){
+                    context.commit('getMes',res.data)
+                    resolve()
+                    })
+            })
+        },
+        getCommer:function(context){
+            return new Promise(function(resolve,reject){
+                axios.get('http://localhost:3000/commer').then(function(res){
+                    context.commit('getCommer',res.data)
+                    resolve()
+                    })
+            })
              
         },
     }

@@ -1,40 +1,59 @@
 <template>
     <div class="dailyRecord">
         <div class="left">
-            <RecordItem v-for="(item,index) in daily" :key='index' :info='item'></RecordItem>
+            <RecordItem v-for="(item,index) in reverseDaily" :key='index' :info='item'></RecordItem>
             <div class="newDaily" @click="showNew(true)" v-if='admin'>新建</div>
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <div class="top">
+            <div class="bigAvatar iconfont icon-atom"></div>
+            <div class="message">
+              <p>小食蚁螂</p>
+              <p>
+                <span>{{daily.length}}</span><span>条日志</span>
+              </p>
+            </div>
+          </div>
+          <div class="bottom">
+            <p >最近访客</p>
+            <p v-for="(commer,index) in sortCommers" :key='index' class="commer">{{commer}}</p>
+          </div>
+        </div>
         <New @hide='showNew(false)' v-if="showNewDaily"></New>
     </div>
 </template>
 <script>
 import RecordItem from "./RecordItem";
-import { mapActions, mapState,mapMutations } from "vuex";
-import New from './New'
+import { mapActions, mapState, mapMutations } from "vuex";
+import New from "./New";
 export default {
   name: "DailyRecord",
   components: {
-    RecordItem,New
+    RecordItem,
+    New
   },
-  data:function(){
+  data: function() {
     return {
-      showNewDaily:false
+      showNewDaily: false
+    };
+  },
+  computed: {
+    ...mapState(["daily", "admin",'commers']),
+    reverseDaily:function(){
+      return this.daily.reverse()
+    },
+    sortCommers:function(){
+      return [...new Set(this.commers.slice(0,10).reverse().map(function(com){
+        return com.commerName
+      }))]
     }
   },
-  computed:{
-    ...mapState(['daily','admin']),
-
-  },
-  methods:{
-    showNew:function(flag){
-      this.showNewDaily=flag
+  methods: {
+    showNew: function(flag) {
+      this.showNewDaily = flag;
     },
-    ...mapActions(['getDaily'])
+    ...mapActions(["getDaily"])
   },
-  mounted:function(){
-    this.getDaily()
-  }
 };
 </script>
 <style lang="scss" scoped>
@@ -64,6 +83,46 @@ export default {
   }
   .right {
     min-width: 250px;
+    padding-left: 40px;
+    .top {
+      display: flex;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgb(221, 237, 240);
+      margin-bottom: 20px;
+
+      .bigAvatar {
+        border: 1px solid #ccc;
+        width: 94px;
+        height: 94px;
+        text-align: center;
+        border-radius: 8px;
+        &::before {
+          font-size: 80px;
+        }
+      }
+      .message {
+        margin-left: 10px;
+        p:nth-child(1) {
+          font-weight: 700;
+          font-size: 14px;
+        }
+        p:nth-child(2) {
+          span:nth-child(1) {
+            font-size: 20px;
+            color: #157c8c;
+          }
+        }
+      }
+    }
+    .bottom{
+      p{
+        color:#157c8c
+      }
+      p.commer{
+        color: black;
+        margin-top: 4px
+      }
+    }
   }
 }
 </style>

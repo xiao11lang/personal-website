@@ -53,7 +53,6 @@ function newArticle(fields,res){
 function newArticleMiddleware(req,res){
     var form=new formidable.IncomingForm();
     form.parse(req,function(err,fields){
-        console.log(fields)
         newArticle(fields,res)
     })
 }
