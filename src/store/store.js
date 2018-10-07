@@ -12,7 +12,8 @@ export default new Vuex.Store({
         mesList:[],
         currentArticle:{},
         thumpList:[],
-        commers:[]
+        commers:[],
+        barrageList:[]
     },
     mutations:{
         setLoginState:function(state,flag){
@@ -55,6 +56,9 @@ export default new Vuex.Store({
         },
         getCommer:function(state,commer){
             state.commers=commer
+        },
+        getBarrage:function(state,barrage){
+            state.barrageList=barrage
         }
     },
     actions:{
@@ -109,6 +113,15 @@ export default new Vuex.Store({
             return new Promise(function(resolve,reject){
                 axios.get('http://localhost:3000/commer').then(function(res){
                     context.commit('getCommer',res.data)
+                    resolve()
+                    })
+            })
+             
+        },
+        getBarrage:function(context){
+            return new Promise(function(resolve,reject){
+                axios.get('http://localhost:3000/barrage').then(function(res){
+                    context.commit('getBarrage',res.data)
                     resolve()
                     })
             })

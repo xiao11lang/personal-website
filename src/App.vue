@@ -3,9 +3,9 @@
     <header>
       <div class="top">
         <div class="topLeft">
-          <span class="iconfont icon-atom" ></span>
+          <span class="iconfont icon-atom" @click="toggleBarrage" title="点击开启弹幕"></span>
           <div class="search">
-            <input type="text" placeholder="搜索">
+            <input type="text" placeholder="发弹幕" v-model="barrage" @keydown.enter="sendBarrage">
           </div>
           <div class="navTool">
             <router-link to='/dailyRecord' tag='span'>日志</router-link>
@@ -33,7 +33,6 @@
     <footer><a href="http://www.miitbeian.gov.cn/">皖ICP备17027274号</a></footer>
     <div class="pop" v-if="showpop">
       <p>{{userName}}</p>
-      <p>留言</p>
       <p @click="setLoginState(false)">退出</p>
     </div>
     <div class="weather">
@@ -47,6 +46,7 @@
     <router-view></router-view>
     <Login v-if="showlogin" @hide="hideLogin" :loginFlag="loginFlag"></Login>
     <Loading v-if="showLoading" message='加载中'></Loading>
+    <Barrage v-if="showBarrage" :newList='newList'></Barrage>
   </div>
 </template>
 
@@ -54,6 +54,7 @@
 import axios from "axios";
 import Login from "./components/Login";
 import Loading from './components/Loading'
+import Barrage from './components/barrage/Barrage'
 import { mapState, mapMutations,mapActions } from "vuex";
 export default {
   name: "App",
@@ -62,12 +63,15 @@ export default {
       showpop: false,
       showlogin:false,
       showLoading:true,
+      showBarrage:false,
       loginFlag:true,//登陆组件默认展示登陆或注册
       weatherInfo: {
         city: "",
         tem: "",
         date: new Date().getMonth() + 1 + "月" + new Date().getDate() + "日"
-      }
+      },
+      barrage:"",
+      newList:[]
     };
   },
   computed: {
@@ -89,26 +93,52 @@ export default {
     setLogin:function(flag){
       this.loginFlag=flag
     },
+    toggleBarrage:function(){
+      let vm=this;
+      if(vm.showBarrage===false){
+        vm.getBarrage().then(function(){
+        vm.showBarrage=true
+      })
+      }else{
+        vm.showBarrage=false
+      }
+      
+      vm.newList=[]
+    },
+    sendBarrage:function(){
+      let vm=this;
+      if(this.barrage.trim()!==''){
+        let fd=new FormData();
+        fd.append('content',this.barrage)
+        axios.post('http://localhost:3000/newBarrage',fd).then(function(res){
+          if(res.data==='success'){
+            vm.newList.push([vm.barrage])
+            /*直接push字符串将导致数组索引增大，弹幕发送的延迟会
+            增大，这里用数组嵌套使得每次新增的弹幕无延迟发送*/
+          }
+        })
+      }
+    },
     ...mapMutations(['setLoginState']),
-    ...mapActions(['getDaily','getArticle','getMes','getCommer'])
+    ...mapActions(['getDaily','getArticle','getMes','getCommer','getBarrage'])
   },
   components: {
-    Login,Loading
+    Login,Loading,Barrage
   },
   mounted: function() {
     var vm = this;
-      /* axios
+       axios
       .get("http://wthrcdn.etouch.cn/weather_mini?city=%E4%B8%8A%E6%B5%B7")
       .then(function(res) {
         vm.weatherInfo.city = res.data.data.city;
         vm.weatherInfo.tem = res.data.data.wendu;
       },function(err){
         console.log(err)
-      });  */
-      Promise.all([vm.getDaily(),vm.getArticle(),vm.getMes(),vm.getCommer()]).then(function(){
+      });  
+       Promise.all([vm.getDaily(),vm.getArticle(),vm.getMes(),vm.getCommer()]).then(function(){
         vm.showLoading=false;
         vm.$router.push('/dailyRecord')
-      })
+      }) 
   }
 };
 </script>

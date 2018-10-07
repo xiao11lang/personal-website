@@ -30,7 +30,7 @@
             </div>
             <div class="hot" >
                 <h3>热门文章</h3>
-                <p >React中组件通信的方式</p>
+                <p v-for="item in totalInfo.hotList" :key='item.title'>{{item.title}}</p>
             </div>
         </div>
         <div class="right" v-if="showSummary">

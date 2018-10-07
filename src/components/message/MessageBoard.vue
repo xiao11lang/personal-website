@@ -38,9 +38,10 @@ export default {
     ...mapState(["isLogin", "userName",'mesList']),
     mesListOrder: function() {
       let vm = this;
-      return this.mesList.sort(function(a, b) {
+      /* return this.mesList.sort(function(a, b) {
         return -vm.toNumber(a.time) + vm.toNumber(b.time);
-      });
+      }); */
+      return this.mesList.reverse()
     }
   },
   methods: {
