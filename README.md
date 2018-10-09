@@ -1,21 +1,42 @@
-# my-app
 
-> my website
 
-## Build Setup
+### git  clone  [项目地址]
 
-``` bash
-# install dependencies
-npm install
+将项目下载到本地
 
-# serve with hot reload at localhost:8080
-npm run dev
+## 前端
 
-# build for production with minification
-npm run build
+### cd  personal-website
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+进入项目根路径
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### npm install 或 yarn add
+
+安装依赖
+
+### npm run dev
+
+启动项目
+
+## 服务端
+
+### cd server
+
+进入服务器文件夹
+
+### npm install 或 yarn add
+
+安装服务器依赖
+
+### cd src 后 执行node index.js
+
+启动服务器
+
+## 其它依赖
+
+后端数据库为mongodb，需单独下载安装
+
+静态资源由nginx托管，并由其做反向代理，本地也要安装
+
+
+
