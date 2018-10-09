@@ -79,13 +79,15 @@ export default {
         let fd = new FormData();
         fd.append("userName", this.login_userName.trim());
         fd.append("password", this.login_pass);
-        axios.post("http://localhost:3000/login", fd).then(function(res) {
+        axios.post("api/login", fd).then(function(res) {
           switch (res.data) {
             case "not_exist":
               alert("用户名不存在");
+              vm.showLoading=false
               return;
             case "pass_error":
               alert("密码错误");
+              vm.showLoading=false
               return;
             default:
               vm.setLoginState(true);
@@ -94,7 +96,7 @@ export default {
               vm.showLoading=false
               let fd=new FormData()
               fd.append('commerName',res.data.userName)
-              axios.post('http://localhost:3000/addCommer',fd).then(function(){})
+              axios.post('api/addCommer',fd).then(function(){})
           }
         },function(err){
           console.log(err)
@@ -133,10 +135,11 @@ export default {
         let fd = new FormData();
         fd.append("userName", this.reg_userName);
         fd.append("password", this.reg_pass);
-        axios.post("http://localhost:3000/register", fd).then(function(res) {
+        axios.post("api/register", fd).then(function(res) {
           switch (res.data) {
             case "exist":
               alert("用户名已经存在");
+              vm.showLoading=false
               vm.reg_userName = "";
               return;
             case "success":
@@ -146,7 +149,7 @@ export default {
               vm.showLoading=false
               let fd=new FormData()
               fd.append('commerName',vm.reg_userName)
-              axios.post('http://localhost:3000/addCommer',fd).then(function(){})
+              axios.post('api/addCommer',fd).then(function(){})
           }
         });
       }

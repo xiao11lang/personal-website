@@ -3,7 +3,7 @@
         <div class="mesTop">留言板</div>
         <div class="mesSendTitle">主人寄语</div>
         <div class="mesSendBody">
-            多看、多问、多读、多想
+          有朋自远方来，不亦说乎
         </div>
         <div class="writeBoardCon">
             <div class="boardTitle">
@@ -63,7 +63,7 @@ export default {
         fd.append("content", vm.$refs.content.innerHTML);
         fd.append("time", vm.parse(time));
         vm.showLoading=true
-        axios.post("http://localhost:3000/message", fd).then(function(res) {
+        axios.post("api/message", fd).then(function(res) {
           vm.mesAdd({
             userName: vm.userName,
             content: vm.$refs.content.innerHTML,

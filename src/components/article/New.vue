@@ -69,7 +69,7 @@ export default {
       fd.append("isOriginal", this.$refs.isOriginal.checked);
       fd.append("path", this.path);
       fd.append("writeTime", writeTime);
-      axios.post("http://localhost:3000/newArticle", fd).then(function(res) {
+      axios.post("api/newArticle", fd).then(function(res) {
         if (res.data === "success") {
           vm.hide();
         }

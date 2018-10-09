@@ -36,7 +36,7 @@ export default {
         info:function(){
             let vm=this;
             return {
-                path:'http://localhost:8090/static/'+vm.currentArticle.path,
+                path:'static/html/'+vm.currentArticle.path,
                 thumpUp:vm.currentArticle.thumpUp,
                 id:vm.currentArticle._id
             }

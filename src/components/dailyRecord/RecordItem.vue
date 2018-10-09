@@ -9,7 +9,7 @@
                 <div class="voice">{{info.content}}</div>
             </div>
             <div class="images">
-                <img :src="'static/image/'+path" alt="" v-for="path in info.path" :key='path'>
+                <img :src="'/static/img/'+path" alt="" v-for="path in info.path" :key='path'>
             </div>
             <div class="time">
                 {{parseTime(info.writeTime)}}

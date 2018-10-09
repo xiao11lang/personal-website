@@ -52,7 +52,7 @@ export default {
       fd.append("content", this.content);
       fd.append("path", this.path);
       fd.append("writeTime", writeTime);
-      axios.post("http://localhost:3000/newDaily", fd).then(function(res) {
+      axios.post("api/newDaily", fd).then(function(res) {
         if (res.data === "success") {
           vm.hide();
         }

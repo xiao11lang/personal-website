@@ -110,11 +110,12 @@ export default {
       if(this.barrage.trim()!==''){
         let fd=new FormData();
         fd.append('content',this.barrage)
-        axios.post('http://localhost:3000/newBarrage',fd).then(function(res){
+        axios.post('api/newBarrage',fd).then(function(res){
           if(res.data==='success'){
             vm.newList.push([vm.barrage])
             /*直接push字符串将导致数组索引增大，弹幕发送的延迟会
             增大，这里用数组嵌套使得每次新增的弹幕无延迟发送*/
+            vm.barrage=''
           }
         })
       }
