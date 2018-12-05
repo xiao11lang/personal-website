@@ -33,7 +33,7 @@
     <footer><a href="http://www.miitbeian.gov.cn/">皖ICP备17027274号</a></footer>
     <div class="pop" v-if="showpop">
       <p>{{userName}}</p>
-      <p>修改头像</p>
+      <p @click="showAvatar">修改头像</p>
       <p @click="setLoginState(false)">退出</p>
     </div>
     <div class="weather">
@@ -48,6 +48,7 @@
     <Login v-if="showlogin" @hide="hideLogin" :loginFlag="loginFlag"></Login>
     <Loading v-if="showLoading" message='加载中'></Loading>
     <Barrage v-if="showBarrage" :newList='newList'></Barrage>
+    <Avatar v-if="showavatar" @hide='hideAvatar'/>
   </div>
 </template>
 
@@ -56,6 +57,7 @@ import axios from "axios";
 import Login from "./components/Login";
 import Loading from './components/Loading'
 import Barrage from './components/barrage/Barrage'
+import Avatar from './components/Avatar'
 import { mapState, mapMutations,mapActions } from "vuex";
 export default {
   name: "App",
@@ -65,6 +67,7 @@ export default {
       showlogin:false,
       showLoading:true,
       showBarrage:false,
+      showavatar:false,
       loginFlag:true,//登陆组件默认展示登陆或注册
       weatherInfo: {
         city: "",
@@ -84,6 +87,12 @@ export default {
     },
     hidePop: function() {
       this.showpop = false;
+    },
+    showAvatar: function() {
+      this.showavatar = true;
+    },
+    hideAvatar: function() {
+      this.showavatar = false;
     },
     showLogin:function(){
       this.showlogin=true
@@ -125,7 +134,7 @@ export default {
     ...mapActions(['getDaily','getArticle','getMes','getCommer','getBarrage'])
   },
   components: {
-    Login,Loading,Barrage
+    Login,Loading,Barrage,Avatar
   },
   mounted: function() {
     var vm = this;
