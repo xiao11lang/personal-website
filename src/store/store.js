@@ -64,7 +64,7 @@ export default new Vuex.Store({
     actions:{
         getArticle:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('api/article').then(function(res){
+                axios.get('http://www.11lang.cn/api/article').then(function(res){
                     context.commit('getArticle',res.data)
                     resolve()
                     })
@@ -75,7 +75,7 @@ export default new Vuex.Store({
             let fd=new FormData()
             fd.append('id',data.id)
             fd.append('readCount',data.readCount)
-            axios.post('api/countAdd',fd).then(function(res){
+            axios.post('http://www.11lang.cn/api/countAdd',fd).then(function(res){
                 if(res.data==='success'){
                     context.commit('readCountAdd',data)
                 }
@@ -86,7 +86,7 @@ export default new Vuex.Store({
             let fd=new FormData()
             fd.append('id',data.id)
             fd.append('thumpUp',data.thumpUp)
-            axios.post('api/thumpAdd',fd).then(function(res){
+            axios.post('http://www.11lang.cn/api/thumpAdd',fd).then(function(res){
                 if(res.data==='success'){
                     
                 }
@@ -94,7 +94,7 @@ export default new Vuex.Store({
         },
         getDaily:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('api/daily').then(function(res){
+                axios.get('http://www.11lang.cn/api/daily').then(function(res){
                     context.commit('getDaily',res.data)
                     resolve()
                     })
@@ -103,7 +103,7 @@ export default new Vuex.Store({
         },
         getMes:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('api/message').then(function(res){
+                axios.get('http://www.11lang.cn/api/message').then(function(res){
                     context.commit('getMes',res.data)
                     resolve()
                     })
@@ -111,7 +111,7 @@ export default new Vuex.Store({
         },
         getCommer:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('api/commer').then(function(res){
+                axios.get('http://www.11lang.cn/api/commer').then(function(res){
                     context.commit('getCommer',res.data)
                     resolve()
                     })
@@ -120,7 +120,7 @@ export default new Vuex.Store({
         },
         getBarrage:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('api/barrage').then(function(res){
+                axios.get('http://www.11lang.cn/api/barrage').then(function(res){
                     context.commit('getBarrage',res.data)
                     resolve()
                     })
