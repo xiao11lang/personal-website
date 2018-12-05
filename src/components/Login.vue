@@ -79,7 +79,7 @@ export default {
         let fd = new FormData();
         fd.append("userName", this.login_userName.trim());
         fd.append("password", this.login_pass);
-        axios.post("api/login", fd).then(function(res) {
+        axios.post("http://www.11lang.cn/api/login", fd).then(function(res) {
           switch (res.data) {
             case "not_exist":
               alert("用户名不存在");
@@ -96,7 +96,7 @@ export default {
               vm.showLoading=false
               let fd=new FormData()
               fd.append('commerName',res.data.userName)
-              axios.post('api/addCommer',fd).then(function(){})
+              axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){})
           }
         },function(err){
           console.log(err)

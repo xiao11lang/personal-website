@@ -64,7 +64,7 @@ export default new Vuex.Store({
     actions:{
         getArticle:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/article').then(function(res){
+                axios.get('http://www.11lang.cn/api/getArticle').then(function(res){
                     context.commit('getArticle',res.data)
                     resolve()
                     })
@@ -94,7 +94,7 @@ export default new Vuex.Store({
         },
         getDaily:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/daily').then(function(res){
+                axios.get('http://www.11lang.cn/api/getDaily').then(function(res){
                     context.commit('getDaily',res.data)
                     resolve()
                     })
@@ -103,7 +103,7 @@ export default new Vuex.Store({
         },
         getMes:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/message').then(function(res){
+                axios.get('http://www.11lang.cn/api/getMessage').then(function(res){
                     context.commit('getMes',res.data)
                     resolve()
                     })
@@ -111,7 +111,7 @@ export default new Vuex.Store({
         },
         getCommer:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/commer').then(function(res){
+                axios.get('http://www.11lang.cn/api/getCommer').then(function(res){
                     context.commit('getCommer',res.data)
                     resolve()
                     })
@@ -120,7 +120,7 @@ export default new Vuex.Store({
         },
         getBarrage:function(context){
             return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/barrage').then(function(res){
+                axios.get('http://www.11lang.cn/api/getBarrage').then(function(res){
                     context.commit('getBarrage',res.data)
                     resolve()
                     })

@@ -63,7 +63,7 @@ export default {
         fd.append("content", vm.$refs.content.innerHTML);
         fd.append("time", vm.parse(time));
         vm.showLoading=true
-        axios.post("api/message", fd).then(function(res) {
+        axios.post("http://www.11lang.cn/api/addMessage", fd).then(function(res) {
           vm.mesAdd({
             userName: vm.userName,
             content: vm.$refs.content.innerHTML,

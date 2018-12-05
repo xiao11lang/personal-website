@@ -33,6 +33,7 @@
     <footer><a href="http://www.miitbeian.gov.cn/">皖ICP备17027274号</a></footer>
     <div class="pop" v-if="showpop">
       <p>{{userName}}</p>
+      <p>修改头像</p>
       <p @click="setLoginState(false)">退出</p>
     </div>
     <div class="weather">
@@ -110,7 +111,7 @@ export default {
       if(this.barrage.trim()!==''){
         let fd=new FormData();
         fd.append('content',this.barrage)
-        axios.post('api/newBarrage',fd).then(function(res){
+        axios.post('http://www.11lang.cn/api/addBarrage',fd).then(function(res){
           if(res.data==='success'){
             vm.newList.push([vm.barrage])
             /*直接push字符串将导致数组索引增大，弹幕发送的延迟会
@@ -266,13 +267,14 @@ body {
   }
   .pop {
     position: fixed;
-    top: 55px;
+    top: 65px;
     right: 180px;
     width: 150px;
     border: 1px solid #ccc;
     border-bottom: none;
     border-radius: 3px;
     background-color: white;
+    z-index: 10;
     p {
       height: 30px;
       line-height: 30px;
