@@ -1,6 +1,8 @@
 const Spanner=require('../until')
 const connection=require('../mysql')
 var spanner=new Spanner(connection)
+const fs=require('fs')
+const path=require('path')
 async function getDaily(ctx) {
     try{
         var daily=await spanner.query({
@@ -13,10 +15,15 @@ async function getDaily(ctx) {
 }
 async function addDaily(ctx){
     try{
+        var {content,writeTime,paths}=ctx.request.body
+        var files=Object.keys(ctx.request.files)
+        files.forEach(function(file){
+            fs.renameSync(ctx.request.files[file].path,path.resolve('/data/www/static/img',ctx.request.files[file].name))
+        })
         var res=await spanner.insert({
             tableName:'daily',
-            fields:['commerName'],
-            values:[ctx.request.body.commerName]
+            fields:['content','writeTime','path'],
+            values:[content,writeTime,paths]
         })
         ctx.body='success'
     }catch(e){

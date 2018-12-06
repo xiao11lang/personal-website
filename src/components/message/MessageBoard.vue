@@ -15,7 +15,7 @@
         <div class="messageCon">
             <div class="mesCount">留言({{mesList.length}})</div>
         </div>
-        <Message v-for="(mes,index) of mesListOrder" :key="mes.time+index" :info="mes" :index='mesList.length-index'></Message>
+        <Message v-for="(mes,index) of mesList" :key="mes.time+index" :info="mes" :index='mesList.length-index'></Message>
         <Loading v-if="showLoading" message='发表中'></Loading>
     </div>
 </template>
@@ -35,14 +35,7 @@ export default {
     Message,Loading
   },
   computed: {
-    ...mapState(["isLogin", "userName",'mesList']),
-    mesListOrder: function() {
-      let vm = this;
-      /* return this.mesList.sort(function(a, b) {
-        return -vm.toNumber(a.time) + vm.toNumber(b.time);
-      }); */
-      return this.mesList.reverse()
-    }
+    ...mapState(["isLogin", "userName",'mesList','avatar'])
   },
   methods: {
     ...mapActions(['getMes']),
@@ -67,7 +60,8 @@ export default {
           vm.mesAdd({
             userName: vm.userName,
             content: vm.$refs.content.innerHTML,
-            time: vm.parse(time)
+            time: vm.parse(time),
+            avatar:vm.avatar
           });
           vm.$refs.content.innerHTML=''
           vm.showLoading=false
@@ -99,8 +93,7 @@ export default {
             .join("")
       );
     }
-  },
-  
+  },  
 };
 </script>
 <style lang="scss" scoped>

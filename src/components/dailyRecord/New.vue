@@ -5,9 +5,14 @@
                 <span>内容</span>
                 <div><input type="text" placeholder="内容" v-model="content"></div>
             </div>
-            <div class="item">
+            <div class="item upload">
                 <span>图片</span>
-                <div><input type="text" placeholder="图片" v-model="path"></div>
+                <div>
+                  <img :src="src" alt="" v-for="(src,index) in photoSrc" :key='index'>
+                  <span class="iconfont icon-shangchuan">
+                    <input type="file" multiple @change="selectPhoto">
+                  </span>
+                </div>
             </div>
             <div class="item" @click="newArticle">新建</div>
         </div>
@@ -23,8 +28,10 @@ export default {
       title: "",
       content: "",
       type: "",
-      path: "",
-      isOriginal: true
+      path: [],
+      isOriginal: true,
+      photoList:[],
+      photoSrc:[]
     };
   },
   methods: {
@@ -39,6 +46,19 @@ export default {
         this.$emit("hide", false);
       }
     },
+    selectPhoto:function(e){
+      let that=this;
+      Array.from(e.target.files).forEach(function(file,index){
+        that.photoList.push(file)
+        that.path.push(`http://www.11lang.cn/static/img/${file.name}`)
+        let fr=new FileReader()
+        fr.readAsDataURL(file)
+        fr.onload=function(){
+          that.photoSrc.push(this.result)
+        }
+      })
+      
+    },
     newArticle: function() {
       let vm = this;
       let fd = new FormData();
@@ -46,15 +66,20 @@ export default {
       let month = new Date().getMonth() + 1;
       let date = new Date().getDate();
       let writeTime =year+"-"+month+'-'+date
-      if(this.content.trim()===''||this.path.trim()===''){
+      if(this.content.trim()===''){
         return 
-      }
+      } 
       fd.append("content", this.content);
-      fd.append("path", this.path);
+      fd.append("paths", JSON.stringify(this.path));
       fd.append("writeTime", writeTime);
-      axios.post("api/newDaily", fd).then(function(res) {
+      this.photoList.forEach(function(photo,index){
+        fd.append(`img${index}`,photo)
+      })
+      axios.post("http://www.11lang.cn/api/addDaily", fd).then(function(res) {
         if (res.data === "success") {
-          vm.hide();
+          vm.photoList=[];
+          vm.photoSrc=[];
+          vm.$emit('hide')
         }
       });
     }
@@ -99,6 +124,43 @@ export default {
           color: #586069;
         }
       }
+    }
+    .item.upload{
+      div{
+        display: flex;
+        flex-wrap: wrap;
+        max-width:100%;
+        align-items: center; 
+        border: none;
+        height: auto;
+        span::before{
+          font-size: 30px;
+        }
+        span{
+          position: relative;
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          padding: 0;
+          input{
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            opacity: 0
+          }
+        }
+        img{
+          width: 100px;
+          border: 1px solid #ccc;
+          margin: 5px
+        }
+      }
+
     }
     .item:last-child {
       background: #2ebc4f;

@@ -4,7 +4,9 @@ var spanner=new Spanner(connection)
 async function getMessage(ctx) {
     try{
         var commer=await spanner.query({
-            tableName:"message"
+            fields:['m.*','u.avatar'],
+            tableName:"user u,message m",
+            rules:'where u.userName=m.userName'
         })
         ctx.body=commer
     }catch(e){

@@ -1,7 +1,7 @@
 <template>
     <div class="message">
         <div class="mesLeft">
-            <span class="iconfont icon-Git"></span>
+            <span :class="['iconfont',info.avatar]"></span>
         </div>
         <div class="mesRight">
             <div class="mesTop">
