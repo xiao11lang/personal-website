@@ -30,7 +30,7 @@ class Spanner{
             throw new Error('表名不可为空')
         }
         fields.forEach(function(field,index){
-            setStr+=`${field}=${values[index]},`
+            setStr+=`${field}='${values[index]}',`
         })
         var sql=`update ${tableName} set ${setStr.slice(0,setStr.length-1)} ${rules}`
         var that=this;

@@ -16,7 +16,7 @@
         </div>
         <div class="topRight">
           <div v-if="isLogin" class="avatar">
-            <span class="iconfont icon-Git"></span>
+            <span :class="['iconfont',avatar]"></span>
             <span class="iconfont icon-xia" @click.stop="showPop"></span>
           </div>
           <div v-if="!isLogin" class="loginBtn" @click="showLogin">
@@ -79,7 +79,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin",'userName','admin'])
+    ...mapState(["isLogin",'userName','admin','avatar'])
   },
   methods: {
     showPop: function() {

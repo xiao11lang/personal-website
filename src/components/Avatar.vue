@@ -5,12 +5,14 @@
                 <span v-for='(avatar,index) in avatarList' :key='avatar' 
                 :class="['iconfont',avatar,index==selectIndex?'select':'']" @click="select(index)"></span>
             </div>
-            <div class="button">更换</div>
+            <div class="button" @click="modifyAvatar">更换</div>
         </div>
         
     </div>
 </template>
 <script>
+import axios from 'axios'
+import {mapState,mapMutations} from 'vuex'
 export default {
     name:"Avatar",
     data:function(){
@@ -18,7 +20,7 @@ export default {
             avatarList:['icon-shu','icon-niu','icon-hu','icon-tuzi','icon-long','icon-she',
             'icon-1','icon-yang','icon-houzi','icon-ji','icon-gou','icon-zhu','icon-mao',
             'icon-kaola','icon-hippo','icon-weibiaoti-','icon-xiongmao','icon-dongman'],
-            selectIndex:''
+            selectIndex:null
         }
     },
     methods:{
@@ -29,7 +31,25 @@ export default {
             if(e.target==e.currentTarget){
                 this.$emit('hide')
             }
-        }
+        },
+        modifyAvatar:function(){
+            let that=this;
+            if(this.selectIndex!=null){
+                let fd=new FormData()
+                let avatar=this.avatarList[this.selectIndex]
+                fd.append('userName',this.userName)
+                fd.append('avatar',avatar)
+                axios.post('http://www.11lang.cn/api/modifyAvatar',fd).then(()=>{
+                    that.setAvatar(avatar)
+                    that.$emit('hide')
+                })
+            }
+            
+        },
+        ...mapMutations(['setAvatar'])
+    },
+    computed:{
+        ...mapState(['userName'])
     }
 }
 </script>

@@ -9,9 +9,9 @@ async function login(ctx) {
         }else if(res[0].password!=ctx.request.body.password){
             ctx.body='pass_error'
         }else{
-            var {userName,admin}=res[0]
+            var {userName,admin,avatar}=res[0]
             ctx.body={
-                userName,admin
+                userName,admin,avatar
             }
         }
     }catch(e){
@@ -39,6 +39,19 @@ async function register(ctx){
         console.log(e)
     }
 }
+async function modifyAvatar(ctx){
+    try{
+        var res=await spanner.update({
+            tableName:'user',
+            fields:['avatar'],
+            values:[ctx.request.body.avatar],
+            rules:`where userName='${ctx.request.body.userName}'`
+        })
+        ctx.body='success'
+    }catch(e){
+        console.log(e)
+    }
+}
 module.exports=[{
     method:'post',
     path:'/api/login',
@@ -47,4 +60,8 @@ module.exports=[{
     method:'post',
     path:'/api/register',
     handler:register
+},{
+    method:'post',
+    path:'/api/modifyAvatar',
+    handler:modifyAvatar
 }]

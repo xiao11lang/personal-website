@@ -91,7 +91,7 @@ export default {
               return;
             default:
               vm.setLoginState(true);
-              vm.setUserInfo({ userName: res.data.userName, admin: res.data.admin });
+              vm.setUserInfo({ userName: res.data.userName, admin: res.data.admin, avatar:res.data.avatar });
               vm.$emit("hide");
               vm.showLoading=false
               let fd=new FormData()
