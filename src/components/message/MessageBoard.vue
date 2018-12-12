@@ -16,12 +16,14 @@
             <div class="mesCount">留言({{mesList.length}})</div>
         </div>
         <Message v-for="(mes,index) of mesList" :key="mes.time+index" :info="mes" :index='mesList.length-index'></Message>
+        <Page :totalCount='110'></Page>
         <Loading v-if="showLoading" message='发表中'></Loading>
     </div>
 </template>
 <script>
 import Message from "./Message";
 import Loading from '../Loading'
+import Page from '../Page'
 import axios from "axios";
 import { mapState,mapActions,mapMutations } from "vuex";
 export default {
@@ -32,7 +34,7 @@ export default {
     };
   },
   components: {
-    Message,Loading
+    Message,Loading,Page
   },
   computed: {
     ...mapState(["isLogin", "userName",'mesList','avatar'])
