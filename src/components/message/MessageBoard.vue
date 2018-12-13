@@ -16,7 +16,7 @@
             <div class="mesCount">留言({{mesList.length}})</div>
         </div>
         <Message v-for="(mes,index) of mesList" :key="mes.time+index" :info="mes" :index='mesList.length-index'></Message>
-        <Page :totalCount='110'></Page>
+        <Page :totalCount='110' @onChange='change($event)'></Page>
         <Loading v-if="showLoading" message='发表中'></Loading>
     </div>
 </template>
@@ -40,6 +40,9 @@ export default {
     ...mapState(["isLogin", "userName",'mesList','avatar'])
   },
   methods: {
+    change:function(val){
+      console.log(val)
+    },
     ...mapActions(['getMes']),
     ...mapMutations(['mesAdd']),
     publish: function() {
@@ -101,6 +104,7 @@ export default {
 <style lang="scss" scoped>
 .messageBoard {
   margin: 30px 180px;
+  overflow: hidden;
   padding: 0 20px;
   font-size: 14px;
   background-color: white;
