@@ -15,8 +15,8 @@
         <div class="messageCon">
             <div class="mesCount">留言({{mesList.length}})</div>
         </div>
-        <Message v-for="(mes,index) of mesList" :key="mes.time+index" :info="mes" :index='mesList.length-index'></Message>
-        <Page :totalCount='110' @onChange='change($event)'></Page>
+        <Message v-for="(mes,index) of showList" :key="mes.time+index" :info="mes" :index='mes.index'></Message>
+        <Page :totalCount='mesList.length' @onChange='change($event)' v-if="mesList.length>10"></Page>
         <Loading v-if="showLoading" message='发表中'></Loading>
     </div>
 </template>
@@ -30,18 +30,25 @@ export default {
   name: "MessageBoard",
   data: function() {
     return {
-      showLoading:false
+      showLoading:false,
+      pageValue:1
     };
   },
   components: {
     Message,Loading,Page
   },
   computed: {
-    ...mapState(["isLogin", "userName",'mesList','avatar'])
+    ...mapState(["isLogin", "userName",'mesList','avatar']),
+    pageArr:function(){
+      return this.getPageData(this.mesList.length)
+    },
+    showList:function(){
+      return this.mesList.slice(this.pageArr[this.pageValue-1][1]-1,this.pageArr[this.pageValue-1][0]).reverse()
+    }
   },
   methods: {
     change:function(val){
-      console.log(val)
+      this.pageValue=val
     },
     ...mapActions(['getMes']),
     ...mapMutations(['mesAdd']),
@@ -97,8 +104,13 @@ export default {
             .split(":")
             .join("")
       );
-    }
-  },  
+    },
+    getPageData:function (count){
+    return new Array(Math.ceil(count/10)).join(' ').split(' ').map(function(value,index){
+        return (count+1-10*(index+1))<0?[count+10-10*(index+1),1]:[count+10-10*(index+1),count+1-10*(index+1)]
+    })
+}
+  }
 };
 </script>
 <style lang="scss" scoped>

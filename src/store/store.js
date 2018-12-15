@@ -54,10 +54,10 @@ export default new Vuex.Store({
             state.daily=daily
         },
         getMes:function(state,mes){
-            state.mesList=mes.reverse()
+            state.mesList=mes.map(function(v,index){return Object.assign({},v,{index:index+1})})
         },
         mesAdd:function(state,mes){
-            state.mesList.unshift(mes)
+            state.mesList.push(Object.assign({},mes,{index:state.mesList.length+1}))
         },
         getCommer:function(state,commer){
             state.commers=commer

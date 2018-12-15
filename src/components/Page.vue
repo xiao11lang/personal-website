@@ -16,11 +16,12 @@ export default {
     data:function(){
         return {
             currentIndex:1,
-            pageCount:0,
         }
     },
-    created:function(){
-        this.pageCount=Math.ceil(this.totalCount/10);
+    computed:{
+        pageCount:function(){
+            return Math.ceil(this.totalCount/10);
+        }
     },
     watch:{
         "currentIndex":function(val){
