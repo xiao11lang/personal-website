@@ -101,4 +101,4 @@ class Spanner{
         })
     }
 }
-module.exports=Spanner;
+module.exports=Spanner
