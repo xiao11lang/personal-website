@@ -27,42 +27,42 @@ async function addArticle(ctx){
 }
 async function addCount(ctx){
     try{
-        var {id}=ctx.request.id;
+        var {id}=ctx.request.body;
         var rules=`where id=${id}`
         var count=await spanner.query({
             tableName:"article",
             fields:['readCount'],
             rules:rules
         })
-        var params=[count]
+        var params=[count[0].readCount+1]
         var res=await spanner.update({
             tableName:'article',
             fields:['readCount'],
             values:params,
             rules:`where id=${id}`
         })
-        ctx.body=res
+        ctx.body='success'
     }catch(e){
         console.log(e)
     }
 }
 async function addThump(ctx){
     try{
-        var {id}=ctx.request.id;
+        var {id}=ctx.request.body;
         var rules=`where id=${id}`
         var count=await spanner.query({
             tableName:"article",
             fields:['thumpUp'],
             rules:rules
         })
-        var params=[count]
+        var params=[count[0].thumpUp+1]
         var res=await spanner.update({
             tableName:'article',
             fields:['thumpUp'],
             values:params,
             rules:`where id=${id}`
         })
-        ctx.body=res
+        ctx.body='success'
     }catch(e){
         console.log(e)
     }

@@ -39,16 +39,16 @@ export default new Vuex.Store({
         },
         readCountAdd:function(state,data){
             let article=state.article.find(function(art){
-                return art._id===data.id
+                return art.id===data.id
             })
             article.readCount=data.readCount
         },
         thumpUpAdd:function(state,data){
             let article=state.article.find(function(art){
-                return art._id===data.id
+                return art.id===data.id
             })
             article.thumpUp=data.thumpUp
-            state.thumpList.push(article._id)
+            state.thumpList.push(article.id)
         },
         getDaily:function(state,daily){
             state.daily=daily

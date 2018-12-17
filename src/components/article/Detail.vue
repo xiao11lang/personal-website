@@ -7,7 +7,7 @@
                 <span >赞({{info.thumpUp}})</span>
             </div>
         </div>
-        <iframe :src="info.path" frameborder="0" width="100%" height="1000"></iframe>
+        <iframe :src="'http://www.11lang.cn/'+info.path" frameborder="0" width="100%" height="1000"></iframe>
     </div>
 </template>
 <script>
@@ -38,7 +38,7 @@ export default {
             return {
                 path:'static/html/'+vm.currentArticle.path,
                 thumpUp:vm.currentArticle.thumpUp,
-                id:vm.currentArticle._id
+                id:vm.currentArticle.id
             }
         }
     }
