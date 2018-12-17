@@ -46,6 +46,27 @@ async function addCount(ctx){
         console.log(e)
     }
 }
+async function addThump(ctx){
+    try{
+        var {id}=ctx.request.id;
+        var rules=`where id=${id}`
+        var count=await spanner.query({
+            tableName:"article",
+            fields:['thumpUp'],
+            rules:rules
+        })
+        var params=[count]
+        var res=await spanner.update({
+            tableName:'article',
+            fields:['thumpUp'],
+            values:params,
+            rules:`where id=${id}`
+        })
+        ctx.body=res
+    }catch(e){
+        console.log(e)
+    }
+}
 module.exports=[{
     method:'get',
     path:'/api/getArticle',
@@ -58,4 +79,8 @@ module.exports=[{
     method:'post',
     path:'/api/addCount',
     handler:addCount
+},{
+    method:'post',
+    path:'/api/addThump',
+    handler:addThump
 }]

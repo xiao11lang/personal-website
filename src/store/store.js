@@ -79,8 +79,7 @@ export default new Vuex.Store({
         countAdd:function(context,data){
             let fd=new FormData()
             fd.append('id',data.id)
-            fd.append('readCount',data.readCount)
-            axios.post('http://www.11lang.cn/api/countAdd',fd).then(function(res){
+            axios.post('http://www.11lang.cn/api/addCount',fd).then(function(res){
                 if(res.data==='success'){
                     context.commit('readCountAdd',data)
                 }
@@ -90,8 +89,7 @@ export default new Vuex.Store({
             context.commit('thumpUpAdd',data)
             let fd=new FormData()
             fd.append('id',data.id)
-            fd.append('thumpUp',data.thumpUp)
-            axios.post('http://www.11lang.cn/api/thumpAdd',fd).then(function(res){
+            axios.post('http://www.11lang.cn/api/addthump',fd).then(function(res){
                 if(res.data==='success'){
                     
                 }
