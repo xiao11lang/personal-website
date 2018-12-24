@@ -20,7 +20,7 @@ async function addArticle(ctx){
             fields:['title','type','writeTime','isOriginal','path'],
             values:params
         })
-        ctx.body=res
+        ctx.body='success'
     }catch(e){
         console.log(e)
     }
