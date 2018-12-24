@@ -66,7 +66,7 @@ export default {
       fd.append("title", this.title);
       fd.append("content", this.content);
       fd.append("type", this.type);
-      fd.append("isOriginal", this.$refs.isOriginal.checked);
+      fd.append("isOriginal", this.$refs.isOriginal.checked?0:1);
       fd.append("path", this.path);
       fd.append("writeTime", writeTime);
       axios.post("http://www.11lang.cn/api/addArticle", fd).then(function(res) {

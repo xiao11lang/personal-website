@@ -88,7 +88,7 @@ export default {
       let vm = this;
       if (this.onlySelf) {
         onlySelfArticle = this.article.filter(function(article) {
-          return article.isOriginal === onlySelf;
+          return article.isOriginal === 1;
         });
       } else {
         onlySelfArticle = this.article;
