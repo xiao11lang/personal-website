@@ -1,8 +1,9 @@
 <template>
     <div class="dailyRecord">
         <div class="left">
-            <RecordItem v-for="(item,index) in reverseDaily" :key='index' :info='item'></RecordItem>
+            <RecordItem v-for="(item,index) in reverseDaily" :key='index' :info='item' :admin='admin'></RecordItem>
             <div class="newDaily" @click="showNew(true)" v-if='admin'>新建</div>
+            <Page :totalCount='reverseDaily.length'></Page>
         </div>
         <div class="right">
           <div class="top">
@@ -24,13 +25,15 @@
 </template>
 <script>
 import RecordItem from "./RecordItem";
+import Page from '../Page'
 import { mapActions, mapState, mapMutations } from "vuex";
 import New from "./New";
 export default {
   name: "DailyRecord",
   components: {
     RecordItem,
-    New
+    New,
+    Page
   },
   data: function() {
     return {

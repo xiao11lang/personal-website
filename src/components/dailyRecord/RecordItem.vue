@@ -12,19 +12,30 @@
                 <img :src="path" alt="" v-for="path in JSON.parse(info.path)" :key='path'>
             </div>
             <div class="time">
-                {{parseTime(info.writeTime)}}
+                <span>{{parseTime(info.writeTime)}}</span>
+                <span v-if="admin" @click="deleteDaily(info.id)">删除</span>
             </div>
         </div>
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: "RecordItem",
-  props:['info'],
+  props:['info','admin'],
   methods:{
       parseTime:function(time){
           let timeArr=time.split('-')
           return timeArr[0]+'年'+timeArr[1]+"月"+timeArr[2]+"日"
+      },
+      deleteDaily:function(id){
+          let fd=new FormData();
+          fd.append('id',id)
+          axios.post('http://www.11lang.cn/api/deleteDaily',fd).then(function(res){
+              if(res.data==='success'){
+
+              }
+          })
       }
   }
 
@@ -72,7 +83,12 @@ export default {
     }
     .time{
         color: #8c7e83;
-        font-size: 12px
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        & :last-child{
+            color: #2595b7;
+        }
     }
   }
 }

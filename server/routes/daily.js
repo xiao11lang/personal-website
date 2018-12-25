@@ -30,6 +30,19 @@ async function addDaily(ctx){
         console.log(e)
     }
 }
+async function deleteDaily(ctx){
+    try{
+        var {id}=ctx.request.body
+        
+        var res=await spanner.delete({
+            tableName:'daily',
+            rules:`where id=${id}`
+        })
+        ctx.body='success'
+    }catch(e){
+        console.log(e)
+    }
+}
 module.exports=[{
     method:'get',
     path:'/api/getDaily',
@@ -38,4 +51,8 @@ module.exports=[{
     method:'post',
     path:'/api/addDaily',
     handler:addDaily
+},{
+    method:'post',
+    path:'/api/deleteDaily',
+    handler:deleteDaily
 }]
