@@ -3,7 +3,7 @@
         <div class="left">
             <RecordItem v-for="(item,index) in reverseDaily" :key='index' :info='item' :admin='admin'></RecordItem>
             <div class="newDaily" @click="showNew(true)" v-if='admin'>新建</div>
-            <Page :totalCount='reverseDaily.length'></Page>
+            <Page :totalCount='reverseDaily.length' v-if="reverseDaily.length>0"></Page>
         </div>
         <div class="right">
           <div class="top">
