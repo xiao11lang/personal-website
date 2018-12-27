@@ -1,6 +1,9 @@
 <template>
     <div class="summary" @click="show(info)">
-        <div class="title">{{(info.isOriginal?'原 ':"转 ")+info.title}}</div>
+        <div class="title">
+            <span>{{(info.isOriginal?'原 ':"转 ")+info.title}}</span>
+            <span @click.stop="deleteArticle(info.id)" v-if="admin" class="delete">删除</span>
+        </div>
         <div class="content">{{info.content}}</div>
         <div class="extraInfo">
             <div class="typeCon">
@@ -22,7 +25,8 @@
     </div>
 </template>
 <script>
-import {mapMutations} from 'vuex' 
+import axios from 'axios'
+import {mapMutations,mapState} from 'vuex' 
 export default {
     name:"Summary",
     props:['info'],
@@ -31,7 +35,19 @@ export default {
             this.$emit('show')
             this.setArticle(info)
         },
+        deleteArticle:function(id){
+            let fd=new FormData();
+            fd.append('id',id)
+            axios.post('http://www.11lang.cn/api/deleteArticle',fd).then(function(res){
+                if(res.data==='success'){
+
+                }
+            })
+        },
         ...mapMutations(['setArticle'])
+    },
+    computed:{
+        ...mapState(['admin'])
     }
 }
 </script>
@@ -45,7 +61,12 @@ export default {
         box-sizing: border-box;
         border-radius: 3px;
         .title{
-            color: #0366d6
+            color: #0366d6;
+            display: flex;
+            justify-content: space-between;
+            span.delete{
+                color: #d6035b
+            }
         }
         .content{
             color: #586069;

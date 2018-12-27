@@ -13,7 +13,7 @@
             </div>
             <div class="time">
                 <span>{{parseTime(info.writeTime)}}</span>
-                <span v-if="admin" @click="deleteDaily(info.id)">删除</span>
+                <span v-if="admin" @click="deleteDaily(info.id)" class="delete">删除</span>
             </div>
         </div>
     </div>
@@ -86,8 +86,8 @@ export default {
         display: flex;
         justify-content: space-between;
         font-size: 12px;
-        & :last-child{
-            color: #2595b7;
+        span.delete{
+            color: #d6035b
         }
     }
   }

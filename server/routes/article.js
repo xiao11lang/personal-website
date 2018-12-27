@@ -67,6 +67,19 @@ async function addThump(ctx){
         console.log(e)
     }
 }
+async function deleteArticle(ctx){
+    try{
+        var {id}=ctx.request.body
+        
+        var res=await spanner.delete({
+            tableName:'article',
+            rules:`where id=${id}`
+        })
+        ctx.body='success'
+    }catch(e){
+        console.log(e)
+    }
+}
 module.exports=[{
     method:'get',
     path:'/api/getArticle',
@@ -83,4 +96,8 @@ module.exports=[{
     method:'post',
     path:'/api/addThump',
     handler:addThump
+},{
+    method:'post',
+    path:'/api/deleteArticle',
+    handler:deleteArticle
 }]
