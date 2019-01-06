@@ -20,20 +20,23 @@
 </template>
 <script>
 import axios from 'axios'
+import {mapMutations} from 'vuex'
 export default {
   name: "RecordItem",
   props:['info','admin'],
   methods:{
+      ...mapMutations(['deleteDailys']),
       parseTime:function(time){
           let timeArr=time.split('-')
           return timeArr[0]+'年'+timeArr[1]+"月"+timeArr[2]+"日"
       },
       deleteDaily:function(id){
+          let that=this;
           let fd=new FormData();
           fd.append('id',id)
           axios.post('http://www.11lang.cn/api/deleteDaily',fd).then(function(res){
               if(res.data==='success'){
-
+                  that.deleteDailys(id)
               }
           })
       }

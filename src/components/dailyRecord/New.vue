@@ -21,6 +21,7 @@
 </template>
 <script>
 import axios from "axios";
+import {mapState,mapMutations} from 'vuex'
 export default {
   name: "New",
   data: function() {
@@ -35,6 +36,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['addDaily']),
     hide: function(e) {
       if (e) {
         if (e.target != e.currentTarget) {
@@ -79,10 +81,19 @@ export default {
         if (res.data === "success") {
           vm.photoList=[];
           vm.photoSrc=[];
+          vm.addDaily({
+            content:vm.content,
+            path:JSON.stringify(vm.path),
+            writeTime:writeTime,
+            id:vm.daily[vm.daily.length-1].id+1
+          })
           vm.$emit('hide')
         }
       });
     }
+  },
+  computed:{
+    ...mapState(['daily'])
   }
 };
 </script>

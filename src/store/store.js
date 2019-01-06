@@ -53,6 +53,18 @@ export default new Vuex.Store({
         getDaily:function(state,daily){
             state.daily=daily
         },
+        addDaily:function(state,daily){
+            state.daily.push(daily)
+        },
+        deleteDailys:function(state,id){
+            let i;
+            state.daily.forEach(function(daily,index){
+                if(id==daily.id){
+                    i=index
+                }
+            })
+            state.daily.splice(i,1)
+        },
         getMes:function(state,mes){
             state.mesList=mes.map(function(v,index){return Object.assign({},v,{index:index+1})})
         },

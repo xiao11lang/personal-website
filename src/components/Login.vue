@@ -92,6 +92,7 @@ export default {
             default:
               vm.setLoginState(true);
               vm.setUserInfo({ userName: res.data.userName, admin: res.data.admin, avatar:res.data.avatar });
+              localStorage.setItem('userName',res.data.userName)
               vm.$emit("hide");
               vm.showLoading=false
               let fd=new FormData()
@@ -176,6 +177,9 @@ export default {
       this.switchLogin();
     } else {
       this.switchRegister();
+    }
+    if(localStorage.getItem('userName')){
+      this.login_userName=localStorage.getItem('userName')
     }
   }
 };

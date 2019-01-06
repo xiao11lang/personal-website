@@ -3,7 +3,7 @@
         <div class="left">
             <RecordItem v-for="(item,index) in reverseDaily" :key='index' :info='item' :admin='admin'></RecordItem>
             <div class="newDaily" @click="showNew(true)" v-if='admin'>新建</div>
-            <Page :totalCount='reverseDaily.length' v-if="reverseDaily.length>0"></Page>
+            <Page :totalCount='reverseDaily.length' v-if="reverseDaily.length>10"></Page>
         </div>
         <div class="right">
           <div class="top">
@@ -43,7 +43,10 @@ export default {
   computed: {
     ...mapState(["daily", "admin",'commers']),
     reverseDaily:function(){
-      return this.daily.reverse()
+      let dailys=this.daily.filter(function(){
+        return true
+      })//返回新的数组，直接翻转影响原来数组，在新增时会导致顺序错误
+      return dailys.reverse()
     },
     sortCommers:function(){
       return [...new Set(this.commers.slice(0,10).reverse().map(function(com){
