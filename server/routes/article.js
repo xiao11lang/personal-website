@@ -13,11 +13,11 @@ async function getArticle(ctx) {
 }
 async function addArticle(ctx){
     try{
-        var {title,type,writeTime,isOriginal,path}=ctx.request.body;
-        var params=[title,type,writeTime,isOriginal,path]
+        var {title,type,writeTime,isOriginal,path,content}=ctx.request.body;
+        var params=[title,type,writeTime,isOriginal,path,content]
         var res=await spanner.insert({
             tableName:'article',
-            fields:['title','type','writeTime','isOriginal','path'],
+            fields:['title','type','writeTime','isOriginal','path','content'],
             values:params
         })
         ctx.body='success'

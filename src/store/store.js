@@ -34,6 +34,9 @@ export default new Vuex.Store({
         getArticle:function(state,article){
             state.article=article
         },
+        addArticle:function(state,article){
+            state.article.unshift(article)
+        },
         setArticle:function(state,article){
             state.currentArticle=article
         },
