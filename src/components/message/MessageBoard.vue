@@ -107,7 +107,7 @@ export default {
     },
     getPageData:function (count){
     return new Array(Math.ceil(count/10)).join(' ').split(' ').map(function(value,index){
-        return (count+1-10*(index+1))<0?[count+10-10*(index+1),1]:[count+10-10*(index+1),count+1-10*(index+1)]
+        return (count+1-10*(index+1))<=0?[count+10-10*(index+1),1]:[count+10-10*(index+1),count+1-10*(index+1)]
     })
 }
   }

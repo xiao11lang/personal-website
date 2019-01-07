@@ -1,9 +1,9 @@
 <template>
     <div class="dailyRecord">
         <div class="left">
-            <RecordItem v-for="(item,index) in reverseDaily" :key='index' :info='item' :admin='admin'></RecordItem>
+            <RecordItem v-for="(item,index) in showList" :key='index' :info='item' :admin='admin'></RecordItem>
             <div class="newDaily" @click="showNew(true)" v-if='admin'>新建</div>
-            <Page :totalCount='reverseDaily.length' v-if="reverseDaily.length>10"></Page>
+            <Page :totalCount='daily.length' v-if="daily.length>10" @onChange='change($event)'></Page>
         </div>
         <div class="right">
           <div class="top">
@@ -37,11 +37,18 @@ export default {
   },
   data: function() {
     return {
-      showNewDaily: false
+      showNewDaily: false,
+      pageValue:1
     };
   },
   computed: {
     ...mapState(["daily", "admin",'commers']),
+    pageArr:function(){
+      return this.getPageData(this.daily.length)
+    },
+    showList:function(){
+      return this.daily.slice(this.pageArr[this.pageValue-1][1]-1,this.pageArr[this.pageValue-1][0]).reverse()
+    },
     reverseDaily:function(){
       let dailys=this.daily.filter(function(){
         return true
@@ -55,10 +62,18 @@ export default {
     }
   },
   methods: {
+    change:function(val){
+      this.pageValue=val
+    },
     showNew: function(flag) {
       this.showNewDaily = flag;
     },
-    ...mapActions(["getDaily"])
+    ...mapActions(["getDaily"]),
+    getPageData:function (count){
+    return new Array(Math.ceil(count/10)).join(' ').split(' ').map(function(value,index){
+        return (count+1-10*(index+1))<=0?[count+10-10*(index+1),1]:[count+10-10*(index+1),count+1-10*(index+1)]
+    })
+}
   },
 };
 </script>
