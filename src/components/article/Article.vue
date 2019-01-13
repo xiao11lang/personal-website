@@ -70,7 +70,6 @@ export default {
       showSummary: true,
       showNew:false,
       sortRule: "time",
-      totalInfo: {},
       filter: ""
     };
   },
@@ -123,6 +122,9 @@ export default {
             return a2.thumpUp - a1.thumpUp;
           });
       }
+    },
+    totalInfo:function(){
+      return getInfo(this.article)
     }
   },
   methods: {
