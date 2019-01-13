@@ -21,16 +21,16 @@
             </div>
             <div class="classification">
                 <h3 @click="setFilter('')">分类</h3>
-                <p v-for="(item,key) of totalInfo.typeList" :key='key' @click="setFilter({type:'type',value:key})"><span>{{key}}</span><span>{{item}}篇</span></p>
+                <p v-for="(item,key) of totalInfo.typeList" :key='key+item' @click="setFilter({type:'type',value:key})"><span>{{key}}</span><span>{{item}}篇</span></p>
             </div>
             <div class="file">
                 <h3 @click="setFilter('')">时间线</h3>
-                <p v-for="(item,key) of totalInfo.timeList" :key='key' @click="setFilter({type:'writeTime',value:key})"><span>{{key}}</span><span>{{item}}篇</span></p>
+                <p v-for="(item,key) of totalInfo.timeList" :key='key+item' @click="setFilter({type:'writeTime',value:key})"><span>{{key}}</span><span>{{item}}篇</span></p>
 
             </div>
             <div class="hot" >
                 <h3>热门文章</h3>
-                <p v-for="item in totalInfo.hotList" :key='item.title'>{{item.title}}</p>
+                <p v-for="(item,index) in totalInfo.hotList" :key='item.title+index'>{{item.title}}</p>
             </div>
         </div>
         <div class="right" v-if="showSummary">
@@ -151,9 +151,7 @@ export default {
       this.filter = filter;
     }
   },
-  mounted: function() {
-    this.totalInfo = getInfo(this.article);
-  }
+  
 };
 </script>
 <style lang="scss" scoped>
