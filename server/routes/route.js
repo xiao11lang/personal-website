@@ -4,11 +4,12 @@ const article=require('./article')
 const message=require('./message')
 const barrage=require('./barrage')
 const daily=require('./daily')
+const self=require('./self')
 const Router=require('koa-router')
 const cors=require('koa2-cors')
 var router=new Router();
 router.use(cors())
-var routeConfig=[].concat(user,commer,barrage,article,message,daily)
+var routeConfig=[].concat(user,commer,barrage,article,message,daily,self)
 routeConfig.forEach((conf)=>{
     router[conf.method](conf.path,conf.handler)
 })

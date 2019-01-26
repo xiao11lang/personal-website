@@ -53,7 +53,7 @@ export default {
     };
   },
   computed:{
-    ...mapState(['article','daily','mesList'])
+    ...mapState(['article','daily','mesList','selfInfo'])
   },
   methods: {
     switchIndex(index) {

@@ -201,7 +201,7 @@ const SelfInfo={
         summary:'基于v8的服务端js实现',
         itemLists:[{
             key:'框架',
-            value:"express"
+            value:"express,koa2"
         }]
     },{
         subject:"CSS",

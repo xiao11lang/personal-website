@@ -9,6 +9,7 @@ export default new Vuex.Store({
         admin:false,
         avatar:'icon-git',
         article:[],
+        selfInfo:{},
         daily:[],
         mesList:[],
         currentArticle:{},
@@ -33,6 +34,9 @@ export default new Vuex.Store({
         },
         getArticle:function(state,article){
             state.article=article
+        },
+        getSelfInfo:function(state,info){
+            state.selfInfo=info
         },
         addArticle:function(state,article){
             state.article.unshift(article)
@@ -86,6 +90,15 @@ export default new Vuex.Store({
             return new Promise(function(resolve,reject){
                 axios.get('http://www.11lang.cn/api/getArticle').then(function(res){
                     context.commit('getArticle',res.data)
+                    resolve()
+                    })
+            })
+             
+        },
+        getSelfInfo:function(context){
+            return new Promise(function(resolve,reject){
+                axios.get('http://www.11lang.cn/api/getSelfInfo').then(function(res){
+                    context.commit('getSelfInfo',res.data)
                     resolve()
                     })
             })

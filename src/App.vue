@@ -131,7 +131,7 @@ export default {
       }
     },
     ...mapMutations(['setLoginState']),
-    ...mapActions(['getDaily','getArticle','getMes','getCommer','getBarrage'])
+    ...mapActions(['getDaily','getArticle','getMes','getCommer','getBarrage','getSelfInfo'])
   },
   components: {
     Login,Loading,Barrage,Avatar
@@ -146,7 +146,7 @@ export default {
       },function(err){
         console.log(err)
       });  
-       Promise.all([vm.getDaily(),vm.getArticle(),vm.getMes(),vm.getCommer()]).then(function(){
+       Promise.all([vm.getDaily(),vm.getArticle(),vm.getMes(),vm.getCommer(),vm.getSelfInfo()]).then(function(){
         vm.showLoading=false;
         vm.$router.push('/dailyRecord')
       }) 
