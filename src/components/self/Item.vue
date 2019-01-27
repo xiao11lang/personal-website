@@ -9,8 +9,8 @@
             <p class="summary">{{detail.summary}}</p>
         </div>
         <div class="back" v-if="showDetail">
-            <div class="backItem" v-for="item of detail.itemLists" :key="item.key">
-                <span class="key">{{item.key}}</span>
+            <div class="backItem" v-for="item of detail.itemLists" :key="item.keyName">
+                <span class="key">{{item.keyName}}</span>
                 <span class="value">{{item.value}}</span>
             </div>
         </div>

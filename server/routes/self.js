@@ -9,16 +9,22 @@ async function getSelfInfo(ctx) {
         var itemList=await spanner.query({
             tableName:"itemList"
         })
+        var typeDes=await spanner.query({
+            tableName:"typeDes"
+        })
         var info={}
+        typeDes.forEach(function(des){
+            info[des.infoType]={}
+            info[des.infoType].title=des.title;
+            info[des.infoType].subTitle=des.subTitle;
+            info[des.infoType].class=des.class;
+            info[des.infoType].details=[];
+        })
         selfInfo.forEach(function(v){
             v.itemLists=itemList.filter(function(item){
                 return item.type==v.subject
             })
-            if(info[v.infoType]){
-                info[v.infoType].push(v)
-            }else{
-                info[v.infoType]=[v]
-            }
+            info[v.infoType].details.push(v)
         })
 
         ctx.body=info

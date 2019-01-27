@@ -21,15 +21,20 @@
                     </div>
                 </div>
                 <div class="nav">
-                    <div :class="{active:activeIndex===0}" @click="switchIndex(0)"><span class="iconfont icon-jibenziliao"></span>基本资料</div>
+                    <div :class="{active:activeIndex===index}" @click="switchIndex(index)" v-for="(item,index) of info" :key='item.details[0].infoType'>
+                      <span class="iconfont" :class="item.class"></span>
+                      {{item.title}}
+                    </div>
+                    <!-- <div :class="{active:activeIndex===0}" @click="switchIndex(0)"><span class="iconfont icon-jibenziliao"></span>基本资料</div>
                     <div :class="{active:activeIndex===1}" @click="switchIndex(1)"><span class="iconfont icon-xingquaihao"></span>兴趣爱好</div>
-                    <div :class="{active:activeIndex===2}" @click="switchIndex(2)"><span class="iconfont icon-jishu"></span>技能经验</div>
+                    <div :class="{active:activeIndex===2}" @click="switchIndex(2)"><span class="iconfont icon-jishu"></span>技能经验</div> -->
                 </div>
             </div>
             <div class="mainRight">
-                <BaseInfo title="基本资料" subTitle='这是我的基本资料' v-if="activeIndex===0"></BaseInfo>
+                <ItemCon v-for="(item,index) of info" :key="index" :title='item.title' :subTitle='item.subTitle' :details='item.details' v-if='activeIndex===index'></ItemCon>
+                <!-- <BaseInfo title="基本资料" subTitle='这是我的基本资料' v-if="activeIndex===0"></BaseInfo>
                 <Hobby title="兴趣爱好" subTitle='这是我的兴趣爱好' v-if="activeIndex===1"></Hobby>
-                <Skill title="技能经验" subTitle='这是我的技能经验' v-if="activeIndex===2"></Skill>
+                <Skill title="技能经验" subTitle='这是我的技能经验' v-if="activeIndex===2"></Skill> -->
             </div>
         </div>
         <div class="selfBottom">
@@ -44,6 +49,7 @@
 import BaseInfo from "./BaseInfo";
 import Hobby from "./Hobby";
 import Skill from "./Skill";
+import ItemCon from './ItemCon'
 import { mapState } from "vuex";
 export default {
   name: "Self",
@@ -53,7 +59,10 @@ export default {
     };
   },
   computed:{
-    ...mapState(['article','daily','mesList','selfInfo'])
+    ...mapState(['article','daily','mesList','selfInfo']),
+    info:function(){
+      return Object.values(this.selfInfo)
+    }
   },
   methods: {
     switchIndex(index) {
@@ -63,7 +72,8 @@ export default {
   components: {
     BaseInfo,
     Hobby,
-    Skill
+    Skill,
+    ItemCon
   }
 };
 </script>
