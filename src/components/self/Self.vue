@@ -32,9 +32,6 @@
             </div>
             <div class="mainRight">
                 <ItemCon v-for="(item,index) of info" :key="index" :title='item.title' :subTitle='item.subTitle' :details='item.details' v-if='activeIndex===index'></ItemCon>
-                <!-- <BaseInfo title="基本资料" subTitle='这是我的基本资料' v-if="activeIndex===0"></BaseInfo>
-                <Hobby title="兴趣爱好" subTitle='这是我的兴趣爱好' v-if="activeIndex===1"></Hobby>
-                <Skill title="技能经验" subTitle='这是我的技能经验' v-if="activeIndex===2"></Skill> -->
             </div>
         </div>
         <div class="selfBottom">
@@ -46,9 +43,6 @@
     </div>
 </template>
 <script>
-import BaseInfo from "./BaseInfo";
-import Hobby from "./Hobby";
-import Skill from "./Skill";
 import ItemCon from './ItemCon'
 import { mapState } from "vuex";
 export default {
@@ -70,9 +64,6 @@ export default {
     }
   },
   components: {
-    BaseInfo,
-    Hobby,
-    Skill,
     ItemCon
   }
 };
