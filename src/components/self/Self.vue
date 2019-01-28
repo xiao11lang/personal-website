@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="nav">
-                    <div :class="{active:activeIndex===index}" @click="switchIndex(index)" v-for="(item,index) of info" :key='item.details[0].infoType'>
+                    <div :class="{active:activeIndex===index}" @click="switchIndex(index)" v-for="(item,index) of infoList" :key='item.details[0].infoType'>
                       <span class="iconfont" :class="item.class"></span>
                       {{item.title}}
                     </div>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="mainRight">
-                <ItemCon v-for="(item,index) of info" :key="index" :title='item.title' :subTitle='item.subTitle' :details='item.details' v-if='activeIndex===index'></ItemCon>
+              <ItemCon  :title='info.title' :subTitle='info.subTitle' :details='info.details'></ItemCon>
             </div>
         </div>
         <div class="selfBottom">
@@ -54,8 +54,11 @@ export default {
   },
   computed:{
     ...mapState(['article','daily','mesList','selfInfo']),
-    info:function(){
+    infoList:function(){
       return Object.values(this.selfInfo)
+    },
+    info:function(){
+      return Object.values(this.selfInfo)[this.activeIndex]
     }
   },
   methods: {
