@@ -10,6 +10,7 @@ async function login(ctx) {
             ctx.body='pass_error'
         }else{
             var {userName,admin,avatar}=res[0]
+            ctx.session.userName=userName
             ctx.body={
                 userName,admin,avatar
             }

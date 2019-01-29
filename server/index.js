@@ -1,29 +1,32 @@
 const Koa=require('koa')
 const koaBody = require('koa-body');
 const router=require('./routes/route')
+const session=require('koa-session')
 var app=new Koa()
-//log工具
 const logUtil = require('./log');
-
-
-// logger
+app.keys = ['personal_serect'];
+ 
+const CONFIG = {
+  key: 'sessionid', 
+  maxAge: 86400000,
+  autoCommit: true, 
+  overwrite: true, 
+  httpOnly: false, 
+  signed: true, 
+  rolling: false, 
+  renew: false, 
+};
+ 
+app.use(session(CONFIG, app));
 app.use(async (ctx, next) => {
-  //响应开始时间
   const start = new Date();
-  //响应间隔时间
   var ms;
   try {
-    //开始进入到下一个中间件
     await next();
-
     ms = new Date() - start;
-    //记录响应日志
     logUtil.logResponse(ctx, ms);
-
   } catch (error) {
-
     ms = new Date() - start;
-    //记录异常日志
     logUtil.logError(ctx, error, ms);
   }
 });

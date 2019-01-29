@@ -15,14 +15,18 @@ async function getMessage(ctx) {
 }
 async function addMessage(ctx){
     try{
-        var {userName,content,time}=ctx.request.body;
-        var params=[userName,content,time]
-        var res=await spanner.insert({
+        if(ctx.session.userName){
+            var {userName,content,time}=ctx.request.body;
+            var params=[userName,content,time]
+            var res=await spanner.insert({
             tableName:'message',
             fields:['userName','content','time'],
             values:params
-        })
-        ctx.body='success'
+            })
+            ctx.body='success'
+        }else{
+            ctx.body='fail'
+        }
     }catch(e){
         console.log(e)
     }
