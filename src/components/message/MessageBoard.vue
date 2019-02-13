@@ -1,57 +1,51 @@
 <template>
-    <div class="messageBoard">
-        <div class="mesTop">留言板</div>
-        <div class="mesSendTitle">主人寄语</div>
-        <div class="mesSendBody">
-          有朋自远方来，不亦说乎
-        </div>
-        <div class="writeBoardCon">
-            <div class="boardTitle">
-                <span>发表您的留言</span>
-            </div>
-            <div class="board" contenteditable="true" ref="content"></div>
-            <div class="button" @click="publish">发表</div>
-        </div>
-        <div class="messageCon">
-            <div class="mesCount">留言({{mesList.length}})</div>
-        </div>
-        <Message v-for="(mes,index) of showList" :key="mes.time+index" :info="mes" :index='mes.index'></Message>
-        <Page :totalCount='mesList.length' @onChange='change($event)' v-if="mesList.length>10"></Page>
-        <Loading v-if="showLoading" message='发表中'></Loading>
+  <div class="messageBoard">
+    <div class="mesTop">留言板</div>
+    <div class="mesSendTitle">主人寄语</div>
+    <div class="mesSendBody">有朋自远方来，不亦说乎</div>
+    <div class="writeBoardCon">
+      <div class="boardTitle">
+        <span>发表您的留言</span>
+      </div>
+      <div class="board" contenteditable="true" ref="content"></div>
+      <div class="button" @click="publish">发表</div>
     </div>
+    <div class="messageCon">
+      <div class="mesCount">留言({{mesCount}})</div>
+    </div>
+    <Message v-for="(mes,index) of mesList" :key="mes.time+index" :info="mes" :index="mes.index"></Message>
+    <Page :totalCount="mesCount" @onChange="change($event)" v-if="mesCount>10"></Page>
+    <Loading v-if="showLoading" message="发表中"></Loading>
+  </div>
 </template>
 <script>
 import Message from "./Message";
-import Loading from '../Loading'
-import Page from '../Page'
+import Loading from "../Loading";
+import Page from "../Page";
 import axios from "axios";
-import { mapState,mapActions,mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "MessageBoard",
   data: function() {
     return {
-      showLoading:false,
-      pageValue:1
+      showLoading: false,
+      pageValue: 1
     };
   },
   components: {
-    Message,Loading,Page
+    Message,
+    Loading,
+    Page
   },
   computed: {
-    ...mapState(["isLogin", "userName",'mesList','avatar']),
-    pageArr:function(){
-      return this.getPageData(this.mesList.length)
-    },
-    showList:function(){
-      return this.mesList.slice(this.pageArr[this.pageValue-1][1]-1,this.pageArr[this.pageValue-1][0]).reverse()
-    }
+    ...mapState(["isLogin", "userName", "mesList","mesCount", "avatar"])
   },
   methods: {
-    change:function(val){
-      this.pageValue=val
+    change: function(val) {
+      this.getMes(val)
     },
-    ...mapActions(['getMes']),
-    ...mapMutations(['mesAdd']),
+    ...mapActions(["getMes"]),
+    ...mapMutations(["mesAdd"]),
     publish: function() {
       if (!this.isLogin) {
         alert("请先登录");
@@ -63,34 +57,47 @@ export default {
       } else {
         let fd = new FormData();
         let vm = this;
-        let time=new Date()
+        let time = new Date();
         fd.append("userName", vm.userName);
         fd.append("content", vm.$refs.content.innerHTML);
         fd.append("time", vm.parse(time));
-        vm.showLoading=true
-        axios.post("http://www.11lang.cn/api/addMessage", fd).then(function(res) {
-          vm.mesAdd({
-            userName: vm.userName,
-            content: vm.$refs.content.innerHTML,
-            time: vm.parse(time),
-            avatar:vm.avatar
+        vm.showLoading = true;
+        axios
+          .post("http://www.11lang.cn/api/addMessage", fd)
+          .then(function(res) {
+            if (res.data === "success") {
+              vm.mesAdd({
+                userName: vm.userName,
+                content: vm.$refs.content.innerHTML,
+                time: vm.parse(time),
+                avatar: vm.avatar
+              });
+              vm.$refs.content.innerHTML = "";
+              vm.showLoading = false;
+            }else{
+              vm.showLoading=false
+              alert('留言失败')
+            }
           });
-          vm.$refs.content.innerHTML=''
-          vm.showLoading=false
-        });
       }
     },
     parse: function(time) {
-      let dateArr=time.toLocaleDateString().split('/')
-      let dateStr = dateArr[0]+'-'+this.withZero(dateArr[1])+'-'+this.withZero(dateArr[2])
-      let timeStr =this.withZero(time.getHours()) + ":" + this.withZero(time.getMinutes());
+      let dateArr = time.toLocaleDateString().split("/");
+      let dateStr =
+        dateArr[0] +
+        "-" +
+        this.withZero(dateArr[1]) +
+        "-" +
+        this.withZero(dateArr[2]);
+      let timeStr =
+        this.withZero(time.getHours()) + ":" + this.withZero(time.getMinutes());
       return dateStr + " " + timeStr;
     },
     withZero: function(str) {
       if (str >= 10) {
         return str;
       } else {
-        return "0" +""+ str;
+        return "0" + "" + str;
       }
     },
     toNumber: function(str) {
@@ -98,18 +105,14 @@ export default {
         str
           .split(" ")[0]
           .split("-")
-          .join("") +''+
+          .join("") +
+          "" +
           str
             .split(" ")[1]
             .split(":")
             .join("")
       );
-    },
-    getPageData:function (count){
-    return new Array(Math.ceil(count/10)).join(' ').split(' ').map(function(value,index){
-        return (count+1-10*(index+1))<=0?[count+10-10*(index+1),1]:[count+10-10*(index+1),count+1-10*(index+1)]
-    })
-}
+    }
   }
 };
 </script>

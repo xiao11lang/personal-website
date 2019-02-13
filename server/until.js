@@ -5,11 +5,17 @@ class Spanner{
     query(options){
         var tableName=options.tableName;
         var fields=options.fields||['*'];
+        var pageNum=options.pageNum||''
+        var order=options.order||''
         var rules=options.rules||'';
+        var pageStr=''
         if(!tableName){
             throw new Error('表名不可为空')
         }
-        var sql=`select ${fields.join(',')} from ${tableName} ${rules}`
+        if(pageNum){
+            pageStr=`limit 10 offset ${10*(pageNum-1)} `
+        }
+        var sql=`select ${fields.join(',')} from ${tableName} ${rules} ${order} ${pageStr}`
         var that=this;
         return new Promise(function(resolve,reject){
             that.connection.query(sql,function(err,res){

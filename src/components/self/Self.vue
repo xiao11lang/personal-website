@@ -16,7 +16,7 @@
                         <p>文章</p>
                     </div>
                     <div class="message">
-                        <p>{{mesList.length}}</p>
+                        <p>{{mesCount}}</p>
                         <p>留言</p>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ export default {
     };
   },
   computed:{
-    ...mapState(['article','daily','mesList','selfInfo']),
+    ...mapState(['article','daily','mesCount','selfInfo']),
     infoList:function(){
       return Object.values(this.selfInfo)
     },

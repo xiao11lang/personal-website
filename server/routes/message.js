@@ -3,12 +3,21 @@ const connection=require('../mysql')
 var spanner=new Spanner(connection)
 async function getMessage(ctx) {
     try{
-        var commer=await spanner.query({
+        var {pageNum}=ctx.request.body;
+        var mes=await spanner.query({
             fields:['m.*','u.avatar'],
             tableName:"user u,message m",
-            rules:'where u.userName=m.userName'
+            rules:'where u.userName=m.userName',
+            pageNum:pageNum,
+            order:'order by time desc'
         })
-        ctx.body=commer
+        var total=await spanner.query({
+            fields:['count(*) total'],
+            tableName:"message",
+        })
+        ctx.body={
+            mes,total:total[0].total
+        }
     }catch(e){
         console.log(e)
     }
@@ -18,7 +27,7 @@ async function addMessage(ctx){
         if(ctx.session.userName){
             var {userName,content,time}=ctx.request.body;
             var params=[userName,content,time]
-            var res=await spanner.insert({
+            await spanner.insert({
             tableName:'message',
             fields:['userName','content','time'],
             values:params
@@ -32,11 +41,11 @@ async function addMessage(ctx){
     }
 }
 module.exports=[{
-    method:'get',
-    path:'/api/getMessage',
-    handler:getMessage
-},{
     method:'post',
     path:'/api/addMessage',
     handler:addMessage
+},{
+    method:'post',
+    path:'/api/getMessage',
+    handler:getMessage
 }]

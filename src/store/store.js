@@ -12,6 +12,7 @@ export default new Vuex.Store({
         selfInfo:{},
         daily:[],
         mesList:[],
+        mesCount:0,
         currentArticle:{},
         thumpList:[],
         commers:[],
@@ -72,8 +73,9 @@ export default new Vuex.Store({
             })
             state.daily.splice(i,1)
         },
-        getMes:function(state,mes){
-            state.mesList=mes.map(function(v,index){return Object.assign({},v,{index:index+1})})
+        getMes:function(state,mesInfo){
+            state.mesCount=mesInfo.total
+            state.mesList=mesInfo.mes.map(function(v,index){return Object.assign({},v,{index:index+1})})
         },
         mesAdd:function(state,mes){
             state.mesList.push(Object.assign({},mes,{index:state.mesList.length+1}))
@@ -132,9 +134,11 @@ export default new Vuex.Store({
             })
              
         },
-        getMes:function(context){
+        getMes:function(context,pageNum){
+            let fd=new FormData()
+            fd.append('pageNum',pageNum)
             return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/getMessage').then(function(res){
+                axios.post('http://www.11lang.cn/api/getMessage',fd).then(function(res){
                     context.commit('getMes',res.data)
                     resolve()
                     })
