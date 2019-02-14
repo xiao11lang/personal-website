@@ -80,7 +80,10 @@ export default new Vuex.Store({
             state.mesList=mesInfo.mes.map(function(v,index){return Object.assign({},v,{index:index+1})})
         },
         mesAdd:function(state,mes){
-            state.mesList.push(Object.assign({},mes,{index:state.mesList.length+1}))
+            state.mesList.unshift(Object.assign({},mes))
+            state.mesList.pop()
+            state.mesList=state.mesList.map(function(v,index){return Object.assign({},v,{index:index+1})})
+            state.mesCount++
         },
         getCommer:function(state,commer){
             state.commers=commer
