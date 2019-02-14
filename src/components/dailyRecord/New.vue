@@ -14,7 +14,7 @@
                   </span>
                 </div>
             </div>
-            <div class="item" @click="newArticle">新建</div>
+            <div class="item" @click="newDaily">新建</div>
         </div>
     </div>
     
@@ -61,7 +61,7 @@ export default {
       })
       
     },
-    newArticle: function() {
+    newDaily: function() {
       let vm = this;
       let fd = new FormData();
       let year = new Date().getFullYear();

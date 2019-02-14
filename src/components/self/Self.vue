@@ -8,7 +8,7 @@
                 </div>
                 <div class="itemCount">
                     <div class="log">
-                        <p>{{daily.length}}</p>
+                        <p>{{dailyCount}}</p>
                         <p>日志</p>
                     </div>
                     <div class="article">
@@ -53,7 +53,7 @@ export default {
     };
   },
   computed:{
-    ...mapState(['article','daily','mesCount','selfInfo']),
+    ...mapState(['article','dailyCount','mesCount','selfInfo']),
     infoList:function(){
       return Object.values(this.selfInfo)
     },

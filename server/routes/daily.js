@@ -5,10 +5,20 @@ const fs=require('fs')
 const path=require('path')
 async function getDaily(ctx) {
     try{
+        var {pageNum}=ctx.request.body;
         var daily=await spanner.query({
-            tableName:"daily"
+            tableName:"daily",
+            pageNum:pageNum,
+            order:'order by id desc'
         })
-        ctx.body=daily
+        var total=await spanner.query({
+            fields:['count(*) total'],
+            tableName:"daily",
+        })
+        ctx.body={
+            daily:daily,
+            total:total[0].total
+        }
     }catch(e){
         console.log(e)
     }
@@ -44,7 +54,7 @@ async function deleteDaily(ctx){
     }
 }
 module.exports=[{
-    method:'get',
+    method:'post',
     path:'/api/getDaily',
     handler:getDaily
 },{

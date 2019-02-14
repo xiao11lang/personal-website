@@ -11,6 +11,7 @@ export default new Vuex.Store({
         article:[],
         selfInfo:{},
         daily:[],
+        dailyCount:0,
         mesList:[],
         mesCount:0,
         currentArticle:{},
@@ -58,8 +59,9 @@ export default new Vuex.Store({
             article.thumpUp=data.thumpUp
             state.thumpList.push(article.id)
         },
-        getDaily:function(state,daily){
-            state.daily=daily
+        getDaily:function(state,dailyInfo){
+            state.dailyCount=dailyInfo.total
+            state.daily=dailyInfo.daily
         },
         addDaily:function(state,daily){
             state.daily.push(daily)
@@ -125,11 +127,15 @@ export default new Vuex.Store({
                 }
             })
         },
-        getDaily:function(context){
+        getDaily:function(context,pageNum){
+            let fd=new FormData()
+            fd.append('pageNum',pageNum)
             return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/getDaily').then(function(res){
+                axios.post('http://www.11lang.cn/api/getDaily',fd).then(function(res){
                     context.commit('getDaily',res.data)
                     resolve()
+                    }).catch(function(e){
+                        reject(e)
                     })
             })
              
@@ -141,6 +147,8 @@ export default new Vuex.Store({
                 axios.post('http://www.11lang.cn/api/getMessage',fd).then(function(res){
                     context.commit('getMes',res.data)
                     resolve()
+                    }).catch(function(e){
+                        reject(e)
                     })
             })
         },

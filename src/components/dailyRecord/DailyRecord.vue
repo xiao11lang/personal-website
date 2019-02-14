@@ -1,9 +1,9 @@
 <template>
     <div class="dailyRecord">
         <div class="left">
-            <RecordItem v-for="(item,index) in showList" :key='index' :info='item' :admin='admin'></RecordItem>
+            <RecordItem v-for="(item,index) in daily" :key='index' :info='item' :admin='admin'></RecordItem>
             <div class="newDaily" @click="showNew(true)" v-if='admin'>新建</div>
-            <Page :totalCount='daily.length' v-if="daily.length>10" @onChange='change($event)'></Page>
+            <Page :totalCount='dailyCount' v-if="dailyCount>10" @onChange='change($event)'></Page>
         </div>
         <div class="right">
           <div class="top">
@@ -11,7 +11,7 @@
             <div class="message">
               <p>小食蚁螂</p>
               <p>
-                <span>{{daily.length}}</span><span>条日志</span>
+                <span>{{dailyCount}}</span><span>条日志</span>
               </p>
             </div>
           </div>
@@ -42,19 +42,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(["daily", "admin",'commers']),
-    pageArr:function(){
-      return this.getPageData(this.daily.length)
-    },
-    showList:function(){
-      return this.daily.slice(this.pageArr[this.pageValue-1][1]-1,this.pageArr[this.pageValue-1][0]).reverse()
-    },
-    reverseDaily:function(){
-      let dailys=this.daily.filter(function(){
-        return true
-      })//返回新的数组，直接翻转影响原来数组，在新增时会导致顺序错误
-      return dailys.reverse()
-    },
+    ...mapState(["daily", "dailyCount","admin",'commers']),
+    
+    
     sortCommers:function(){
       return [...new Set(this.commers.slice(0,10).reverse().map(function(com){
         return com.commerName
@@ -63,7 +53,7 @@ export default {
   },
   methods: {
     change:function(val){
-      this.pageValue=val
+      this.getDaily(val)
     },
     showNew: function(flag) {
       this.showNewDaily = flag;
