@@ -64,7 +64,9 @@ export default new Vuex.Store({
             state.daily=dailyInfo.daily
         },
         addDaily:function(state,daily){
-            state.daily.push(daily)
+            state.daily.unshift(daily)
+            state.daily.pop()
+            state.dailyCount++
         },
         deleteDailys:function(state,id){
             let i;
