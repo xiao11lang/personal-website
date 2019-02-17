@@ -9,6 +9,7 @@ export default new Vuex.Store({
         admin:false,
         avatar:'icon-git',
         article:[],
+        articleCount:0,
         selfInfo:{},
         daily:[],
         dailyCount:0,
@@ -34,14 +35,16 @@ export default new Vuex.Store({
         setAvatar:function(state,avatar){
             state.avatar=avatar
         },
-        getArticle:function(state,article){
-            state.article=article
+        getArticle:function(state,articleInfo){
+            state.article=articleInfo.article
+            state.articleCount=articleInfo.total
         },
         getSelfInfo:function(state,info){
             state.selfInfo=info
         },
         addArticle:function(state,article){
             state.article.unshift(article)
+            state.articleCount++
         },
         setArticle:function(state,article){
             state.currentArticle=article
@@ -95,9 +98,11 @@ export default new Vuex.Store({
         }
     },
     actions:{
-        getArticle:function(context){
+        getArticle:function(context,pageNum){
+            let fd=new FormData()
+            fd.append('pageNum',pageNum)
             return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/getArticle').then(function(res){
+                axios.post('http://www.11lang.cn/api/getArticle',fd).then(function(res){
                     context.commit('getArticle',res.data)
                     resolve()
                     })

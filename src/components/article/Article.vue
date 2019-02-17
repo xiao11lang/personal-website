@@ -49,6 +49,8 @@
             <div class="summaryCon" >
                 <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index' @show='showDetail({id:info.id,readCount:info.readCount+1})'></Summary>
             </div>
+            <Page :totalCount='articleCount' v-if='articleCount>1' @onChange="change($event)"></Page>
+
             <div class="newArticle" v-if="admin" @click="showNewArticle(true)">新建</div>
         </div>
         <Detail v-if="!showSummary" @hide='hideDetail'></Detail>
@@ -57,6 +59,7 @@
     
 </template>
 <script>
+import Page from '../Page'
 import Summary from "./Summary";
 import Detail from "./Detail";
 import New from './New'
@@ -76,10 +79,11 @@ export default {
   components: {
     Summary,
     Detail,
-    New
+    New,
+    Page
   },
   computed: {
-    ...mapState(["article",'admin']),
+    ...mapState(["article","articleCount",'admin']),
     articleShow: function() {
       let onlySelfArticle = [];
       let filterArticle = [];
@@ -149,6 +153,9 @@ export default {
     },
     setFilter: function(filter) {
       this.filter = filter;
+    },
+    change:function(val){
+      this.getArticle(val)
     }
   },
   

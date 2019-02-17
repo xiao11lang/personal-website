@@ -3,10 +3,19 @@ const connection=require('../mysql')
 var spanner=new Spanner(connection)
 async function getArticle(ctx) {
     try{
+        var {pageNum}=ctx.request.body;
         var article=await spanner.query({
-            tableName:"article"
+            tableName:"article",
+            pageNum:pageNum,
         })
-        ctx.body=article
+        var total=await spanner.query({
+            fields:['count(*) total'],
+            tableName:"daily",
+        })
+        ctx.body={
+            article:article,
+            total:total[0].total
+        }
     }catch(e){
         console.log(e)
     }
@@ -81,7 +90,7 @@ async function deleteArticle(ctx){
     }
 }
 module.exports=[{
-    method:'get',
+    method:'post',
     path:'/api/getArticle',
     handler:getArticle
 },{

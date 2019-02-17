@@ -146,7 +146,7 @@ export default {
       },function(err){
         console.log(err)
       });  
-       Promise.all([vm.getDaily(1),vm.getArticle(),vm.getMes(1),vm.getCommer(),vm.getSelfInfo()]).then(function(){
+       Promise.all([vm.getDaily(1),vm.getArticle(1),vm.getMes(1),vm.getCommer(),vm.getSelfInfo()]).then(function(){
         vm.showLoading=false;
         vm.$router.push('/dailyRecord')
       }) 
