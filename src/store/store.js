@@ -44,6 +44,9 @@ export default new Vuex.Store({
         },
         addArticle:function(state,article){
             state.article.unshift(article)
+            if(state.article.length>10){
+                state.article.pop()
+            }
             state.articleCount++
         },
         setArticle:function(state,article){
@@ -68,7 +71,9 @@ export default new Vuex.Store({
         },
         addDaily:function(state,daily){
             state.daily.unshift(daily)
-            state.daily.pop()
+            if(state.daily.length>10){
+                state.daily.pop()
+            }
             state.dailyCount++
         },
         deleteDailys:function(state,id){
@@ -86,7 +91,9 @@ export default new Vuex.Store({
         },
         mesAdd:function(state,mes){
             state.mesList.unshift(Object.assign({},mes))
-            state.mesList.pop()
+            if(state.mesList.length>10){
+                state.mesList.pop()
+            }
             state.mesList=state.mesList.map(function(v,index){return Object.assign({},v,{index:index+1})})
             state.mesCount++
         },
