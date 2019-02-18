@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="page" :style='styleInfo'>
         <span @click='first' class="nan">首页</span>
         <span @click="pre" v-if="currentIndex>=2" class="nan">上一页</span>
         <span v-for="i in pageCount" :key='i' :class="{active:i===currentIndex}" @click="jump(i)">
@@ -12,7 +12,7 @@
 <script>
 export default {
     name:"Page",
-    props:['totalCount'],
+    props:['totalCount','styleInfo'],
     data:function(){
         return {
             currentIndex:1,
