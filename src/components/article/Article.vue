@@ -49,7 +49,7 @@
             <div class="summaryCon" >
                 <Summary :info='info' v-for="(info,index) in articleShow" :key='info.title+index' @show='showDetail({id:info.id,readCount:info.readCount+1})'></Summary>
             </div>
-            <Page :totalCount='articleCount' v-if='articleCount>1' @onChange="change($event)" :styleInfo='{marginLeft:"30px"}'></Page>
+            <Page :totalCount='articleCount' v-if='articleCount>10' @onChange="change($event)" :styleInfo='{marginLeft:"30px"}'></Page>
 
             <div class="newArticle" v-if="admin" @click="showNewArticle(true)">新建</div>
         </div>

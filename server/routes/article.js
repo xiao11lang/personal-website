@@ -10,7 +10,7 @@ async function getArticle(ctx) {
         })
         var total=await spanner.query({
             fields:['count(*) total'],
-            tableName:"daily",
+            tableName:"article",
         })
         ctx.body={
             article:article,
