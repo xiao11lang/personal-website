@@ -16,7 +16,6 @@ export default new Vuex.Store({
         mesList:[],
         mesCount:0,
         currentArticle:{},
-        thumpList:[],
         commers:[],
         barrageList:[]
     },
@@ -63,7 +62,6 @@ export default new Vuex.Store({
                 return art.id===data.id
             })
             article.thumpUp=data.thumpUp
-            state.thumpList.push(article.id)
         },
         getDaily:function(state,dailyInfo){
             state.dailyCount=dailyInfo.total

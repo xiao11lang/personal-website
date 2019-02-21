@@ -24,15 +24,12 @@ export default {
                 alert('请登录后再点赞')
                 return
             }
-            /* if(this.thumpList.indexOf(data.id)>=0){
-                alert('不可重复点赞')
-                return 
-            } */
+            
             this.thumpAdd(data)
         }
     },
     computed:{
-        ...mapState(['currentArticle','thumpList','isLogin','userName']),
+        ...mapState(['currentArticle','isLogin','userName']),
         info:function(){
             let vm=this;
             return {

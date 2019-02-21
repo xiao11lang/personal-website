@@ -46,7 +46,7 @@ export default {
     
     
     sortCommers:function(){
-      return [...new Set(this.commers.slice(0,10).reverse().map(function(com){
+      return [...new Set(this.commers.reverse().slice(0,10).map(function(com){
         return com.commerName
       }))]
     }
