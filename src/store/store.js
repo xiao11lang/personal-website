@@ -30,7 +30,7 @@ export default new Vuex.Store({
         setUserInfo:function(state,info){
             state.userName=info.userName;
             state.admin=info.admin
-            state.avatar=info.avatar;
+            state.avatar=info.avatar||'icon-Git';
         },
         setAvatar:function(state,avatar){
             state.avatar=avatar

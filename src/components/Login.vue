@@ -136,7 +136,7 @@ export default {
         let fd = new FormData();
         fd.append("userName", this.reg_userName);
         fd.append("password", this.reg_pass);
-        axios.post("api/register", fd).then(function(res) {
+        axios.post("http://www.11lang.cn/api/register", fd).then(function(res) {
           switch (res.data) {
             case "exist":
               alert("用户名已经存在");
@@ -150,7 +150,7 @@ export default {
               vm.showLoading=false
               let fd=new FormData()
               fd.append('commerName',vm.reg_userName)
-              axios.post('api/addCommer',fd).then(function(){})
+              axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){})
           }
         });
       }

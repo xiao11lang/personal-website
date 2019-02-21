@@ -34,7 +34,7 @@ async function register(ctx){
                 fields:['userName','password'],
                 values:[body.userName,body.password]
             })
-            ctx.body=res
+            ctx.body='success'
         }
     }catch(e){
         console.log(e)
