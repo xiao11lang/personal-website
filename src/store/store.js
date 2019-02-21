@@ -135,12 +135,14 @@ export default new Vuex.Store({
             })
         },
         thumpAdd:function(context,data){
-            context.commit('thumpUpAdd',data)
             let fd=new FormData()
             fd.append('id',data.id)
+            fd.append('userName',data.userName)
             axios.post('http://www.11lang.cn/api/addthump',fd).then(function(res){
                 if(res.data==='success'){
-                    
+                    context.commit('thumpUpAdd',data)
+                }else{
+                    alert('不可重复点赞')
                 }
             })
         },
