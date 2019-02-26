@@ -7,6 +7,7 @@ export default new Vuex.Store({
         isLogin:false,
         userName:'',
         admin:false,
+        userId:1,
         avatar:'icon-git',
         article:[],
         articleCount:0,
@@ -30,6 +31,7 @@ export default new Vuex.Store({
             state.userName=info.userName;
             state.admin=info.admin
             state.avatar=info.avatar||'icon-Git';
+            state.userId=info.id||1;
         },
         setAvatar:function(state,avatar){
             state.avatar=avatar

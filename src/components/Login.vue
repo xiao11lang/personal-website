@@ -91,13 +91,15 @@ export default {
               return;
             default:
               vm.setLoginState(true);
-              vm.setUserInfo({ userName: res.data.userName, admin: res.data.admin, avatar:res.data.avatar });
+              vm.setUserInfo({ userName: res.data.userName, admin: res.data.admin, avatar:res.data.avatar ,id:res.data.id});
               localStorage.setItem('userName',res.data.userName)
               vm.$emit("hide");
               vm.showLoading=false
               let fd=new FormData()
               fd.append('commerName',res.data.userName)
-              axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){})
+              axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){}).catch(function(){
+                alert('评论失败')
+              })
           }
         },function(err){
           console.log(err)
@@ -145,7 +147,7 @@ export default {
               return;
             case "success":
               vm.setLoginState(true);
-              vm.setUserInfo({ userName: vm.reg_userName, admin: false });
+              vm.setUserInfo({ userName: vm.reg_userName, admin: false,id:res.data.id });
               vm.$emit("hide");
               vm.showLoading=false
               let fd=new FormData()

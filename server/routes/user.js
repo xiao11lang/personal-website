@@ -9,10 +9,10 @@ async function login(ctx) {
         }else if(res[0].password!=ctx.request.body.password){
             ctx.body='pass_error'
         }else{
-            var {userName,admin,avatar}=res[0]
+            var {userName,admin,avatar,id}=res[0]
             ctx.session.userName=userName
             ctx.body={
-                userName,admin,avatar
+                userName,admin,avatar,id
             }
         }
     }catch(e){

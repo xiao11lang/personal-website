@@ -15,15 +15,24 @@
                 <span>{{parseTime(info.writeTime)}}</span>
                 <span v-if="admin" @click="deleteDaily(info.id)" class="delete">删除</span>
             </div>
+            <div class="comment">
+                <input type="text" placeholder="我也说点什么" v-model="comment">
+                <span @click="publish">评论</span>
+            </div>
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
-import {mapMutations} from 'vuex'
+import {mapMutations,mapState} from 'vuex'
 export default {
   name: "RecordItem",
   props:['info','admin'],
+  data:function(){
+      return {
+          comment:''
+      }
+  },
   methods:{
       ...mapMutations(['deleteDailys']),
       parseTime:function(time){
@@ -39,7 +48,34 @@ export default {
                   that.deleteDailys(id)
               }
           })
+      },
+      publish:function(){
+          if(!this.isLogin){
+              alert('请先登录再评论')
+              return 
+          }
+          if(this.comment.trim()===''){
+              alert('请输入评论内容')
+              return 
+          }
+          let vm = this;
+          let fd = new FormData();
+          let year = new Date().getFullYear();
+          let month = new Date().getMonth() + 1;
+          let date = new Date().getDate();
+          let commentTime =year+"-"+month+'-'+date
+          fd.append('commentTime',commentTime)
+          fd.append('dailyId',this.info.id)
+          fd.append('fromId',this.userId)
+          fd.append('toId',1)
+          fd.append('content',this.comment)
+          axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
+
+          })
       }
+  },
+  computed:{
+      ...mapState(['isLogin','userId'])
   }
 
 };
@@ -91,6 +127,20 @@ export default {
         font-size: 12px;
         span.delete{
             color: #d6035b
+        }
+    }
+    .comment{
+        display: flex;
+        margin-top: 10px;
+        justify-content: space-between;
+        align-items: center;
+        input{
+            flex-grow: 1;
+            margin-right: 20px;
+            border: 1px solid rgb(231, 231, 231);
+            height: 30px;
+            line-height: 30px;
+            padding-left: 10px;
         }
     }
   }
