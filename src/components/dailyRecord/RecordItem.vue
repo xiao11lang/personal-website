@@ -16,15 +16,17 @@
                 <span v-if="admin" @click="deleteDaily(info.id)" class="delete">删除</span>
             </div>
             <div class="comment">
-                <input type="text" placeholder="我也说点什么" v-model="comment">
-                <span @click="publish">评论</span>
+                <input type="text" placeholder="我也说点什么" v-model="comment" @focus="onFocus">
+                <span @click="publish" >评论</span>
             </div>
+            <Comment v-for='comment in info.commentList' :key='comment.commentId' :commentInfo='comment'></Comment>
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
 import {mapMutations,mapState} from 'vuex'
+import Comment from './Comment'
 export default {
   name: "RecordItem",
   props:['info','admin'],
@@ -69,13 +71,20 @@ export default {
           fd.append('fromId',this.userId)
           fd.append('toId',1)
           fd.append('content',this.comment)
+          fd.append('parentId',0)
           axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
 
           })
+      },
+      onFocus:function(){
+          this.comment=''
       }
   },
   computed:{
       ...mapState(['isLogin','userId'])
+  },
+  components:{
+      Comment
   }
 
 };

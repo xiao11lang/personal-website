@@ -3,11 +3,11 @@ const connection=require('../mysql')
 var spanner=new Spanner(connection)
 async function addComments(ctx){
     try{
-        const {dailyId,fromId,toId,commentTime,content}=ctx.request.body
+        const {dailyId,fromId,toId,commentTime,content,parentId}=ctx.request.body
         var res=await spanner.insert({
             tableName:'comments',
-            fields:['dailyId','fromId','toId','commentTime','content'],
-            values:[dailyId,fromId,toId,commentTime,content]
+            fields:['dailyId','fromId','toId','commentTime','content','parentId'],
+            values:[dailyId,fromId,toId,commentTime,content,parentId]
         })
         ctx.body='success'
     }catch(e){

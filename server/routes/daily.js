@@ -11,6 +11,41 @@ async function getDaily(ctx) {
             pageNum:pageNum,
             order:'order by id desc'
         })
+        var dailyIdList=daily.map(function(item){
+            return item.id
+        })
+        var userInfo=await spanner.query({
+            tableName:'user'
+        })
+        var userInfoMap={}
+        userInfo.forEach(function(user){
+            userInfoMap[user.id]={
+                name:user.userName,
+                id:user.id,
+                avatar:user.avatar
+            }
+        })
+        var comments=await spanner.query({
+            tableName:'comments',
+            rules:`where dailyId in (${dailyIdList.join(',')})`
+        })
+        comments=comments.map(function(comm){
+            return {
+                fromName:userInfoMap[comm.fromId].name,
+                fromAvatar:userInfoMap[comm.fromId].avatar,
+                toName:userInfoMap[comm.toId].name,
+                toAvatar:userInfoMap[comm.toId].avatar,
+                ...comm
+            }
+        })
+        daily=daily.map(function(item){
+            return {
+                commentList:comments.filter(function(comm){
+                    return comm.dailyId==item.id
+                }),
+                ...item
+            }
+        })
         var total=await spanner.query({
             fields:['count(*) total'],
             tableName:"daily",
