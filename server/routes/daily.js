@@ -29,19 +29,30 @@ async function getDaily(ctx) {
             tableName:'comments',
             rules:`where dailyId in (${dailyIdList.join(',')})`
         })
-        comments=comments.map(function(comm){
+        var commentList=comments.map(function(comm,index,arr){
             return {
                 fromName:userInfoMap[comm.fromId].name,
                 fromAvatar:userInfoMap[comm.fromId].avatar,
                 toName:userInfoMap[comm.toId].name,
                 toAvatar:userInfoMap[comm.toId].avatar,
+                childList:arr.filter(function(child){
+                    return child.parentId==comm.commentId//筛选出子评论
+                }).map(function(item){
+                    return {
+                        fromName:userInfoMap[item.fromId].name,
+                        fromAvatar:userInfoMap[item.fromId].avatar,
+                        toName:userInfoMap[item.toId].name,
+                        toAvatar:userInfoMap[item.toId].avatar,
+                        ...item
+                    }
+                }),
                 ...comm
             }
         })
         daily=daily.map(function(item){
             return {
-                commentList:comments.filter(function(comm){
-                    return comm.dailyId==item.id
+                commentList:commentList.filter(function(comm){
+                    return comm.dailyId==item.id&&comm.parentId==0
                 }),
                 ...item
             }

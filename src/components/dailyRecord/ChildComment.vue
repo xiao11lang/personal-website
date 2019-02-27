@@ -1,31 +1,25 @@
 <template>
-    <div class="commentContainer">
-        <div class="commentItem">
-        <span :class="['iconfont', commentInfo.fromAvatar]"></span>
-        <div class="commentInfo">
+    <div class="childItem">
+        <span :class="['iconfont', childInfo.fromAvatar]"></span>
+        <div class="childInfo">
             <div>
-                <span class="commentName">{{commentInfo.fromName}}</span>
-                <div class="commentContent">{{commentInfo.content}}</div>
+                <span class="commentName">{{childInfo.fromName}}<span class="nameDivider">回复</span>{{childInfo.toName}}</span>
+                <div class="commentContent">{{childInfo.content}}</div>
             </div>
             <div>
-                <span class="commentTime">{{commentInfo.commentTime}}</span>
-                <input type="text" v-if="showReply"  v-focus v-model="comment" @keyup.enter="publish">
+                <span class="commentTime">{{childInfo.commentTime}}</span>
+                <input type="text" v-if="showReply" v-focus v-model="comment" @keyup.enter="publish">
                 <span class="reply" @click="reply">{{showReply?'取消':'回复'}}</span>
             </div>
-        </div>
-    </div>
-    <div class="childContainer">
-            <ChildComment :childInfo='child' v-for='child in commentInfo.childList' :key='child.commentId' :parentId='commentInfo.commentId'></ChildComment>
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
 import {mapMutations,mapState} from 'vuex'
-import ChildComment from './ChildComment'
 export default {
-    name:'Comment',
-    props:['commentInfo'],
+    name:'ChildComment',
+    props:['childInfo','parentId'],
     data:function(){
         return {
             showReply:false,
@@ -52,11 +46,11 @@ export default {
           let date = new Date().getDate();
           let commentTime =year+"-"+month+'-'+date
           fd.append('commentTime',commentTime)
-          fd.append('dailyId',this.commentInfo.dailyId)
+          fd.append('dailyId',this.childInfo.dailyId)
           fd.append('fromId',this.userId)
-          fd.append('toId',this.commentInfo.fromId)
+          fd.append('toId',this.childInfo.fromId)
           fd.append('content',this.comment)
-          fd.append('parentId',this.commentInfo.commentId)
+          fd.append('parentId',this.parentId)
           axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
 
           })
@@ -72,20 +66,18 @@ export default {
     computed:{
         ...mapState(['isLogin','userId'])
     },
-    components:{
-        ChildComment
-    }
 }
 </script>
 <style lang="scss" scoped>
-    .commentItem{
+    .childItem{
         display: flex;
         margin-top: 10px;
+        margin-left: 20px;
         border-bottom: 1px solid rgb(231, 231, 231);
         .iconfont::before{
             font-size: 24px
         }
-        .commentInfo{
+        .childInfo{
             margin: 0 10px;
             color: #8c7e83;
             width: 100%;
@@ -98,7 +90,11 @@ export default {
                 word-break: break-all
             }
             &>:first-child{
-                display: flex
+                display: flex;
+                .nameDivider{
+                    color: #8c7e83;
+                    margin: 0 10px
+                }
             }
             &>:last-child{
                 margin: 5px 0;
