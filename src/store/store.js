@@ -14,6 +14,7 @@ export default new Vuex.Store({
         selfInfo:{},
         daily:[],
         dailyCount:0,
+        dailyPage:1,
         mesList:[],
         mesCount:0,
         currentArticle:{},
@@ -84,6 +85,9 @@ export default new Vuex.Store({
                 }
             })
             state.daily.splice(i,1)
+        },
+        setDailyPage:function(state,page){
+            state.dailyPage=page
         },
         getMes:function(state,mesInfo){
             state.mesCount=mesInfo.total

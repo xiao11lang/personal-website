@@ -54,11 +54,13 @@ export default {
   methods: {
     change:function(val){
       this.getDaily(val)
+      this.setDailyPage(val)
     },
     showNew: function(flag) {
       this.showNewDaily = flag;
     },
-    ...mapActions(["getDaily"])
+    ...mapActions(["getDaily"]),
+    ...mapMutations(['setDailyPage'])
   },
 };
 </script>

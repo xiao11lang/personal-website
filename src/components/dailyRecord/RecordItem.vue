@@ -19,24 +19,32 @@
                 <input type="text" placeholder="我也说点什么" v-model="comment" @focus="onFocus">
                 <span @click="publish" >评论</span>
             </div>
-            <Comment v-for='comment in info.commentList' :key='comment.commentId' :commentInfo='comment'></Comment>
+            <div class="showComment">
+                <span class="iconfont icon-pinglun" @click="toggleComment"></span>
+                <span>{{commentCount+' 条评论'}}</span>
+            </div>
+            <div class="commentContainer" v-if="showComment">
+                <Comment v-for='comment in info.commentList' :key='comment.commentId' :commentInfo='comment'></Comment>
+            </div>
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
-import {mapMutations,mapState} from 'vuex'
+import {mapMutations,mapState,mapActions} from 'vuex'
 import Comment from './Comment'
 export default {
   name: "RecordItem",
   props:['info','admin'],
   data:function(){
       return {
-          comment:''
+          comment:'',
+          showComment:false
       }
   },
   methods:{
       ...mapMutations(['deleteDailys']),
+      ...mapActions(['getDaily']),
       parseTime:function(time){
           let timeArr=time.split('-')
           return timeArr[0]+'年'+timeArr[1]+"月"+timeArr[2]+"日"
@@ -73,15 +81,26 @@ export default {
           fd.append('content',this.comment)
           fd.append('parentId',0)
           axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
-
+              vm.comment=''
+              vm.getDaily(vm.dailyPage)
           })
       },
       onFocus:function(){
           this.comment=''
+      },
+      toggleComment:function(){
+          this.showComment=!this.showComment
       }
   },
   computed:{
-      ...mapState(['isLogin','userId'])
+      ...mapState(['isLogin','userId','dailyPage']),
+      commentCount:function(){
+          let count=this.info.commentList.length;
+          this.info.commentList.forEach(function(comm){
+              count+=comm.childList.length
+          })
+        return count
+      }
   },
   components:{
       Comment
@@ -150,6 +169,17 @@ export default {
             height: 30px;
             line-height: 30px;
             padding-left: 10px;
+        }
+    }
+    .showComment{
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0;
+        span:first-child{
+            margin-right: 10px
+        }
+        .iconfont::before{
+            font-size: 20px
         }
     }
   }

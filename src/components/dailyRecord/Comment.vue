@@ -21,7 +21,7 @@
 </template>
 <script>
 import axios from 'axios'
-import {mapMutations,mapState} from 'vuex'
+import {mapMutations,mapState,mapActions} from 'vuex'
 import ChildComment from './ChildComment'
 export default {
     name:'Comment',
@@ -33,6 +33,7 @@ export default {
         }
     },
     methods:{
+        ...mapActions(['getDaily']),
         reply:function(){
             this.showReply=!this.showReply
         },
@@ -58,7 +59,8 @@ export default {
           fd.append('content',this.comment)
           fd.append('parentId',this.commentInfo.commentId)
           axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
-
+              vm.comment=''
+              vm.getDaily(vm.dailyPage)
           })
       }
     },
@@ -70,7 +72,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['isLogin','userId'])
+        ...mapState(['isLogin','userId','dailyPage'])
     },
     components:{
         ChildComment
