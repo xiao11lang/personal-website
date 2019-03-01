@@ -19,8 +19,8 @@
                 <input type="text" placeholder="我也说点什么" v-model="comment" @focus="onFocus">
                 <span @click="publish" >评论</span>
             </div>
-            <div class="showComment">
-                <span class="iconfont icon-pinglun" @click="toggleComment"></span>
+            <div class="showComment" v-if='info.commentList.length>0' @click="toggleComment">
+                <span class="iconfont icon-pinglun" ></span>
                 <span>{{commentCount+' 条评论'}}</span>
             </div>
             <div class="commentContainer" v-if="showComment">
