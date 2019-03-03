@@ -55,12 +55,16 @@ export default {
         alert("请输入留言内容");
         return;
       } else {
-        let fd = new FormData();
         let vm = this;
         let time = new Date();
-        fd.append("userName", vm.userName);
+        /* fd.append("userName", vm.userName);
         fd.append("content", vm.$refs.content.innerHTML);
-        fd.append("time", vm.parse(time));
+        fd.append("time", vm.parse(time)); */
+        let fd = this.fd({
+          userName:vm.userName,
+          content:vm.$refs.content.innerHTML,
+          time:vm.parse(time)
+        })
         vm.showLoading = true;
         axios
           .post("http://www.11lang.cn/api/addMessage", fd)

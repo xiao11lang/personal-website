@@ -76,9 +76,13 @@ export default {
       } else {
         vm.showLoading=true
         vm.message='登录中'
-        let fd = new FormData();
-        fd.append("userName", this.login_userName.trim());
-        fd.append("password", this.login_pass);
+        //let fd = new FormData();
+        let fd=vm.fd({
+          userName:this.login_userName.trim(),
+          password:this.login_pass
+        })
+        //fd.append("userName", this.login_userName.trim());
+        //fd.append("password", this.login_pass);
         axios.post("http://www.11lang.cn/api/login", fd).then(function(res) {
           switch (res.data) {
             case "not_exist":
@@ -95,8 +99,10 @@ export default {
               localStorage.setItem('userName',res.data.userName)
               vm.$emit("hide");
               vm.showLoading=false
-              let fd=new FormData()
-              fd.append('commerName',res.data.userName)
+              let fd=vm.fd({
+                commerName:res.data.userName
+              })
+              //fd.append('commerName',res.data.userName)
               axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){}).catch(function(){
                 alert('评论失败')
               })
@@ -135,9 +141,12 @@ export default {
       } else {
         vm.showLoading=true
         vm.message='注册中'
-        let fd = new FormData();
-        fd.append("userName", this.reg_userName);
-        fd.append("password", this.reg_pass);
+        let fd = vm.fd({
+          userName:this.reg_userName,
+          password:this.reg_pass
+        })
+        //fd.append("userName", this.reg_userName);
+        //fd.append("password", this.reg_pass);
         axios.post("http://www.11lang.cn/api/register", fd).then(function(res) {
           switch (res.data) {
             case "exist":
@@ -150,8 +159,10 @@ export default {
               vm.setUserInfo({ userName: vm.reg_userName, admin: false,id:res.data.id });
               vm.$emit("hide");
               vm.showLoading=false
-              let fd=new FormData()
-              fd.append('commerName',vm.reg_userName)
+              let fd=vm.fd({
+                commerName:vm.reg_userName
+              })
+              //fd.append('commerName',vm.reg_userName)
               axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){})
           }
         });

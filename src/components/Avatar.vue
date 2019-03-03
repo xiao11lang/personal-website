@@ -35,10 +35,13 @@ export default {
         modifyAvatar:function(){
             let that=this;
             if(this.selectIndex!=null){
-                let fd=new FormData()
                 let avatar=this.avatarList[this.selectIndex]
-                fd.append('userName',this.userName)
-                fd.append('avatar',avatar)
+                /* fd.append('userName',this.userName)
+                fd.append('avatar',avatar) */
+                let fd=this.fd({
+                    userName:this.userName,
+                    avatar:avatar
+                })
                 axios.post('http://www.11lang.cn/api/modifyAvatar',fd).then(()=>{
                     that.setAvatar(avatar)
                     that.$emit('hide')

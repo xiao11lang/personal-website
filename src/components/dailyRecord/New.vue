@@ -63,7 +63,6 @@ export default {
     },
     newDaily: function() {
       let vm = this;
-      let fd = new FormData();
       let year = new Date().getFullYear();
       let month = new Date().getMonth() + 1;
       let date = new Date().getDate();
@@ -71,9 +70,14 @@ export default {
       if(this.content.trim()===''){
         return 
       } 
-      fd.append("content", this.content);
+      let fd = this.fd({
+        content:this.content,
+        paths:JSON.stringify(this.path),
+        writeTime:writeTime
+      })
+      /* fd.append("content", this.content);
       fd.append("paths", JSON.stringify(this.path));
-      fd.append("writeTime", writeTime);
+      fd.append("writeTime", writeTime); */
       this.photoList.forEach(function(photo,index){
         fd.append(`img${index}`,photo)
       })

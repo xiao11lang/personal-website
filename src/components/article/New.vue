@@ -55,7 +55,6 @@ export default {
     },
     newArticle: function() {
       let vm = this;
-      let fd = new FormData();
       let year = new Date().getFullYear();
       let month = new Date().getMonth() + 1;
       let date = new Date().getDate();
@@ -65,12 +64,20 @@ export default {
         (month >= 10 ? month : "0" + month) +
         "-" +
         (date >= 10 ? date : "0" + date);
-      fd.append("title", this.title);
+      let fd = vm.fd({
+        title:this.title,
+        content:this.content,
+        type:this.type,
+        isOriginal:this.$refs.isOriginal.checked?0:1,
+        path:this.path,
+        writeTime:writeTime
+      })     
+      /* fd.append("title", this.title);
       fd.append("content", this.content);
       fd.append("type", this.type);
       fd.append("isOriginal", this.$refs.isOriginal.checked?0:1);
       fd.append("path", this.path);
-      fd.append("writeTime", writeTime);
+      fd.append("writeTime", writeTime); */
       axios.post("http://www.11lang.cn/api/addArticle", fd).then(function(res) {
         if (res.data === "success") {
           vm.addArticle({

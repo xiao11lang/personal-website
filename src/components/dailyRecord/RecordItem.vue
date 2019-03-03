@@ -51,8 +51,9 @@ export default {
       },
       deleteDaily:function(id){
           let that=this;
-          let fd=new FormData();
-          fd.append('id',id)
+          let fd=this.fd({
+              id:id
+          })
           axios.post('http://www.11lang.cn/api/deleteDaily',fd).then(function(res){
               if(res.data==='success'){
                   that.deleteDailys(id)
@@ -69,17 +70,24 @@ export default {
               return 
           }
           let vm = this;
-          let fd = new FormData();
           let year = new Date().getFullYear();
           let month = new Date().getMonth() + 1;
           let date = new Date().getDate();
           let commentTime =year+"-"+month+'-'+date
-          fd.append('commentTime',commentTime)
+          /* fd.append('commentTime',commentTime)
           fd.append('dailyId',this.info.id)
           fd.append('fromId',this.userId)
           fd.append('toId',1)
           fd.append('content',this.comment)
-          fd.append('parentId',0)
+          fd.append('parentId',0) */
+          let fd = this.fd({
+              commentTime:commentTime,
+              dailyId:this.info.id,
+              fromId:this.userId,
+              toId:1,
+              content:this.comment,
+              parentId:0
+          })
           axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
               vm.comment=''
               vm.getDaily(vm.dailyPage)

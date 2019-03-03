@@ -13,3 +13,10 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+Vue.prototype.fd=function(data){
+  let fd=new FormData()
+  Object.keys(data).forEach(function(key){
+    fd.append(key,data[key])
+  })
+  return fd
+}

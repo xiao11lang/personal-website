@@ -47,17 +47,24 @@ export default {
               return 
           }
           let vm = this;
-          let fd = new FormData();
           let year = new Date().getFullYear();
           let month = new Date().getMonth() + 1;
           let date = new Date().getDate();
           let commentTime =year+"-"+month+'-'+date
-          fd.append('commentTime',commentTime)
+          /* fd.append('commentTime',commentTime)
           fd.append('dailyId',this.commentInfo.dailyId)
           fd.append('fromId',this.userId)
           fd.append('toId',this.commentInfo.fromId)
           fd.append('content',this.comment)
-          fd.append('parentId',this.commentInfo.commentId)
+          fd.append('parentId',this.commentInfo.commentId) */
+          let fd = this.fd({
+              commentTime:commentTime,
+              dailyId:this.commentInfo.dailyId,
+              fromId:this.userId,
+              toId:this.commentInfo.fromId,
+              content:this.comment,
+              parentId:this.commentInfo.commentId
+          })
           axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
               vm.comment=''
               vm.getDaily(vm.dailyPage)

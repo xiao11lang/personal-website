@@ -36,12 +36,16 @@ export default {
             this.setArticle(info)
         },
         deleteArticle:function(id){
-            let fd=new FormData();
-            fd.append('id',id)
+            let fd=this.fd({
+                id:id
+            })
+            //fd.append('id',id)
             axios.post('http://www.11lang.cn/api/deleteArticle',fd).then(function(res){
                 if(res.data==='success'){
 
                 }
+            }).catch(function(){
+                alert('删除失败')
             })
         },
         ...mapMutations(['setArticle'])
