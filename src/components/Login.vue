@@ -12,7 +12,7 @@
                 </div>
                 <div class="item">
                     <span>密码</span>
-                    <div :class="{focus:index==2}"><input type="password" placeholder="请输入密码" @blur="blur" @focus="focus(2)" v-model="login_pass"></div>
+                    <div :class="{focus:index==2}"><input type="password" placeholder="请输入密码" @blur="blur" @focus="focus(2)" v-model="login_pass" @keyup.enter="login"></div>
                 </div>
                 <div class="item" @click="login">
                     登 陆
@@ -29,7 +29,7 @@
                 </div>
                 <div class="item">
                     <span>确认密码</span>
-                    <div :class="{focus:index==3}"><input type="password" placeholder="请确认密码" @blur="blur" @focus="focus(3)" v-model="reg_con_pass"></div>
+                    <div :class="{focus:index==3}"><input type="password" placeholder="请确认密码" @blur="blur" @focus="focus(3)" v-model="reg_con_pass" @keyup.enter="register"></div>
                 </div>
                 <div class="item" @click="register">注 册</div>
             </div>
