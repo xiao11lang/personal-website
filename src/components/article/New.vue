@@ -28,7 +28,7 @@
 </template>
 <script>
 import axios from "axios";
-import {mapMutations} from 'vuex'
+import {mapMutations,mapActions} from 'vuex'
 export default {
   name: "New",
   data: function() {
@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     ...mapMutations(['addArticle']),
+    ...mapActions(['getArticle']),
     hide: function(e) {
       if (e) {
         if (e.target != e.currentTarget) {
@@ -80,7 +81,7 @@ export default {
       fd.append("writeTime", writeTime); */
       axios.post("http://www.11lang.cn/api/addArticle", fd).then(function(res) {
         if (res.data === "success") {
-          vm.addArticle({
+          /* vm.addArticle({
             title:vm.title,
             content:vm.content,
             type:vm.type,
@@ -89,7 +90,8 @@ export default {
             writeTime:writeTime,
             readCount:0,
             thumpUp:0
-          })
+          }) */
+          vm.getArticle(1)
           vm.hide();
         }
       });
