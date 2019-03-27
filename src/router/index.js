@@ -10,19 +10,19 @@ export default new Router({
   routes: [
     {
       path:"/messageBoard",
-      component:MessageBoard
+      component:()=>import('../components/message/MessageBoard')
     },
     {
       path:"/self",
-      component:Self
+      component:()=>import('../components/self/Self')
     },
     {
       path:"/article",
-      component:Article
+      component:()=>import('../components/article/Article')
     },
     {
       path:"/dailyRecord",
-      component:DailyRecord
+      component:()=>import('../components/dailyRecord/DailyRecord')
     }
   ]
 })
