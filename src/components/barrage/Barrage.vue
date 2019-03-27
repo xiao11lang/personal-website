@@ -20,7 +20,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['barrageList'])
+        ...mapState('barrage',['barrageList'])
     }
 }
 </script>

@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-Vue.use(Vuex)
+import daily from './daily'
+import barrage from './barrage'
 import axios from "axios"
+Vue.use(Vuex)
 export default new Vuex.Store({
+    modules:{
+        daily:daily,
+        barrage:barrage
+    },
     state:{
         isLogin:false,
         userName:'',

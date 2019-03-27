@@ -131,7 +131,8 @@ export default {
       }
     },
     ...mapMutations(['setLoginState']),
-    ...mapActions(['getDaily','getArticle','getMes','getCommer','getBarrage','getSelfInfo'])
+    ...mapActions(['getDaily','getArticle','getMes','getCommer','getSelfInfo']),
+    ...mapActions('barrage',['getBarrage'])
   },
   components: {
     Login,Loading,Barrage,Avatar
