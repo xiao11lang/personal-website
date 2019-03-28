@@ -54,6 +54,7 @@ export default {
   },
   computed:{
     ...mapState(['article','dailyCount','mesCount','selfInfo']),
+    ...mapState('daily',['dailyCount']),
     infoList:function(){
       return Object.values(this.selfInfo)
     },

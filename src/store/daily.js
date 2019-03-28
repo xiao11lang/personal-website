@@ -1,3 +1,5 @@
+import fetch from '../until/fetch'
+import { GET_DAILY} from '../until/constant'
 export default {
     namespaced:true,
     state:{
@@ -34,14 +36,17 @@ export default {
         getDaily:function(context,pageNum){
             let fd=new FormData()
             fd.append('pageNum',pageNum)
-            return new Promise(function(resolve,reject){
+            fetch(GET_DAILY,fd).then(function(data){
+                context.commit('getDaily',data)
+            })
+            /* return new Promise(function(resolve,reject){
                 axios.post('http://www.11lang.cn/api/getDaily',fd).then(function(res){
                     context.commit('getDaily',res.data)
                     resolve()
                     }).catch(function(e){
                         reject(e)
                     })
-            })
+            }) */
              
         },
     }

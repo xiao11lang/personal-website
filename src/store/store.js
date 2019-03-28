@@ -18,14 +18,13 @@ export default new Vuex.Store({
         article:[],
         articleCount:0,
         selfInfo:{},
-        daily:[],
+        /* daily:[],
         dailyCount:0,
-        dailyPage:1,
+        dailyPage:1, */
         mesList:[],
         mesCount:0,
         currentArticle:{},
         commers:[],
-        barrageList:[]
     },
     mutations:{
         setLoginState:function(state,flag){
@@ -72,7 +71,7 @@ export default new Vuex.Store({
             })
             article.thumpUp=data.thumpUp
         },
-        getDaily:function(state,dailyInfo){
+        /* getDaily:function(state,dailyInfo){
             state.dailyCount=dailyInfo.total
             state.daily=dailyInfo.daily
         },
@@ -94,7 +93,7 @@ export default new Vuex.Store({
         },
         setDailyPage:function(state,page){
             state.dailyPage=page
-        },
+        }, */
         getMes:function(state,mesInfo){
             state.mesCount=mesInfo.total
             state.mesList=mesInfo.mes.map(function(v,index){return Object.assign({},v,{index:index+1})})
@@ -110,9 +109,7 @@ export default new Vuex.Store({
         getCommer:function(state,commer){
             state.commers=commer
         },
-        getBarrage:function(state,barrage){
-            state.barrageList=barrage
-        }
+        
     },
     actions:{
         getArticle:function(context,pageNum){

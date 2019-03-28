@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import {ADD_COMMENTS} from '../../until/constant.js'
 import {mapMutations,mapState,mapActions} from 'vuex'
 import ChildComment from './ChildComment'
 export default {
@@ -33,7 +33,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['getDaily']),
+        ...mapActions('daily',['getDaily']),
         reply:function(){
             this.showReply=!this.showReply
         },
@@ -65,7 +65,11 @@ export default {
               content:this.comment,
               parentId:this.commentInfo.commentId
           })
-          axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
+          /* axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
+              vm.comment=''
+              vm.getDaily(vm.dailyPage)
+          }) */
+          this.fetch(ADD_COMMENTS,fd).then(function(data){
               vm.comment=''
               vm.getDaily(vm.dailyPage)
           })
@@ -79,7 +83,8 @@ export default {
         }
     },
     computed:{
-        ...mapState(['isLogin','userId','dailyPage'])
+        ...mapState(['isLogin','userId']),
+        ...mapState('daily',['dailyPage'])
     },
     components:{
         ChildComment

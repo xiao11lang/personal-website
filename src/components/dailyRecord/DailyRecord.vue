@@ -42,8 +42,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(["daily", "dailyCount","admin",'commers']),
-    
+    ...mapState(["admin",'commers']),
+    ...mapState('daily',['daily','dailyCount']),
     
     sortCommers:function(){
       return [...new Set(this.commers.reverse().slice(0,10).map(function(com){
@@ -59,8 +59,8 @@ export default {
     showNew: function(flag) {
       this.showNewDaily = flag;
     },
-    ...mapActions(["getDaily"]),
-    ...mapMutations(['setDailyPage'])
+    ...mapActions('daily',["getDaily"]),
+    ...mapMutations('daily',['setDailyPage'])
   },
 };
 </script>

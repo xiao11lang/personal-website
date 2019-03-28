@@ -58,6 +58,7 @@ import Login from "./components/Login";
 import Loading from './components/Loading'
 import Barrage from './components/barrage/Barrage'
 import Avatar from './components/Avatar'
+import {ADD_BARRAGE} from './until/constant.js'
 import { mapState, mapMutations,mapActions } from "vuex";
 export default {
   name: "App",
@@ -116,23 +117,33 @@ export default {
       vm.newList=[]
     },
     sendBarrage:function(){
+      if(!this.isLogin){
+        alert('请先登录')
+        return
+      }
       let vm=this;
       if(this.barrage.trim()!==''){
-        let fd=new FormData();
-        fd.append('content',this.barrage)
-        axios.post('http://www.11lang.cn/api/addBarrage',fd).then(function(res){
-          if(res.data==='success'){
+        this.fetch(ADD_BARRAGE,this.fd({
+          content:this.barrage
+        })).then(function(res){
+          if(res==='success'){
             vm.newList.push([vm.barrage])
-            /*直接push字符串将导致数组索引增大，弹幕发送的延迟会
-            增大，这里用数组嵌套使得每次新增的弹幕无延迟发送*/
             vm.barrage=''
           }
         })
+        /* axios.post('http://www.11lang.cn/api/addBarrage',fd).then(function(res){
+          if(res.data==='success'){
+            vm.newList.push([vm.barrage])
+            //直接push字符串将导致数组索引增大，弹幕发送的延迟会增大，这里用数组嵌套使得每次新增的弹幕无延迟发送
+            vm.barrage=''
+          }
+        }) */
       }
     },
     ...mapMutations(['setLoginState']),
-    ...mapActions(['getDaily','getArticle','getMes','getCommer','getSelfInfo']),
-    ...mapActions('barrage',['getBarrage'])
+    ...mapActions(['getArticle','getMes','getCommer','getSelfInfo']),
+    ...mapActions('barrage',['getBarrage']),
+    ...mapActions('daily',['getDaily']),
   },
   components: {
     Login,Loading,Barrage,Avatar

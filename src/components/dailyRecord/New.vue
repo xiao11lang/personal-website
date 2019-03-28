@@ -21,6 +21,7 @@
 </template>
 <script>
 import axios from "axios";
+import {ADD_DAILY} from '../../until/constant.js'
 import {mapState,mapMutations} from 'vuex'
 export default {
   name: "New",
@@ -36,7 +37,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['addDaily']),
+    ...mapMutations('daily',['addDaily']),
     hide: function(e) {
       if (e) {
         if (e.target != e.currentTarget) {
@@ -81,7 +82,20 @@ export default {
       this.photoList.forEach(function(photo,index){
         fd.append(`img${index}`,photo)
       })
-      axios.post("http://www.11lang.cn/api/addDaily", fd).then(function(res) {
+      this.fetch(ADD_DAILY,fd).then(function(data){
+        if (data === "success") {
+          vm.photoList=[];
+          vm.photoSrc=[];
+          vm.addDaily({
+            content:vm.content,
+            path:JSON.stringify(vm.path),
+            writeTime:writeTime,
+            id:vm.daily[vm.daily.length-1].id+1
+          })
+          vm.$emit('hide')
+        }
+      })
+      /* axios.post("http://www.11lang.cn/api/addDaily", fd).then(function(res) {
         if (res.data === "success") {
           vm.photoList=[];
           vm.photoSrc=[];
@@ -93,11 +107,11 @@ export default {
           })
           vm.$emit('hide')
         }
-      });
+      }); */
     }
   },
   computed:{
-    ...mapState(['daily'])
+    ...mapState('daily',['daily'])
   }
 };
 </script>

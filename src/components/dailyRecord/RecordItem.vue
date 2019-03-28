@@ -30,7 +30,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import { DELETE_DAILY} from '../../until/constant.js'
 import {mapMutations,mapState,mapActions} from 'vuex'
 import Comment from './Comment'
 export default {
@@ -54,11 +54,16 @@ export default {
           let fd=this.fd({
               id:id
           })
-          axios.post('http://www.11lang.cn/api/deleteDaily',fd).then(function(res){
-              if(res.data==='success'){
+          this.fetch(DELETE_DAILY,fd).then(function(data){
+              if(data==='success'){
                   that.deleteDailys(id)
               }
           })
+          /* axios.post('http://www.11lang.cn/api/deleteDaily',fd).then(function(res){
+              if(res.data==='success'){
+                  that.deleteDailys(id)
+              }
+          }) */
       },
       publish:function(){
           if(!this.isLogin){
@@ -101,7 +106,8 @@ export default {
       }
   },
   computed:{
-      ...mapState(['isLogin','userId','dailyPage']),
+      ...mapState(['isLogin','userId']),
+      ...mapState('daily',['dailyPage']),
       commentCount:function(){
           let count=this.info.commentList.length;
           this.info.commentList.forEach(function(comm){
