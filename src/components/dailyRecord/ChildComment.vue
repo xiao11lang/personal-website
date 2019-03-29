@@ -77,7 +77,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['isLogin','userId','dailyPage']),
+        ...mapState(['isLogin','userId']),
         ...mapState('daily',['dailyPage'])
     },
 }

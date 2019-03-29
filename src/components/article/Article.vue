@@ -83,7 +83,8 @@ export default {
     Page
   },
   computed: {
-    ...mapState(["article","articleCount",'admin']),
+    ...mapState(['admin']),
+    ...mapState('article',["article","articleCount"]),
     articleShow: function() {
       let onlySelfArticle = [];
       let filterArticle = [];
@@ -132,8 +133,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getArticle",'countAdd']),
-    ...mapMutations(['readCountAdd']),
+    ...mapActions('article',["getArticle",'countAdd']),
+    ...mapMutations('article',['readCountAdd']),
     changeRule: function(rule) {
       this.sortRule = rule;
     },

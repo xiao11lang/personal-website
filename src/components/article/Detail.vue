@@ -18,7 +18,7 @@ export default {
         hide:function(){
             this.$emit('hide')
         },
-        ...mapActions(['thumpAdd']),
+        ...mapActions('article',['thumpAdd']),
         thumpUpAdd:function(data){
             if(!this.isLogin){
                 alert('请登录后再点赞')
@@ -29,7 +29,8 @@ export default {
         }
     },
     computed:{
-        ...mapState(['currentArticle','isLogin','userName']),
+        ...mapState(['isLogin','userName']),
+        ...mapState('article',['currentArticle']),
         info:function(){
             let vm=this;
             return {

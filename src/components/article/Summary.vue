@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import {DELETE_ARTICLE} from '../../until/constant.js'
 import {mapMutations,mapState} from 'vuex' 
 export default {
     name:"Summary",
@@ -40,15 +40,21 @@ export default {
                 id:id
             })
             //fd.append('id',id)
-            axios.post('http://www.11lang.cn/api/deleteArticle',fd).then(function(res){
+            /* axios.post('http://www.11lang.cn/api/deleteArticle',fd).then(function(res){
                 if(res.data==='success'){
 
                 }
             }).catch(function(){
                 alert('删除失败')
+            }) */
+            this.fetch(DELETE_ARTICLE,fd).then(function(res){
+                if(res==='success'){
+                }
+            }).catch(function(){
+                alert('删除失败')
             })
         },
-        ...mapMutations(['setArticle'])
+        ...mapMutations('article',['setArticle'])
     },
     computed:{
         ...mapState(['admin'])

@@ -30,7 +30,7 @@
     </div>
 </template>
 <script>
-import { DELETE_DAILY} from '../../until/constant.js'
+import { DELETE_DAILY,ADD_COMMENTS} from '../../until/constant.js'
 import {mapMutations,mapState,mapActions} from 'vuex'
 import Comment from './Comment'
 export default {
@@ -93,10 +93,14 @@ export default {
               content:this.comment,
               parentId:0
           })
-          axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
+          this.fetch(ADD_COMMENTS,fd).then(function(data){
               vm.comment=''
               vm.getDaily(vm.dailyPage)
           })
+          /* axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
+              vm.comment=''
+              vm.getDaily(vm.dailyPage)
+          }) */
       },
       onFocus:function(){
           this.comment=''

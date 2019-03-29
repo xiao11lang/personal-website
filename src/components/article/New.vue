@@ -27,8 +27,8 @@
     
 </template>
 <script>
-import axios from "axios";
 import {mapMutations,mapActions} from 'vuex'
+import {ADD_ARTICLE} from '../../until/constant.js'
 export default {
   name: "New",
   data: function() {
@@ -41,8 +41,8 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['addArticle']),
-    ...mapActions(['getArticle']),
+    ...mapMutations('article',['addArticle']),
+    ...mapActions('article',['getArticle']),
     hide: function(e) {
       if (e) {
         if (e.target != e.currentTarget) {
@@ -73,28 +73,18 @@ export default {
         path:this.path,
         writeTime:writeTime
       })     
-      /* fd.append("title", this.title);
-      fd.append("content", this.content);
-      fd.append("type", this.type);
-      fd.append("isOriginal", this.$refs.isOriginal.checked?0:1);
-      fd.append("path", this.path);
-      fd.append("writeTime", writeTime); */
-      axios.post("http://www.11lang.cn/api/addArticle", fd).then(function(res) {
+      /* axios.post("http://www.11lang.cn/api/addArticle", fd).then(function(res) {
         if (res.data === "success") {
-          /* vm.addArticle({
-            title:vm.title,
-            content:vm.content,
-            type:vm.type,
-            isOriginal:vm.$refs.isOriginal.checked?0:1,
-            path:vm.path,
-            writeTime:writeTime,
-            readCount:0,
-            thumpUp:0
-          }) */
           vm.getArticle(1)
           vm.hide();
         }
-      });
+      }); */
+      this.fetch(ADD_ARTICLE,fd).then(function(data){
+        if (data === "success") {
+          vm.getArticle(1)
+          vm.hide();
+        }
+      })
     }
   }
 };
