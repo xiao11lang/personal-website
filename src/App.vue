@@ -146,6 +146,7 @@ export default {
     ...mapActions('daily',['getDaily']),
     ...mapActions('article',['getArticle']),
     ...mapActions('message',['getMes']),
+    ...mapActions('self',['getSelfInfo']),
   },
   components: {
     Login,Loading,Barrage,Avatar

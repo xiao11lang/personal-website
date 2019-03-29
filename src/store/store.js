@@ -4,6 +4,7 @@ import daily from './daily'
 import barrage from './barrage'
 import article from './article'
 import message from './message'
+import self from './self'
 import axios from "axios"
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -11,7 +12,8 @@ export default new Vuex.Store({
         daily:daily,
         barrage:barrage,
         article:article,
-        message:message
+        message:message,
+        self:self
     },
     state:{
         isLogin:false,

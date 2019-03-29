@@ -53,7 +53,7 @@ export default {
     };
   },
   computed:{
-    ...mapState(['selfInfo']),
+    ...mapState('self',['selfInfo']),
     ...mapState('daily',['dailyCount']),
     ...mapState('message',['mesCount']),
     ...mapState('article',['article']),
