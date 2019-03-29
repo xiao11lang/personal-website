@@ -145,6 +145,7 @@ export default {
     ...mapActions('barrage',['getBarrage']),
     ...mapActions('daily',['getDaily']),
     ...mapActions('article',['getArticle']),
+    ...mapActions('message',['getMes']),
   },
   components: {
     Login,Loading,Barrage,Avatar

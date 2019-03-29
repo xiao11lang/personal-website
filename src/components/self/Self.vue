@@ -53,8 +53,10 @@ export default {
     };
   },
   computed:{
-    ...mapState(['article','dailyCount','mesCount','selfInfo']),
+    ...mapState(['selfInfo']),
     ...mapState('daily',['dailyCount']),
+    ...mapState('message',['mesCount']),
+    ...mapState('article',['article']),
     infoList:function(){
       return Object.values(this.selfInfo)
     },

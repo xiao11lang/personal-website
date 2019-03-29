@@ -22,8 +22,8 @@
 import Message from "./Message";
 import Loading from "../Loading";
 import Page from "../Page";
-import axios from "axios";
 import { mapState, mapActions, mapMutations } from "vuex";
+import {ADD_MESSAGE} from '../../until/constant.js'
 export default {
   name: "MessageBoard",
   data: function() {
@@ -38,14 +38,15 @@ export default {
     Page
   },
   computed: {
-    ...mapState(["isLogin", "userName", "mesList","mesCount", "avatar"])
+    ...mapState(["isLogin", "userName","avatar"]),
+    ...mapState('message',["mesList","mesCount"])
   },
   methods: {
     change: function(val) {
       this.getMes(val)
     },
-    ...mapActions(["getMes"]),
-    ...mapMutations(["mesAdd"]),
+    ...mapActions('message',["getMes"]),
+    ...mapMutations('message',["mesAdd"]),
     publish: function() {
       if (!this.isLogin) {
         alert("请先登录");
@@ -66,10 +67,8 @@ export default {
           time:vm.parse(time)
         })
         vm.showLoading = true;
-        axios
-          .post("http://www.11lang.cn/api/addMessage", fd)
-          .then(function(res) {
-            if (res.data === "success") {
+        this.fetch(ADD_MESSAGE,fd).then(function(data) {
+            if (data === "success") {
               vm.mesAdd({
                 userName: vm.userName,
                 content: vm.$refs.content.innerHTML,

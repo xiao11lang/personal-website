@@ -22,7 +22,7 @@
 <script>
 import axios from "axios";
 import {ADD_DAILY} from '../../until/constant.js'
-import {mapState,mapMutations} from 'vuex'
+import {mapState,mapMutations,mapActions} from 'vuex'
 export default {
   name: "New",
   data: function() {
@@ -38,6 +38,7 @@ export default {
   },
   methods: {
     ...mapMutations('daily',['addDaily']),
+    ...mapActions('daily',['getDaily']),
     hide: function(e) {
       if (e) {
         if (e.target != e.currentTarget) {
@@ -86,13 +87,15 @@ export default {
         if (data === "success") {
           vm.photoList=[];
           vm.photoSrc=[];
-          vm.addDaily({
+          /* vm.addDaily({
             content:vm.content,
             path:JSON.stringify(vm.path),
             writeTime:writeTime,
             id:vm.daily[vm.daily.length-1].id+1
+          }) */
+          vm.getDaily(vm.dailyPage).then(function(){
+            vm.$emit('hide')
           })
-          vm.$emit('hide')
         }
       })
       /* axios.post("http://www.11lang.cn/api/addDaily", fd).then(function(res) {
@@ -111,7 +114,7 @@ export default {
     }
   },
   computed:{
-    ...mapState('daily',['daily'])
+    ...mapState('daily',['daily','dailyPage'])
   }
 };
 </script>

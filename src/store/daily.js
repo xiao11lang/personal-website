@@ -36,7 +36,7 @@ export default {
         getDaily:function(context,pageNum){
             let fd=new FormData()
             fd.append('pageNum',pageNum)
-            fetch(GET_DAILY,fd).then(function(data){
+            return fetch(GET_DAILY,fd).then(function(data){
                 context.commit('getDaily',data)
             })
             /* return new Promise(function(resolve,reject){
