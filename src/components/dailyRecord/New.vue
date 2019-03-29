@@ -87,30 +87,11 @@ export default {
         if (data === "success") {
           vm.photoList=[];
           vm.photoSrc=[];
-          /* vm.addDaily({
-            content:vm.content,
-            path:JSON.stringify(vm.path),
-            writeTime:writeTime,
-            id:vm.daily[vm.daily.length-1].id+1
-          }) */
           vm.getDaily(vm.dailyPage).then(function(){
             vm.$emit('hide')
           })
         }
       })
-      /* axios.post("http://www.11lang.cn/api/addDaily", fd).then(function(res) {
-        if (res.data === "success") {
-          vm.photoList=[];
-          vm.photoSrc=[];
-          vm.addDaily({
-            content:vm.content,
-            path:JSON.stringify(vm.path),
-            writeTime:writeTime,
-            id:vm.daily[vm.daily.length-1].id+1
-          })
-          vm.$emit('hide')
-        }
-      }); */
     }
   },
   computed:{

@@ -25,9 +25,6 @@
                       <span class="iconfont" :class="item.class"></span>
                       {{item.title}}
                     </div>
-                    <!-- <div :class="{active:activeIndex===0}" @click="switchIndex(0)"><span class="iconfont icon-jibenziliao"></span>基本资料</div>
-                    <div :class="{active:activeIndex===1}" @click="switchIndex(1)"><span class="iconfont icon-xingquaihao"></span>兴趣爱好</div>
-                    <div :class="{active:activeIndex===2}" @click="switchIndex(2)"><span class="iconfont icon-jishu"></span>技能经验</div> -->
                 </div>
             </div>
             <div class="mainRight">

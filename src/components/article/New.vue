@@ -73,12 +73,6 @@ export default {
         path:this.path,
         writeTime:writeTime
       })     
-      /* axios.post("http://www.11lang.cn/api/addArticle", fd).then(function(res) {
-        if (res.data === "success") {
-          vm.getArticle(1)
-          vm.hide();
-        }
-      }); */
       this.fetch(ADD_ARTICLE,fd).then(function(data){
         if (data === "success") {
           vm.getArticle(1)

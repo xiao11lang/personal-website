@@ -42,13 +42,6 @@ export default {
             fetch(GET_ARTICLE,fd).then(function(data){
                 context.commit('getArticle',data)
             })
-            /* return new Promise(function(resolve,reject){
-                axios.post('http://www.11lang.cn/api/getArticle',fd).then(function(res){
-                    context.commit('getArticle',res.data)
-                    resolve()
-                    })
-            }) */
-             
         },
         countAdd:function(context,data){
             let fd=new FormData()
@@ -58,11 +51,6 @@ export default {
                     context.commit('readCountAdd',data)
                 }
             })
-            /* axios.post('http://www.11lang.cn/api/addCount',fd).then(function(res){
-                if(res.data==='success'){
-                    context.commit('readCountAdd',data)
-                }
-            }) */
         },
         thumpAdd:function(context,data){
             let fd=new FormData()
@@ -75,13 +63,6 @@ export default {
                     alert('不可重复点赞')
                 }
             })
-            /* axios.post('http://www.11lang.cn/api/addthump',fd).then(function(res){
-                if(res.data==='success'){
-                    context.commit('thumpUpAdd',data)
-                }else{
-                    alert('不可重复点赞')
-                }
-            }) */
         },
     }
 }

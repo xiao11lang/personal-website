@@ -59,11 +59,6 @@ export default {
                   that.deleteDailys(id)
               }
           })
-          /* axios.post('http://www.11lang.cn/api/deleteDaily',fd).then(function(res){
-              if(res.data==='success'){
-                  that.deleteDailys(id)
-              }
-          }) */
       },
       publish:function(){
           if(!this.isLogin){
@@ -79,12 +74,6 @@ export default {
           let month = new Date().getMonth() + 1;
           let date = new Date().getDate();
           let commentTime =year+"-"+month+'-'+date
-          /* fd.append('commentTime',commentTime)
-          fd.append('dailyId',this.info.id)
-          fd.append('fromId',this.userId)
-          fd.append('toId',1)
-          fd.append('content',this.comment)
-          fd.append('parentId',0) */
           let fd = this.fd({
               commentTime:commentTime,
               dailyId:this.info.id,
@@ -97,10 +86,6 @@ export default {
               vm.comment=''
               vm.getDaily(vm.dailyPage)
           })
-          /* axios.post('http://www.11lang.cn/api/addComments',fd).then(function(res){
-              vm.comment=''
-              vm.getDaily(vm.dailyPage)
-          }) */
       },
       onFocus:function(){
           this.comment=''

@@ -24,14 +24,6 @@ export default {
         getMes:function(context,pageNum){
             let fd=new FormData()
             fd.append('pageNum',pageNum)
-            /* return new Promise(function(resolve,reject){
-                axios.post('http://www.11lang.cn/api/getMessage',fd).then(function(res){
-                    context.commit('getMes',res.data)
-                    resolve()
-                    }).catch(function(e){
-                        reject(e)
-                    })
-            }) */
             return fetch(GET_MESSAGE,fd).then(function(data){
                 context.commit('getMes',data)
             })

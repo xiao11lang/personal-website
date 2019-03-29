@@ -58,9 +58,6 @@ export default {
       } else {
         let vm = this;
         let time = new Date();
-        /* fd.append("userName", vm.userName);
-        fd.append("content", vm.$refs.content.innerHTML);
-        fd.append("time", vm.parse(time)); */
         let fd = this.fd({
           userName:vm.userName,
           content:vm.$refs.content.innerHTML,

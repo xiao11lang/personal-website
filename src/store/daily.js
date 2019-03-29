@@ -39,15 +39,7 @@ export default {
             return fetch(GET_DAILY,fd).then(function(data){
                 context.commit('getDaily',data)
             })
-            /* return new Promise(function(resolve,reject){
-                axios.post('http://www.11lang.cn/api/getDaily',fd).then(function(res){
-                    context.commit('getDaily',res.data)
-                    resolve()
-                    }).catch(function(e){
-                        reject(e)
-                    })
-            }) */
-             
+            
         },
     }
 }

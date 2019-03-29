@@ -39,14 +39,6 @@ export default {
             let fd=this.fd({
                 id:id
             })
-            //fd.append('id',id)
-            /* axios.post('http://www.11lang.cn/api/deleteArticle',fd).then(function(res){
-                if(res.data==='success'){
-
-                }
-            }).catch(function(){
-                alert('删除失败')
-            }) */
             this.fetch(DELETE_ARTICLE,fd).then(function(res){
                 if(res==='success'){
                 }
