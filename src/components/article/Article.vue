@@ -153,6 +153,7 @@ export default {
       this.onlySelf = !this.onlySelf;
     },
     setFilter: function(filter) {
+      this.showSummary=true
       this.filter = filter;
     },
     change:function(val){
