@@ -44,9 +44,10 @@ export default {
   methods: {
     change: function(val) {
       this.getMes(val)
+      this.setMessagePage(val)
     },
     ...mapActions('message',["getMes"]),
-    ...mapMutations('message',["mesAdd"]),
+    ...mapMutations('message',["mesAdd","setMessagePage"]),
     publish: function() {
       if (!this.isLogin) {
         alert("请先登录");

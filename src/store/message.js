@@ -5,6 +5,7 @@ export default {
     state:{
         mesList:[],
         mesCount:0,
+        messagePage:1
     },
     mutations:{
         getMes:function(state,mesInfo){
@@ -18,6 +19,9 @@ export default {
             }
             state.mesList=state.mesList.map(function(v,index){return Object.assign({},v,{index:index+1})})
             state.mesCount++
+        },
+        setMessagePage:function(state,page){
+            state.messagePage=page
         }
     },
     actions:{

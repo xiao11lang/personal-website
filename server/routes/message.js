@@ -40,6 +40,18 @@ async function addMessage(ctx){
         console.log(e)
     }
 }
+async function deleteMessage(ctx){
+    try{
+        var {id}=ctx.request.body;
+        var  res= await spanner.delete({
+            tableName:'message',
+            rules:`where id=${id}`
+            })
+            ctx.body='success'
+    }catch(e){
+        console.log(e)
+    }
+}
 module.exports=[{
     method:'post',
     path:'/api/addMessage',
@@ -48,4 +60,8 @@ module.exports=[{
     method:'post',
     path:'/api/getMessage',
     handler:getMessage
+},{
+    method:'post',
+    path:'/api/deleteMessage',
+    handler:deleteMessage
 }]
