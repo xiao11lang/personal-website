@@ -10,7 +10,7 @@
 
 进入项目根路径
 
-### npm install 或 yarn add
+### npm install 或 yarn 
 
 安装依赖
 
@@ -24,7 +24,7 @@
 
 进入服务器文件夹
 
-### npm install 或 yarn add
+### npm install 或 yarn
 
 安装服务器依赖
 
@@ -34,7 +34,7 @@
 
 ## 其它依赖
 
-后端数据库为mongodb，需单独下载安装
+后端数据库为mysql，需单独下载安装
 
 静态资源由nginx托管，并由其做反向代理，本地也要安装
 
