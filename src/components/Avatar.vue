@@ -36,8 +36,6 @@ export default {
             let that=this;
             if(this.selectIndex!=null){
                 let avatar=this.avatarList[this.selectIndex]
-                /* fd.append('userName',this.userName)
-                fd.append('avatar',avatar) */
                 let fd=this.fd({
                     userName:this.userName,
                     avatar:avatar

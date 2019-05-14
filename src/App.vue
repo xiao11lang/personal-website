@@ -131,13 +131,6 @@ export default {
             vm.barrage=''
           }
         })
-        /* axios.post('http://www.11lang.cn/api/addBarrage',fd).then(function(res){
-          if(res.data==='success'){
-            vm.newList.push([vm.barrage])
-            //直接push字符串将导致数组索引增大，弹幕发送的延迟会增大，这里用数组嵌套使得每次新增的弹幕无延迟发送
-            vm.barrage=''
-          }
-        }) */
       }
     },
     ...mapMutations(['setLoginState']),

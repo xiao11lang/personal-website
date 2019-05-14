@@ -76,13 +76,10 @@ export default {
       } else {
         vm.showLoading=true
         vm.message='登录中'
-        //let fd = new FormData();
         let fd=vm.fd({
           userName:this.login_userName.trim(),
           password:this.login_pass
         })
-        //fd.append("userName", this.login_userName.trim());
-        //fd.append("password", this.login_pass);
         axios.post("http://www.11lang.cn/api/login", fd).then(function(res) {
           switch (res.data) {
             case "not_exist":
@@ -102,7 +99,6 @@ export default {
               let fd=vm.fd({
                 commerName:res.data.userName
               })
-              //fd.append('commerName',res.data.userName)
               axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){}).catch(function(){
                 alert('评论失败')
               })
@@ -145,8 +141,6 @@ export default {
           userName:this.reg_userName,
           password:this.reg_pass
         })
-        //fd.append("userName", this.reg_userName);
-        //fd.append("password", this.reg_pass);
         axios.post("http://www.11lang.cn/api/register", fd).then(function(res) {
           switch (res.data) {
             case "exist":
@@ -162,7 +156,6 @@ export default {
               let fd=vm.fd({
                 commerName:vm.reg_userName
               })
-              //fd.append('commerName',vm.reg_userName)
               axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){})
           }
         });
