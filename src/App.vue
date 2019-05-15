@@ -58,7 +58,7 @@ import Login from "./components/Login";
 import Loading from './components/Loading'
 import Barrage from './components/barrage/Barrage'
 import Avatar from './components/Avatar'
-import {ADD_BARRAGE} from './until/constant.js'
+import {addBarrage} from './api/barrage.js'
 import { mapState, mapMutations,mapActions } from "vuex";
 export default {
   name: "App",
@@ -123,7 +123,7 @@ export default {
       }
       let vm=this;
       if(this.barrage.trim()!==''){
-        this.fetch(ADD_BARRAGE,this.fd({
+        addBarrage(this.fd({
           content:this.barrage
         })).then(function(res){
           if(res==='success'){

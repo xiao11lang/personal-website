@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/store'
-import fetch from './until/fetch'
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
@@ -21,4 +20,3 @@ Vue.prototype.fd=function(data){
   })
   return fd
 }
-Vue.prototype.fetch=fetch

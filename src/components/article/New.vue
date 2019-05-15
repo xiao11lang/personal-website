@@ -28,7 +28,6 @@
 </template>
 <script>
 import {mapMutations,mapActions} from 'vuex'
-import {ADD_ARTICLE} from '../../until/constant.js'
 import {addArticle} from '../../api/article.js'
 export default {
   name: "New",
@@ -80,12 +79,6 @@ export default {
           vm.hide();
         }
       })
-      /* this.fetch(ADD_ARTICLE,fd).then(function(data){
-        if (data === "success") {
-          vm.getArticle(1)
-          vm.hide();
-        }
-      }) */
     }
   }
 };

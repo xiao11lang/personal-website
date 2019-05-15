@@ -5,7 +5,6 @@ import barrage from './barrage'
 import article from './article'
 import message from './message'
 import self from './self'
-import axios from "axios"
 import {getCommer} from '../api/daily'
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -49,15 +48,8 @@ export default new Vuex.Store({
         
         getCommer:function(context){
             return getCommer().then(function(res){
-                context.commit('getCommer',res.data)
+                context.commit('getCommer',res)
                 })
-            /* return new Promise(function(resolve,reject){
-                axios.get('http://www.11lang.cn/api/getCommer').then(function(res){
-                    context.commit('getCommer',res.data)
-                    resolve()
-                    })
-            }) */
-             
         }
     }
 })

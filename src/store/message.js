@@ -1,5 +1,3 @@
-import {GET_MESSAGE} from '../until/constant'
-import fetch from '../until/fetch'
 import {getMessage} from '../api/message'
 export default {
     namespaced:true,
@@ -32,9 +30,6 @@ export default {
             return getMessage(fd).then(function(data){
                 context.commit('getMes',data)
             })
-            /* return fetch(GET_MESSAGE,fd).then(function(data){
-                context.commit('getMes',data)
-            }) */
         }
     }
 }

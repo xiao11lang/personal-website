@@ -1,5 +1,3 @@
-import fetch from '../until/fetch'
-import {GET_SELFINFO} from '../until/constant'
 import {getSelfInfo} from '../api/self'
 export default {
     namespaced:true,
@@ -16,9 +14,6 @@ export default {
             getSelfInfo().then(function(data){
                 context.commit('getSelfInfo',data)
             })
-            /* fetch(GET_SELFINFO).then(function(data){
-                context.commit('getSelfInfo',data)
-            }) */
         },
     }
 }

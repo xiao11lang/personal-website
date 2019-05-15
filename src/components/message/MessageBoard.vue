@@ -23,7 +23,6 @@ import Message from "./Message";
 import Loading from "../Loading";
 import Page from "../Page";
 import { mapState, mapActions, mapMutations } from "vuex";
-import {ADD_MESSAGE} from '../../until/constant.js'
 import {addMessage} from '../../api/message.js'
 export default {
   name: "MessageBoard",
@@ -81,21 +80,6 @@ export default {
               alert('留言失败')
             }
           });
-        /* this.fetch(ADD_MESSAGE,fd).then(function(data) {
-            if (data === "success") {
-              vm.mesAdd({
-                userName: vm.userName,
-                content: vm.$refs.content.innerHTML,
-                time: vm.parse(time),
-                avatar: vm.avatar
-              });
-              vm.$refs.content.innerHTML = "";
-              vm.showLoading = false;
-            }else{
-              vm.showLoading=false
-              alert('留言失败')
-            }
-          }); */
       }
     },
     parse: function(time) {

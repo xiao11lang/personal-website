@@ -140,7 +140,6 @@ export default {
     },
     showDetail: function(data) {
       this.showSummary = false;
-      //this.readCountAdd(id)
       this.countAdd(data)
     },
     hideDetail: function(id) {

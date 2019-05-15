@@ -26,6 +26,6 @@ export const getCommer=()=>fetch({
 })
 export const addCommer=(data)=>fetch({
     url:ADD_COMMER,
-    method:'get',
+    method:'post',
     data
 })

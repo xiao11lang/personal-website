@@ -20,7 +20,6 @@
     </div>
 </template>
 <script>
-import {ADD_COMMENTS} from '../../until/constant.js'
 import {addComments} from '../../api/daily.js'
 import {mapMutations,mapState,mapActions} from 'vuex'
 import ChildComment from './ChildComment'
@@ -64,12 +63,10 @@ export default {
               vm.comment=''
               vm.getDaily(vm.dailyPage)
           })
-          /* this.fetch(ADD_COMMENTS,fd).then(function(data){
-              vm.comment=''
-              vm.getDaily(vm.dailyPage)
-          }) */
+          
       }
     },
+    
     directives:{
         'focus':{
             inserted:function(el){

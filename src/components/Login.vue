@@ -38,7 +38,6 @@
     </div>
 </template>
 <script>
-import axios from "axios";
 import Loading from './Loading'
 import { mapMutations } from "vuex";
 import {login,register} from '../api/account.js'
@@ -103,9 +102,6 @@ export default {
               })
               addCommer(fd).then(function(){}).catch(function(){
               })
-              /* axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){}).catch(function(){
-                alert('评论失败')
-              }) */
           }
         }).catch((err)=>{
           console.log(err);
@@ -162,7 +158,6 @@ export default {
               })
               addCommer(fd).then(function(){}).catch(function(){
               })
-              /* axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){}) */
           }
         }).catch((err)=>{
           console.log(err);

@@ -30,7 +30,6 @@
     </div>
 </template>
 <script>
-import { DELETE_DAILY,ADD_COMMENTS} from '../../until/constant.js'
 import {deleteDaily,addComments} from '../../api/daily.js'
 import {mapMutations,mapState,mapActions} from 'vuex'
 import Comment from './Comment'
@@ -44,8 +43,8 @@ export default {
       }
   },
   methods:{
-      ...mapMutations(['deleteDailys']),
-      ...mapActions(['getDaily']),
+      ...mapMutations('daily',['deleteDailys']),
+      ...mapActions('daily',['getDaily']),
       parseTime:function(time){
           let timeArr=time.split('-')
           return timeArr[0]+'年'+timeArr[1]+"月"+timeArr[2]+"日"
@@ -60,11 +59,6 @@ export default {
                   that.deleteDailys(id)
               }
           })
-          /* this.fetch(DELETE_DAILY,fd).then(function(data){
-              if(data==='success'){
-                  that.deleteDailys(id)
-              }
-          }) */
       },
       publish:function(){
           if(!this.isLogin){
@@ -92,10 +86,6 @@ export default {
               vm.comment=''
               vm.getDaily(vm.dailyPage)
           })
-          /* this.fetch(ADD_COMMENTS,fd).then(function(data){
-              vm.comment=''
-              vm.getDaily(vm.dailyPage)
-          }) */
       },
       onFocus:function(){
           this.comment=''

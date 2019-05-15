@@ -1,5 +1,3 @@
-import fetch from '../until/fetch'
-import {GET_ARTICLE,ADD_COUNT,ADD_THUMP} from '../until/constant'
 import {getArticle,addCount,addThump} from '../api/article'
 export default {
     namespaced:true,
@@ -43,9 +41,6 @@ export default {
             getArticle(fd).then((data)=>{
                 context.commit('getArticle',data)
             })
-            /* fetch(GET_ARTICLE,fd).then(function(data){
-                context.commit('getArticle',data)
-            }) */
         },
         countAdd:function(context,data){
             let fd=new FormData()
@@ -55,11 +50,6 @@ export default {
                     context.commit('readCountAdd',data)
                 }
             })
-            /* fetch(ADD_COUNT,fd).then(function(res){
-                if(res==='success'){
-                    context.commit('readCountAdd',data)
-                }
-            }) */
         },
         thumpAdd:function(context,data){
             let fd=new FormData()
@@ -72,13 +62,6 @@ export default {
                     alert('不可重复点赞')
                 }
             })
-            /* fetch(ADD_THUMP).then(function(res){
-                if(res==='success'){
-                    context.commit('thumpUpAdd',data)
-                }else{
-                    alert('不可重复点赞')
-                }
-            }) */
         },
     }
 }

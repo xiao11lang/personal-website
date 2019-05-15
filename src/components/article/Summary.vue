@@ -25,7 +25,6 @@
     </div>
 </template>
 <script>
-import {DELETE_ARTICLE} from '../../until/constant.js'
 import {deleteArticle} from '../../api/article.js'
 import {mapMutations,mapState} from 'vuex' 
 export default {
@@ -46,12 +45,6 @@ export default {
             }).catch(function(){
                 alert('删除失败')
             })
-            /* this.fetch(DELETE_ARTICLE,fd).then(function(res){
-                if(res==='success'){
-                }
-            }).catch(function(){
-                alert('删除失败')
-            }) */
         },
         ...mapMutations('article',['setArticle'])
     },
