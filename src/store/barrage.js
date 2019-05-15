@@ -1,5 +1,6 @@
 import fetch from '../until/fetch'
 import {GET_BARRAGE} from '../until/constant'
+import {getBarrage} from '../api/barrage'
 export default {
     namespaced:true,
     state:{
@@ -12,9 +13,12 @@ export default {
     },
     actions:{
         getBarrage:function(context){
-            fetch(GET_BARRAGE).then(function(data){
+            getBarrage().then(function(data){
                 context.commit('getBarrage',data)
             })
+            /* fetch(GET_BARRAGE).then(function(data){
+                context.commit('getBarrage',data)
+            }) */
         }
     }
 }

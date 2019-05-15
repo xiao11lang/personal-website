@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import {modifyAvatar} from '../api/avatar.js'
 import {mapState,mapMutations} from 'vuex'
 export default {
     name:"Avatar",
@@ -33,17 +33,17 @@ export default {
             }
         },
         modifyAvatar:function(){
-            let that=this;
             if(this.selectIndex!=null){
                 let avatar=this.avatarList[this.selectIndex]
                 let fd=this.fd({
                     userName:this.userName,
                     avatar:avatar
                 })
-                axios.post('http://www.11lang.cn/api/modifyAvatar',fd).then(()=>{
-                    that.setAvatar(avatar)
-                    that.$emit('hide')
+                modifyAvatar(fd).then(()=>{
+                    this.setAvatar(avatar)
+                    this.$emit('hide')
                 })
+                
             }
             
         },

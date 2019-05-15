@@ -41,6 +41,8 @@
 import axios from "axios";
 import Loading from './Loading'
 import { mapMutations } from "vuex";
+import {login,register} from '../api/account.js'
+import {addCommer} from '../api/daily.js'
 export default {
   name: "Login",
   data: function() {
@@ -80,8 +82,8 @@ export default {
           userName:this.login_userName.trim(),
           password:this.login_pass
         })
-        axios.post("http://www.11lang.cn/api/login", fd).then(function(res) {
-          switch (res.data) {
+        login(fd).then((data)=>{
+          switch (data) {
             case "not_exist":
               alert("用户名不存在");
               vm.showLoading=false
@@ -92,20 +94,22 @@ export default {
               return;
             default:
               vm.setLoginState(true);
-              vm.setUserInfo({ userName: res.data.userName, admin: res.data.admin, avatar:res.data.avatar ,id:res.data.id});
-              localStorage.setItem('userName',res.data.userName)
+              vm.setUserInfo({ userName: data.userName, admin: data.admin, avatar:data.avatar ,id:data.id});
+              localStorage.setItem('userName',data.userName)
               vm.$emit("hide");
               vm.showLoading=false
               let fd=vm.fd({
-                commerName:res.data.userName
+                commerName:data.userName
               })
-              axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){}).catch(function(){
+              addCommer(fd).then(function(){}).catch(function(){
+              })
+              /* axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){}).catch(function(){
                 alert('评论失败')
-              })
+              }) */
           }
-        },function(err){
-          console.log(err)
-        });
+        }).catch((err)=>{
+          console.log(err);
+        })
       }
     },
     register: function() {
@@ -141,8 +145,8 @@ export default {
           userName:this.reg_userName,
           password:this.reg_pass
         })
-        axios.post("http://www.11lang.cn/api/register", fd).then(function(res) {
-          switch (res.data) {
+        register(fd).then((data)=>{
+          switch (data) {
             case "exist":
               alert("用户名已经存在");
               vm.showLoading=false
@@ -150,15 +154,19 @@ export default {
               return;
             case "success":
               vm.setLoginState(true);
-              vm.setUserInfo({ userName: vm.reg_userName, admin: false,id:res.data.id });
+              vm.setUserInfo({ userName: vm.reg_userName, admin: false,id:data.id });
               vm.$emit("hide");
               vm.showLoading=false
               let fd=vm.fd({
                 commerName:vm.reg_userName
               })
-              axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){})
+              addCommer(fd).then(function(){}).catch(function(){
+              })
+              /* axios.post('http://www.11lang.cn/api/addCommer',fd).then(function(){}) */
           }
-        });
+        }).catch((err)=>{
+          console.log(err);
+        })
       }
     },
     focus: function(index) {

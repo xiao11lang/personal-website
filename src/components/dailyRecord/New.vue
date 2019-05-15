@@ -22,6 +22,7 @@
 <script>
 import axios from "axios";
 import {ADD_DAILY} from '../../until/constant.js'
+import {addDaily} from '../../api/daily.js'
 import {mapState,mapMutations,mapActions} from 'vuex'
 export default {
   name: "New",
@@ -83,7 +84,7 @@ export default {
       this.photoList.forEach(function(photo,index){
         fd.append(`img${index}`,photo)
       })
-      this.fetch(ADD_DAILY,fd).then(function(data){
+      addDaily(fd).then(function(data){
         if (data === "success") {
           vm.photoList=[];
           vm.photoSrc=[];
@@ -92,6 +93,15 @@ export default {
           })
         }
       })
+      /* this.fetch(ADD_DAILY,fd).then(function(data){
+        if (data === "success") {
+          vm.photoList=[];
+          vm.photoSrc=[];
+          vm.getDaily(vm.dailyPage).then(function(){
+            vm.$emit('hide')
+          })
+        }
+      }) */
     }
   },
   computed:{

@@ -26,6 +26,7 @@
 </template>
 <script>
 import {DELETE_ARTICLE} from '../../until/constant.js'
+import {deleteArticle} from '../../api/article.js'
 import {mapMutations,mapState} from 'vuex' 
 export default {
     name:"Summary",
@@ -39,12 +40,18 @@ export default {
             let fd=this.fd({
                 id:id
             })
-            this.fetch(DELETE_ARTICLE,fd).then(function(res){
+            deleteArticle(fd).then(function(res){
                 if(res==='success'){
                 }
             }).catch(function(){
                 alert('删除失败')
             })
+            /* this.fetch(DELETE_ARTICLE,fd).then(function(res){
+                if(res==='success'){
+                }
+            }).catch(function(){
+                alert('删除失败')
+            }) */
         },
         ...mapMutations('article',['setArticle'])
     },

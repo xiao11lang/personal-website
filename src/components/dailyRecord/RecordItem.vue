@@ -31,6 +31,7 @@
 </template>
 <script>
 import { DELETE_DAILY,ADD_COMMENTS} from '../../until/constant.js'
+import {deleteDaily,addComments} from '../../api/daily.js'
 import {mapMutations,mapState,mapActions} from 'vuex'
 import Comment from './Comment'
 export default {
@@ -54,11 +55,16 @@ export default {
           let fd=this.fd({
               id:id
           })
-          this.fetch(DELETE_DAILY,fd).then(function(data){
+          deleteDaily(fd).then(function(data){
               if(data==='success'){
                   that.deleteDailys(id)
               }
           })
+          /* this.fetch(DELETE_DAILY,fd).then(function(data){
+              if(data==='success'){
+                  that.deleteDailys(id)
+              }
+          }) */
       },
       publish:function(){
           if(!this.isLogin){
@@ -82,10 +88,14 @@ export default {
               content:this.comment,
               parentId:0
           })
-          this.fetch(ADD_COMMENTS,fd).then(function(data){
+          addComments(fd).then(function(data){
               vm.comment=''
               vm.getDaily(vm.dailyPage)
           })
+          /* this.fetch(ADD_COMMENTS,fd).then(function(data){
+              vm.comment=''
+              vm.getDaily(vm.dailyPage)
+          }) */
       },
       onFocus:function(){
           this.comment=''

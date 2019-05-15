@@ -21,6 +21,7 @@
 </template>
 <script>
 import {ADD_COMMENTS} from '../../until/constant.js'
+import {addComments} from '../../api/daily.js'
 import {mapMutations,mapState,mapActions} from 'vuex'
 import ChildComment from './ChildComment'
 export default {
@@ -59,10 +60,14 @@ export default {
               content:this.comment,
               parentId:this.commentInfo.commentId
           })
-          this.fetch(ADD_COMMENTS,fd).then(function(data){
+          addComments(fd).then(function(data){
               vm.comment=''
               vm.getDaily(vm.dailyPage)
           })
+          /* this.fetch(ADD_COMMENTS,fd).then(function(data){
+              vm.comment=''
+              vm.getDaily(vm.dailyPage)
+          }) */
       }
     },
     directives:{

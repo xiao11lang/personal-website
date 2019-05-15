@@ -1,5 +1,6 @@
 import {GET_MESSAGE} from '../until/constant'
 import fetch from '../until/fetch'
+import {getMessage} from '../api/message'
 export default {
     namespaced:true,
     state:{
@@ -28,9 +29,12 @@ export default {
         getMes:function(context,pageNum){
             let fd=new FormData()
             fd.append('pageNum',pageNum)
-            return fetch(GET_MESSAGE,fd).then(function(data){
+            return getMessage(fd).then(function(data){
                 context.commit('getMes',data)
             })
+            /* return fetch(GET_MESSAGE,fd).then(function(data){
+                context.commit('getMes',data)
+            }) */
         }
     }
 }

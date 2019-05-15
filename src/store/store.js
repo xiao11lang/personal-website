@@ -6,6 +6,7 @@ import article from './article'
 import message from './message'
 import self from './self'
 import axios from "axios"
+import {getCommer} from '../api/daily'
 Vue.use(Vuex)
 export default new Vuex.Store({
     modules:{
@@ -47,12 +48,15 @@ export default new Vuex.Store({
     actions:{
         
         getCommer:function(context){
-            return new Promise(function(resolve,reject){
+            return getCommer().then(function(res){
+                context.commit('getCommer',res.data)
+                })
+            /* return new Promise(function(resolve,reject){
                 axios.get('http://www.11lang.cn/api/getCommer').then(function(res){
                     context.commit('getCommer',res.data)
                     resolve()
                     })
-            })
+            }) */
              
         }
     }

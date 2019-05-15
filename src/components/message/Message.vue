@@ -21,6 +21,7 @@
 <script>
 import {mapState,mapActions,mapMutations} from 'vuex'
 import {DELETE_MESSAGE} from '../../until/constant.js'
+import {deleteMessage} from '../../api/message.js'
 export default {
   name: "Message",
   props:['info','index'],
@@ -37,7 +38,7 @@ export default {
           let fd=this.fd({
               id:id
           })
-          this.fetch(DELETE_MESSAGE,fd).then(function(data){
+          deleteMessage(fd).then(function(data){
               let page=vm.messagePage;
               if(vm.mesList.length===1){
                   page--
@@ -45,6 +46,14 @@ export default {
               }
               vm.getMes(page)
           })
+          /* this.fetch(DELETE_MESSAGE,fd).then(function(data){
+              let page=vm.messagePage;
+              if(vm.mesList.length===1){
+                  page--
+                  vm.setMessagePage(page)
+              }
+              vm.getMes(page)
+          }) */
       },
       ...mapActions('message',['getMes']),
       ...mapMutations('message',["setMessagePage"])

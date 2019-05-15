@@ -1,5 +1,6 @@
 import fetch from '../until/fetch'
 import { GET_DAILY} from '../until/constant'
+import {getDaily} from '../api/daily'
 export default {
     namespaced:true,
     state:{
@@ -36,9 +37,12 @@ export default {
         getDaily:function(context,pageNum){
             let fd=new FormData()
             fd.append('pageNum',pageNum)
-            return fetch(GET_DAILY,fd).then(function(data){
+            return getDaily(fd).then(function(data){
                 context.commit('getDaily',data)
             })
+            /* return fetch(GET_DAILY,fd).then(function(data){
+                context.commit('getDaily',data)
+            }) */
             
         },
     }
